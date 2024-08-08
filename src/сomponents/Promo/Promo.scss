@@ -1,0 +1,94 @@
+@use "../src/assets/variables.scss" as color;
+@import '../src/assets/mixins.scss';
+
+
+
+.promo {
+    position: relative;
+    color: color.$white;
+    padding: 50px 0;
+    min-height: 600px;
+
+    @include responsiveMarginBottom;
+
+    @media (min-width: 768px) {
+        min-height: 634px;
+        padding: 60px 0;
+    }
+
+    @media (min-width: 1000px) {
+        min-height: 476px;
+    }
+
+    @media (min-width: 1440px) {
+       padding: 80px 0; 
+       min-height: 600px;
+    }
+
+    &__bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+    }
+
+    &__bg-img {
+        display: block;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .container {
+        position: relative;
+        //z-index: 1;
+    }
+
+    &__title {
+        font-size: 52px;
+        font-weight: 700;
+        line-height: 57.2px;
+
+        &:not(:last-child) {
+            margin-bottom: 24px;
+
+            @media (min-width: 768px) {
+                margin-bottom: 40px;
+            }
+        }
+
+        @media (min-width: 480px) {
+            font-size: 60px;
+            line-height: 66px;
+        }
+
+        @media (min-width: 768px) {
+            font-size: 68px;
+            line-height: 74.8px;
+        }
+
+        @media (min-width: 1000px) {
+            font-size: 90px;
+            line-height: 99px;      
+        }
+
+        @media (min-width: 1440px) {
+            font-size: 96px; 
+            line-height: 105.6px;   
+        }
+    }
+
+    &__btn {
+        min-width: 200px;
+
+        &:hover {
+            background-color: color.$main-text-light;
+        }
+
+        @media (min-width: 768px) {
+            min-width: 218px;
+        }
+    }
+}

@@ -1,10 +1,10 @@
 import React from 'react'
+import Promo from '../../сomponents/Promo/Promo';
 
 const HomePage = () => {
   return (
     <div>
-      Home Page
-      
+      <Promo />
     </div>
   )
 }

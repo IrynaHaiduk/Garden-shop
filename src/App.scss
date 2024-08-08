@@ -108,3 +108,26 @@ input[type='radio'].visually-hidden {
         }
     }
 }
+
+
+.btn {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23.4px;
+    text-align: center;
+    padding: 12px;
+    gap: 10px;
+    border-radius: 6px;
+    display: inline-block;
+
+    @media (min-width: 768px) {
+        font-size: 20px;
+        line-height: 26px;
+        padding: 16px;
+    }
+}
+
+.btn--bright {
+    color: color.$white;
+    background-color: color.$bright-color-light;
+}

@@ -1,19 +1,9 @@
 @use "../src/assets/variables.scss" as color;
+@import '../src/assets/mixins.scss';
+
 
 .contacts {
-    margin-bottom: 56px;
-
-    @media (min-width: 768px) {
-        margin-bottom: 60px;
-    }
-
-    @media (min-width: 1024px) {
-        margin-bottom: 70px;
-    }
-
-    @media (min-width: 1440px) {
-        margin-bottom: 80px;
-    }
+   @include responsiveMarginBottom;
 
 
     &__list {
