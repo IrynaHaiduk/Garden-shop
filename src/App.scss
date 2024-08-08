@@ -11,7 +11,6 @@ body {
     background-color: color.$main-bg-light;
 }
 
-
 *,
 *::after,
 *::before {
@@ -55,6 +54,16 @@ input[type='radio'].visually-hidden {
 }
 
 .heading {
+    margin-bottom: 24px;
+
+    @media (min-width: 768px) {
+        margin-bottom: 32px;
+    }
+
+    @media (min-width: 1024px) {
+        margin-bottom: 40px;
+    }
+
 
     &__title {
         font-size: 40px;
