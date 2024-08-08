@@ -8,6 +8,7 @@
     color: color.$white;
     padding: 50px 0;
     min-height: 600px;
+    overflow: hidden;
 
     @include responsiveMarginBottom;
 
@@ -83,9 +84,7 @@
     &__btn {
         min-width: 200px;
 
-        &:hover {
-            background-color: color.$main-text-light;
-        }
+      
 
         @media (min-width: 768px) {
             min-width: 218px;

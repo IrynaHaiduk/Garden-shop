@@ -32,6 +32,8 @@
 
     &__map {
         height: 250px;
+        overflow: hidden;
+        position: relative;
 
         @media (min-width: 1024px) {
             height: 300px;
@@ -97,6 +99,14 @@
         @media (min-width: 768px) {
             font-size: 40px;
             line-height: 44px;
+        }
+
+        a {
+            &:hover {
+              color:  color.$bright-color-light;   
+            }
+           
+    
         }
     }
 }
