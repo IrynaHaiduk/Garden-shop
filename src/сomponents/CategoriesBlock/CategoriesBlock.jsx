@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchCategories } from '../../store/features/productSlice';
 import Category from '../Category/Category';
+import Heading from '../Heading/Heading';
 
 const CategoriesBlock = () => {
 
@@ -22,18 +23,8 @@ const CategoriesBlock = () => {
     return (
         <section className="categories-block">
             <div className="container">
-                <div className="heading">
-                    <h2 className="heading__title">
-                        Categories
-                    </h2>
-                    <div className="heading__block">
-                        <div className="heading__decor"></div>
-                        <Link to="/categories" className='heading__link'>
-                            All categories
-                        </Link>
-                    </div>
+                <Heading title="Categories" subtitle="All categories" link="categories" />
 
-                </div>
                 <ul className="categories-block__list">
                     {
                         categories && categories.slice(0, maxNumOfCategories).map(category => (
