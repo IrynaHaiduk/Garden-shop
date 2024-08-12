@@ -2,8 +2,23 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import promoBg from "../../images/promo-bg.jpg";
 import "./CategoriesBlock.scss";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchCategories } from '../../store/features/productSlice';
+import Category from '../Category/Category';
 
 const CategoriesBlock = () => {
+
+    const dispatch = useDispatch();
+    const maxNumOfCategories = 4;
+
+    const { categories } = useSelector(state => state.products);
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, []);
+
+    console.log(categories);
     return (
         <section className="categories-block">
             <div className="container">
@@ -20,58 +35,11 @@ const CategoriesBlock = () => {
 
                 </div>
                 <ul className="categories-block__list">
-                    <li className="categories-block__item category">
-                        <Link to="/" className='category__link'>
-                            <div className="category__image">
-                                <img src={promoBg} alt="" />
-                            </div>
-                            <div className="category__content">
-                                <h3 className="category__title">
-                                    Fertilizer
-                                </h3>
-                            </div>
-
-                        </Link>
-                    </li>
-                    <li className="categories-block__item category">
-                        <Link to="/" className='category__link'>
-                            <div className="category__image">
-                                <img src={promoBg} alt="" />
-                            </div>
-                            <div className="category__content">
-                                <h3 className="category__title">
-                                    Protective products and septic tanks
-                                </h3>
-                            </div>
-
-                        </Link>
-                    </li>
-                    <li className="categories-block__item category">
-                        <Link to="/" className='category__link'>
-                            <div className="category__image">
-                                <img src={promoBg} alt="" />
-                            </div>
-                            <div className="category__content">
-                                <h3 className="category__title">
-                                    Fertilizer
-                                </h3>
-                            </div>
-
-                        </Link>
-                    </li>
-                    <li className="categories-block__item category">
-                        <Link to="/" className='category__link'>
-                            <div className="category__image">
-                                <img src={promoBg} alt="" />
-                            </div>
-                            <div className="category__content">
-                                <h3 className="category__title">
-                                    Fertilizer
-                                </h3>
-                            </div>
-
-                        </Link>
-                    </li>
+                    {
+                        categories && categories.slice(0, maxNumOfCategories).map(category => (
+                            <Category key={category.id} category={category} />
+                        ))
+                    }
                 </ul>
                 <Link to="/categories" className='categories-block__btn btn--light'>
                     All categories
