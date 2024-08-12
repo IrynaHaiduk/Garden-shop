@@ -2,17 +2,14 @@ import React from 'react';
 import iconInstagram from "../../images/icons/icon-instagram.svg";
 import iconWhatsapp from "../../images/icons/icon-whatsapp.svg";
 import "./Contacts.scss";
+import Heading from '../Heading/Heading';
 
 const Contacts = () => {
     return (
         <section className="contacts">
             <div className="container">
-                <div className="heading">
-                    <h2 className="heading__title">
-                        Contact
-                    </h2>
-                </div>
-
+                <Heading title="Contact"/>
+                
                 <ul className="contacts__list">
                     <li className="contacts__item contact">
                         <h3 className="contact__header">

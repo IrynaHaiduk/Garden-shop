@@ -56,101 +56,6 @@ input[type='radio'].visually-hidden {
     padding: 0 20px;
 }
 
-.heading {
-    margin-bottom: 24px;
-    overflow: hidden;
-
-    @media (min-width: 480px) {
-        display: flex;
-        align-items: flex-end;
-        gap: 16px;
-
-    }
-
-    @media (min-width: 768px) {
-        margin-bottom: 32px;
-        gap: 20px;
-    }
-
-    @media (min-width: 1000px) {
-        gap: 32px;
-    }
-
-    @media (min-width: 1440px) {
-        margin-bottom: 40px;
-    }
-
-
-    &__title {
-        font-size: 40px;
-        font-weight: 700;
-        line-height: 44px;
-        position: relative;
-        z-index: 1;
-      
-        @media (min-width: 480px) {
-            font-size: 48px;
-            line-height: 52.8px;
-        }
-
-        @media (min-width: 768px) {
-            font-size: 56px;
-            line-height: 61.6px;
-        }
-
-        @media (min-width: 1000px) {
-            font-size: 64px;
-            line-height: 70.4px;
-        }
-    }
-
-    &__block {
-        display: none;
-
-        @media (min-width: 480px) {
-            flex-grow: 1;
-            display: flex;
-            
-            align-items: center;
-            margin-bottom: 4px;
-        }
-    }
-
-    &__decor {
-        display: block;
-        height: 1px;
-        width: 100%;
-        background-color: color.$text-light-2; 
-    }
-
-    &__link {
-        display: none;
-
-        @media (min-width: 480px) {
-            flex-shrink: 0;
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 17.64px;
-            text-align: center;
-            padding: 8px 16px;
-            border: 1px solid color.$text-light-2;
-            border-radius: 6px;
-        }
-
-        @media (min-width: 768px) {
-            font-size: 16px;
-            line-height: 20.16px;
-
-        }
-
-        &:hover {
-            color:  color.$bright-color-light;
-            border-color:  color.$bright-color-light;
-        }
-    }
-}
-
 
 .btn {
     font-size: 18px;
@@ -170,10 +75,14 @@ input[type='radio'].visually-hidden {
 }
 
 .btn--bright {
+    border: none;
+    outline: none;
+    border-radius: 6px;
     color: color.$white;
     background-color: color.$bright-color-light;
 
     &:hover {
+        cursor: pointer;
         background-color: color.$bright-color-light-1;
     }
 }
