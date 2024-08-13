@@ -19,7 +19,6 @@ const CategoriesBlock = () => {
         dispatch(fetchCategories());
     }, []);
 
-    console.log(categories);
     return (
         <section className="categories-block">
             <div className="container">

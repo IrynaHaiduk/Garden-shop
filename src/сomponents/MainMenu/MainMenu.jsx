@@ -1,7 +1,9 @@
 import React from 'react';
 import "./MainMenu.scss";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import ProductCard from '../ProductCard/ProductCard';
+import DiscountPopup from '../DiscountPopup/DiscountPopup';
 
 const MainMenu = () => {
 
@@ -13,6 +15,18 @@ const MainMenu = () => {
     }
 
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+    useEffect(() => {
+        if (isPopupVisible) {
+            document.body.classList.add("no-scroll");
+        } else {
+            document.body.classList.remove("no-scroll");
+        }
+
+        return () => {
+            document.body.classList.remove("no-scroll");
+        };
+    }, [isPopupVisible]);
 
     const togglePopup = () => {
         setIsPopupVisible(!isPopupVisible);
@@ -59,62 +73,7 @@ const MainMenu = () => {
                             </button>
                         </div>
                         {isPopupVisible && (
-                            <div className="discount-popup">
-                                <div className="discount-popup__content">
-                                    <div className="discount-popup__wrapper">
-                                        <button onClick={togglePopup} className="discount-popup__btn">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="44"
-                                                height="44"
-                                                viewBox="0 0 44 44"
-                                                fill="none"
-                                            >
-                                                <path
-                                                    d="M33 11L11 33"
-                                                    stroke="#FFFFF1"
-                                                    strokeWidth="3.66667"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                                <path
-                                                    d="M11 11L33 33"
-                                                    stroke="#FFFFF1"
-                                                    strokeWidth="3.66667"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                            </svg>
-                                        </button>
-                                        <h2 className="discount-popup__title">
-                                            50% discount on product of the day!
-                                        </h2>
-                                    </div>
-
-                                    <div className="discount-product">
-                                        <div className="discount-product__image">
-                                            <img src="" alt="" />
-                                        </div>
-                                        <div className="discount-product__content">
-                                            <h3 className="discount-product__title">
-
-                                            </h3>
-                                            <div className="discount-product__price">
-                                                <span className="discount-product__price-new">
-
-                                                </span>
-                                                <span className="discount-product__price-old">
-
-                                                </span>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <button className='discount-popup__btn'>Add to cart</button>
-                                </div>
-
-                            </div>
+                            <DiscountPopup togglePopup={togglePopup} />
                         )
                         }
                     </div >
