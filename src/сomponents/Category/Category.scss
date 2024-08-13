@@ -66,4 +66,8 @@
             line-height: 26px;
         }
     }
+
+    &__content {
+        flex-grow: 1;
+    }
 }

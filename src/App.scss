@@ -20,7 +20,7 @@ body {
     box-sizing: inherit;
     padding: 0;
     margin: 0;
-    transition: all 1s ease;
+    transition: all 0.3s ease;
 }
 
 a {
@@ -100,7 +100,11 @@ input[type='radio'].visually-hidden {
     border: 1px solid color.$text-light-2;
 
     &:hover {
-        color:  color.$bright-color-light;
-        border-color:  color.$bright-color-light;
+        color: color.$bright-color-light;
+        border-color: color.$bright-color-light;
     }
+}
+
+.no-scroll {
+    overflow: hidden;
 }
