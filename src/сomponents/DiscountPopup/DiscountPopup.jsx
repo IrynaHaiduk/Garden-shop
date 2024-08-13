@@ -38,7 +38,7 @@ const DiscountPopup = ({togglePopup}) => {
 
                 <ProductCard />
 
-                <button className='discount-popup__btn'>Add to cart</button>
+                <button className='discount-popup__btn btn--white'>Add to cart</button>
             </div>
 
         </div>

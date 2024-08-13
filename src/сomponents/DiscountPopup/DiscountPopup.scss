@@ -64,30 +64,6 @@
         }
     }
 
-    &__btn {
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 23.4px;
-        text-align: center;
-        color: color.$main-text-light;
-        background-color: color.$bg-light-1;
-        padding: 16px 32px;
-        gap: 10px;
-        border-radius: 6px;
-        border: none;
-        outline: none;
-
-        @media (min-width: 768px) {
-            font-size: 20px;
-            line-height: 26px;
-        }
-
-        &:hover {
-            background-color: color.$bright-color-light-1;
-            color: color.$white;
-        }
-    }
 
     &__btn-close {
         border: none;
