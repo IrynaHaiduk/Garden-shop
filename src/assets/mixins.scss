@@ -15,12 +15,18 @@
 }
 
 @mixin responsiveMarginTop {
-    margin-top: 32px;
+      margin-top: 32px;  
+
+    @media (min-width: 768px) {
+        margin-top: 32px;  
+    }
     
     @media (min-width: 1000px) {
         margin-top: 40px;
     }
 }
+
+
 
 
 

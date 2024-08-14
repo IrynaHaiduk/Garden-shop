@@ -18,33 +18,39 @@ const Breadcrumbs = () => {
     console.log(pathnames);
 
     return (
-         <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-                <li className="breadcrumbs__item">
-                    <Link to="/" className="breadcrumbs__link">
-                        Main Page
-                    </Link>
-                </li>
-                {pathnames.map((value, index) => {
-                    const path = `/${pathnames.slice(0, index + 1).join('/')}`;
-                    const isLast = index === pathnames.length - 1;
+        <div className="breadcrumbs">
+            <div className="container">
+                <nav className="breadcrumbs__nav">
 
-                    return (
-                        <li key={path} className="breadcrumbs__item">
-                            {isLast ? (
-                                <span className="breadcrumbs__link--active">
-                                    {capitalize(value)}
-                                </span>
-                            ) : (
-                                <Link to={path} className="breadcrumbs__link">
-                                    {capitalize(value)}
-                                </Link>
-                            )}
+                    <ul className="breadcrumbs__list">
+                        <li className="breadcrumbs__item">
+                            <Link to="/" className="breadcrumbs__link">
+                                Main Page
+                            </Link>
                         </li>
-                    );
-                })}
-            </ul>
-        </nav>
+                        {pathnames.map((value, index) => {
+                            const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                            const isLast = index === pathnames.length - 1;
+
+                            return (
+                                <li key={path} className="breadcrumbs__item">
+                                    {isLast ? (
+                                        <span className="breadcrumbs__link--active">
+                                            {capitalize(value)}
+                                        </span>
+                                    ) : (
+                                        <Link to={path} className="breadcrumbs__link">
+                                            {capitalize(value)}
+                                        </Link>
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ul>
+
+                </nav>
+            </div>
+        </div >
     );
 };
 
