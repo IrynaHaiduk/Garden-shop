@@ -6,12 +6,12 @@ import Header from '../Header/Header';
 const Layout = () => {
     return (
         <>
-        <div className="wrapper">
-            <Header />
-            <main>
-                <Outlet />
-            </main>
-            <Footer />
+            <div className="wrapper">
+                <Header />
+                <main>
+                    <Outlet />
+                </main>
+                <Footer />
             </div>
         </>
     )

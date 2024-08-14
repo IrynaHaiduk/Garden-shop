@@ -2,7 +2,6 @@ import React from 'react';
 import "./MainMenu.scss";
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import ProductCard from '../ProductCard/ProductCard';
 import DiscountPopup from '../DiscountPopup/DiscountPopup';
 
 const MainMenu = () => {
@@ -13,8 +12,26 @@ const MainMenu = () => {
     const handleToggleMenu = () => {
         setIsToggle(!isToggle);
     }
-
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+    useEffect(() => {
+    
+        const handleResize = () => {
+            if (window.innerWidth >= 768) {
+                setIsToggle(true); 
+            } else {
+                setIsToggle(false); 
+            }
+        };
+
+        handleResize(); 
+        
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         if (isPopupVisible) {
@@ -85,7 +102,6 @@ const MainMenu = () => {
                             <path d="M6 32H38" stroke="#424436" strokeWidth="3" strokeLinecap="square" strokeLinejoin="round" />
                         </svg>
                     </button>
-
 
             }
 

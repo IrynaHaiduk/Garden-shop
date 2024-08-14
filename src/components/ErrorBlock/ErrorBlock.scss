@@ -1,0 +1,114 @@
+@use "../src/assets/variables.scss" as color;
+@import '../src/assets/mixins.scss';
+
+.error-block {
+    @include responsiveMarginBottom;
+    text-align: center;
+
+    &:first-child {
+        margin-top: 56px;
+
+        @media (min-width: 768px) {
+            margin-top: 60px;
+        }
+
+        @media (min-width: 1024px) {
+            margin-top: 70px;
+        }
+
+        @media (min-width: 1440px) {
+            margin-top: 80px;
+        }
+    }
+
+    &__wrapper {
+        margin: 0 auto;
+        max-width: 760px;
+    }
+
+    &__img {
+        margin: 0 auto;
+
+        @media (min-width: 768px) {
+            max-width: 648px;
+        }
+
+        @media (min-width: 1000px) {
+            max-width: 690px;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 24px;
+
+            @media (min-width: 768px) {
+                margin-bottom: 32px;
+            }
+        }
+
+        img {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    &__title {
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 44px;
+        color: color.$text-light-3;
+
+        @media (min-width: 480px) {
+            font-size: 48px;
+            line-height: 52.8px;
+        }
+
+        @media (min-width: 768px) {
+            font-size: 56px;
+            line-height: 61.6px;
+        }
+
+        @media (min-width: 1000px) {
+            font-size: 64px;
+            line-height: 70.4px;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 12px;
+
+            @media (min-width: 1000px) {
+                margin-bottom: 16px;
+            }
+        }
+    }
+
+    &__content {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 23.4px;
+        color: color.$text-light-1;
+
+        @media (min-width: 768px) {
+            font-size: 20px;
+            line-height: 26px;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 24px;
+
+            @media (min-width: 768px) {
+                margin-bottom: 32px;
+            }
+        }
+    }
+
+    &__btn {
+        min-width: 191px;
+        display: inline-block;
+
+        @media (min-width: 768px) {
+            min-width: 209px;
+        }
+    }
+
+
+}

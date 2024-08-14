@@ -27,7 +27,9 @@ const CategoriesBlock = () => {
                 <ul className="categories-block__list">
                     {
                         categories && categories.slice(0, maxNumOfCategories).map(category => (
-                            <Category key={category.id} category={category} />
+                            <li key={category.id}>
+                                <Category category={category} />
+                            </li>
                         ))
                     }
                 </ul>

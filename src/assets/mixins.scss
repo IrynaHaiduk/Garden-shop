@@ -9,8 +9,16 @@
         margin-bottom: 70px;
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 1440px) {
         margin-bottom: 80px;
+    }
+}
+
+@mixin responsiveMarginTop {
+    margin-top: 32px;
+    
+    @media (min-width: 1000px) {
+        margin-top: 40px;
     }
 }
 
