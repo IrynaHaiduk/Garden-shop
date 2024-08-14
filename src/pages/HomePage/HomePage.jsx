@@ -1,8 +1,8 @@
 import React from 'react'
-import Promo from '../../сomponents/Promo/Promo';
-import CategoriesBlock from '../../сomponents/CategoriesBlock/CategoriesBlock';
-import DiscountProductsBlock from '../../сomponents/DiscountProductsBlock/DiscountProductsBlock';
-import FormBlock from '../../сomponents/FormBlock/FormBlock';
+import Promo from '@/components/Promo/Promo';
+import CategoriesBlock from '@/components/CategoriesBlock/CategoriesBlock';
+import DiscountProductsBlock from '@/components/DiscountProductsBlock/DiscountProductsBlock';
+import FormBlock from '@/components/FormBlock/FormBlock';
 
 const HomePage = () => {
   return (

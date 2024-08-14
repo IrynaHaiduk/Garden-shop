@@ -57,6 +57,18 @@
         }
     }
 
+    &__success {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17.64px;
+        margin-bottom: 10px;
+
+        @media (min-width: 768px) {
+            font-size: 16px;
+            line-height: 20.16px;
+        }
+    }
+
     &__error {
         display: flex;
         align-items: center;

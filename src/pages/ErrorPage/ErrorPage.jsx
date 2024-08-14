@@ -1,10 +1,12 @@
 import React from 'react'
+import ErrorBlock from '@/components/ErrorBlock/ErrorBlock';
 
 const ErrorPage = () => {
   return (
-    <div>
+    <>
+    <ErrorBlock/>
       
-    </div>
+    </>
   )
 }
 

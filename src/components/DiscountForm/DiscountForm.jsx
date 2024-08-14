@@ -1,8 +1,8 @@
 import React from 'react';
 import { useForm } from "react-hook-form"
 import "./DiscountForm.scss";
-import iconError from "../../images/icons/icon-error.svg"
-import { useState } from 'react';
+import iconError from "@/images/icons/icon-error.svg"
+import { useState, useEffect } from 'react';
 
 const DiscountForm = () => {
 
@@ -15,18 +15,29 @@ const DiscountForm = () => {
         reset,
     } = useForm();
 
- 
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
 
     const submitForm = formData => {
-       
+        console.log('Form submitted:', formData);
+        setIsSubmitted(true);
+        setShowMessage(true);
         reset();
     }
+
+    useEffect(() => {
+        if (showMessage) {
+            const timer = setTimeout(() => {
+                setShowMessage(false);
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [showMessage]);
 
     return (
         <form
             onSubmit={handleSubmit(submitForm)}
-            action="/submit-form"
-            method="POST"
             className="form-block__form discount-form"
         >
             <div className="discount-form__item">
@@ -35,7 +46,7 @@ const DiscountForm = () => {
                     {...register("name", {
                         required: "This field is required",
                         pattern: {
-                            value: /^[A-Za-z]+$/i,
+                            value: /^[a-zA-ZÀ-ÿ\s]+$/,
                             message: "Wrong input. Try again"
                         },
                         minLength: {
@@ -72,7 +83,7 @@ const DiscountForm = () => {
                     {...register("phone", {
                         required: "This field is required",
                         pattern: {
-                            value: /^\+49[1-9][0-9]{1,14}$/,
+                            value: /^\+?[1-9]\d{1,14}$/,
                             message: "Wrong input. Try again"
                         }
                     })}
@@ -82,7 +93,7 @@ const DiscountForm = () => {
                     className="discount-form__input"
                     placeholder='Phone number'
                 />
-                 {
+                {
                     errors.phone && (
                         <div className="discount-form__error">
                             <img src={iconError} alt="error" />
@@ -93,19 +104,19 @@ const DiscountForm = () => {
             </div>
             <div className="discount-form__item">
                 <label htmlFor="email" className="discount-form__label visually-hidden">Email:</label>
-                <input 
-                {...register("email", {
-                    required: "This field is required",
-                    pattern: {
-                        value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-                        message: "Wrong input. Try again"
-                    },
-                })}
-                type="email" 
-                id="email" 
-                name="email" 
-                className="discount-form__input" 
-                placeholder='Email' 
+                <input
+                    {...register("email", {
+                        required: "This field is required",
+                        pattern: {
+                            value: /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/,
+                            message: "Wrong input. Try again"
+                        },
+                    })}
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="discount-form__input"
+                    placeholder='Email'
                 />
                 {
                     errors.email && (
@@ -116,11 +127,15 @@ const DiscountForm = () => {
                     )
                 }
             </div>
+            {showMessage && <div className="discount-form__success">
+                <p>Data was sent successfully!</p>
+            </div>
+            }
 
 
-            <button type="submit" className="discount-form__btn btn--white" disabled="isSubmitting">
+            <button type="submit" className="discount-form__btn btn--white" disabled={isSubmitting}>
                 Get a discount
-                </button>
+            </button>
 
         </form>
     )

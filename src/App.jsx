@@ -1,7 +1,7 @@
 import './App.scss'
 import { Routes, Route } from 'react-router-dom';
 import HomePage from '@/pages/HomePage/HomePage';
-import Layout from '@/сomponents/Layout/Layout';
+import Layout from '@/components/Layout/Layout';
 import CategoriesPage from '@/pages/CategoriesPage/CategoriesPage';
 import AllProductsPage from '@/pages/AllProductsPage/AllProductsPage';
 import CartPage from '@/pages/CartPage/CartPage';
