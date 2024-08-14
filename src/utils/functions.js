@@ -12,3 +12,10 @@ export function getRandomElements(arr, num) {
 
     return result;
 }
+
+
+export function getRandomElement(arr) {
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    
+    return arr[randomIndex];
+}

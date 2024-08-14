@@ -5,21 +5,11 @@
     @include responsiveMarginBottom;
 
     &__list {
-        display: grid;
-        gap: 20px;
+        @include itemsList;
         margin-bottom: 24px;
 
         @media (min-width: 480px) {
-            grid-template-columns: repeat(2, 1fr);
             margin-bottom: 0;
-        }
-
-        @media (min-width: 1000px) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-
-        @media (min-width: 1440px) {
-            gap: 32px;
         }
     }
 

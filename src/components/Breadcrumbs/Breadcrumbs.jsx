@@ -8,10 +8,13 @@ const Breadcrumbs = () => {
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter((item) => item);
 
-    const capitalize = (value) => {
+    const capitalizeFirstWord = (value) => {
         return value
             .split('-')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .map((word, index) => index === 0 
+                ? word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() 
+                : word.toLowerCase()
+            )
             .join(' ');
     };
 
@@ -36,11 +39,11 @@ const Breadcrumbs = () => {
                                 <li key={path} className="breadcrumbs__item">
                                     {isLast ? (
                                         <span className="breadcrumbs__link--active">
-                                            {capitalize(value)}
+                                             {capitalizeFirstWord(value)}
                                         </span>
                                     ) : (
                                         <Link to={path} className="breadcrumbs__link">
-                                            {capitalize(value)}
+                                              {capitalizeFirstWord(value)}
                                         </Link>
                                     )}
                                 </li>

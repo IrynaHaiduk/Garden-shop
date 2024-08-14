@@ -1,8 +1,31 @@
 import React from 'react';
 import "./DiscountPopup.scss";
 import ProductCard from '../ProductCard/ProductCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchProducts } from '@/store/features/productSlice';
+import { useState } from 'react';
+import { getRandomElement } from '../../utils/functions';
 
-const DiscountPopup = ({togglePopup}) => {
+const DiscountPopup = ({ togglePopup }) => {
+
+    const dispatch = useDispatch();
+    const [discountProduct, setDiscountProduct] = useState();
+
+    const { products } = useSelector(state => state.products);
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if(products.length > 0) {
+            const randomProduct = getRandomElement(products);
+            setDiscountProduct(randomProduct);
+        }
+    }, [])
+
+
     return (
         <div className="discount-popup">
             <div className="discount-popup__content">
@@ -36,8 +59,8 @@ const DiscountPopup = ({togglePopup}) => {
                     </h2>
                 </div>
 
-                <ProductCard />
-
+                {discountProduct && <ProductCard product={discountProduct}/>}
+           
                 <button className='discount-popup__btn btn--white'>Add to cart</button>
             </div>
 

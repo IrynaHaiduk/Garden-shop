@@ -75,7 +75,7 @@ const MainMenu = () => {
                                     </NavLink>
                                 </li>
                                 <li className="main-menu__item">
-                                    <NavLink to="/products" className={setActiveLink}>
+                                    <NavLink to="/all-products" className={setActiveLink}>
                                         All products
                                     </NavLink>
                                 </li>
