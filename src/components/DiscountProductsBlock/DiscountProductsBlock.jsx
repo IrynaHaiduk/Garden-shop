@@ -2,7 +2,7 @@ import React from 'react';
 import Heading from '../Heading/Heading';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchDiscountedProducts } from '../../store/features/productSlice';
+import { fetchDiscountedProducts } from '@/store/features/productSlice';
 import ProductCard from "../ProductCard/ProductCard";
 import "./DiscountProductsBlock.scss";
 import { Link } from 'react-router-dom';

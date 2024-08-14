@@ -18,11 +18,28 @@
       margin-top: 32px;  
 
     @media (min-width: 768px) {
-        margin-top: 32px;  
+        margin-top: 32p
     }
     
     @media (min-width: 1000px) {
         margin-top: 40px;
+    }
+}
+
+@mixin itemsList {
+    display: grid;
+    gap: 20px;
+
+    @media (min-width: 480px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1000px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (min-width: 1440px) {
+        gap: 32px;
     }
 }
 
