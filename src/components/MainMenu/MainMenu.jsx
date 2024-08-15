@@ -13,6 +13,9 @@ const MainMenu = () => {
         setIsToggle(!isToggle);
     }
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const togglePopup = () => {
+        setIsPopupVisible(!isPopupVisible);
+    };
 
     useEffect(() => {
     
@@ -34,6 +37,18 @@ const MainMenu = () => {
     }, []);
 
     useEffect(() => {
+        if (window.innerWidth < 768 && isToggle) {
+            document.body.classList.add("no-scroll");
+        } else {
+            document.body.classList.remove("no-scroll");
+        }
+
+        return () => {
+            document.body.classList.remove("no-scroll");
+        };
+    }, [isToggle]);
+
+    useEffect(() => {
         if (isPopupVisible) {
             document.body.classList.add("no-scroll");
         } else {
@@ -44,10 +59,6 @@ const MainMenu = () => {
             document.body.classList.remove("no-scroll");
         };
     }, [isPopupVisible]);
-
-    const togglePopup = () => {
-        setIsPopupVisible(!isPopupVisible);
-    };
 
     return (
         <div className="main-menu">
@@ -80,7 +91,7 @@ const MainMenu = () => {
                                     </NavLink>
                                 </li>
                                 <li className="main-menu__item">
-                                    <NavLink to="/discounted-products" className={setActiveLink}>
+                                    <NavLink to="/all-sales" className={setActiveLink}>
                                         All sales
                                     </NavLink>
                                 </li>
@@ -90,7 +101,7 @@ const MainMenu = () => {
                             </button>
                         </div>
                         {isPopupVisible && (
-                            <DiscountPopup togglePopup={togglePopup} />
+                            <DiscountPopup togglePopup={togglePopup} isPopupVisible={isPopupVisible} setIsPopupVisible={setIsPopupVisible}/>
                         )
                         }
                     </div >

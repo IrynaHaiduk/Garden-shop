@@ -3,7 +3,7 @@ import "./AllProducts.scss";
 import Heading from '@/components/Heading/Heading';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '@/store/features/productSlice';
-import  ProductCard  from '@/components/ProductCard/ProductCard';
+import ProductCard from '@/components/ProductCard/ProductCard';
 import { useEffect } from 'react';
 
 const AllProducts = () => {
@@ -14,21 +14,24 @@ const AllProducts = () => {
 
     useEffect(() => {
         dispatch(fetchProducts());
-    }, []);
+    }, [dispatch]);
 
     return (
         <section className="all-products">
             <div className="container">
                 <Heading title="All products" />
+                {products &&
+                    <ul className="all-products__list">
 
-                <ul className="all-products__list">
-
-                    {products && products.map(product => (
-                        <li key={product.id} className="all-products__item">
-                            <ProductCard product={product}/>
-                        </li>
-                    ))}
-                </ul>
+                        {
+                            products.map(product => (
+                                <li key={product.id} className="all-products__item">
+                                    <ProductCard product={product} />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                }
             </div>
 
 

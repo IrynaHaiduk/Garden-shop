@@ -3,14 +3,11 @@ import { Link } from 'react-router-dom';
 import "./ProductCard.scss";
 
 const DiscountProduct = ({ product }) => {
-
-
     let discountPercentage = null;
 
     if (product && product.discont_price !== undefined && product.discont_price) {
         discountPercentage = Math.round(((product.price - product.discont_price) / product.price) * 100);
     }
-
 
     return (
         <>
@@ -79,7 +76,7 @@ const DiscountProduct = ({ product }) => {
                             {product.discont_price ? (
                                 <div className="product-card__price">
                                     <span className="product-card__price-new">
-                                        ${product.discont_price}
+                                        ${product.discont_price.toFixed(2)}
                                     </span>
                                     <span className="product-card__price-old">
                                         ${product.price}

@@ -28,7 +28,13 @@
 
 @mixin itemsList {
     display: grid;
+    width: 100%;
     gap: 20px;
+
+    >li {
+        width: 100%;
+        display: block;
+    }
 
     @media (min-width: 480px) {
         grid-template-columns: repeat(2, 1fr);
