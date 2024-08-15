@@ -1,10 +1,13 @@
 import React from 'react'
+import DiscountedProducts from '@/components/DiscountedProducts/DiscountedProducts'
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 
 const DiscountedProductsPage = () => {
   return (
-    <div>
-      DiscountedProductsPage
-    </div>
+    <>
+      <Breadcrumbs />
+      <DiscountedProducts />
+    </>
   )
 }
 
