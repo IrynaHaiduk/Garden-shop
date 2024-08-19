@@ -1,22 +1,22 @@
 import React from 'react';
-import "./AllProducts.scss";
+import "./CategoriesProducts.scss";
+import { useParams } from 'react-router-dom';
 import Heading from '@/components/Heading/Heading';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '@/store/features/productSlice';
-import ProductCard from '@/components/ProductCard/ProductCard';
-import { useEffect } from 'react';
-import { sortByPrice } from '@/store/features/productSlice';
-import { useState } from 'react';
-import Sort from '../Sort/Sort';
-import { filterByPrice } from '@/store/features/productSlice';
-import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
-import { filterDiscountedProducts } from '../../store/features/productSlice';
 import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
+import Sort from '../Sort/Sort';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories, fetchProducts } from '@/store/features/productSlice';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import ProductCard from '@/components/ProductCard/ProductCard';
 
-const AllProducts = () => {
 
+const CategoriesProducts = () => {
     const dispatch = useDispatch();
-    const { products, filteredProducts } = useSelector(state => state.products);
+    const { categoryId } = useParams();
+    const { products, categories, filteredProducts } = useSelector(state => state.products);
+    const [currentCategory, setCurrentCategory] = useState("");
+    const [currentProducts, setCurrentProducts] = useState([]);
     let [minPrice, setMinPrice] = useState("");
     let [maxPrice, setMaxPrice] = useState("");
     const [sortByValue, setSortByValue] = useState({
@@ -24,12 +24,6 @@ const AllProducts = () => {
         label: "default",
         value: "default",
     });
-    const [isChecked, setIsChecked] = useState(false);
-
-    const handleCheckboxChange = (event) => {
-
-        setIsChecked(!isChecked);
-    };
 
     const [sortLabels, setSortlabels] = useState([
         {
@@ -49,31 +43,37 @@ const AllProducts = () => {
         },
     ]);
 
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
 
+    useEffect(() => {
+        if (categories.length > 0) {
+            const searchedCategory = categories.find(category => category.id === categoryId);
+            setCurrentCategory(searchedCategory);
+        }
+    }, [categories, categoryId]);
 
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch]);
 
     useEffect(() => {
+        if (products.length > 0) {
+            const searchedProducts = products.filter(product => product.categoryId === categoryId);
+            setCurrentProducts(searchedProducts);
+        }
+    }, [products, categoryId]);
 
-        let minPriceVal = minPrice && minPrice > 0 ? minPrice : 0;
-        let maxPriceVal = maxPrice ? maxPrice : Infinity;
-
-        dispatch(filterDiscountedProducts({value: isChecked}));
-        dispatch(filterByPrice({ minPrice: minPriceVal, maxPrice: maxPriceVal }));  
-        dispatch(sortByPrice({ value: sortByValue.value }));
-      
-    }, [sortByValue, minPrice, maxPrice, isChecked, dispatch]);
-
+    console.log(currentProducts);
 
     const data = filteredProducts.length > 0 ? filteredProducts : products;
 
 
     return (
-        <section className="all-products">
+        <section className="categories-products">
             <div className="container">
-                <Heading title="All products" />
+                <Heading title={currentCategory?.title} />
 
                 <div className="filters">
 
@@ -87,13 +87,7 @@ const AllProducts = () => {
                         />
 
                     </div>
-                    <div className='filters__item'>
-                        <CustomCheckbox
-                            title="Discounted items"
-                            checked={isChecked}
-                            onChange={handleCheckboxChange}
-                        />
-                    </div>
+
                     <div className='filters__item'>
                         <p>Sorted</p>
                         <Sort
@@ -105,12 +99,12 @@ const AllProducts = () => {
 
                 </div>
 
-                {data &&
-                    <ul className="all-products__list">
+                {currentProducts &&
+                    <ul className="categories-products__list">
 
                         {
-                            data.map(product => (
-                                <li key={product.id} className="all-products__item">
+                            currentProducts.map(product => (
+                                <li key={product.id} className="categories-products__item">
                                     <ProductCard product={product} />
                                 </li>
                             ))
@@ -124,4 +118,4 @@ const AllProducts = () => {
     )
 }
 
-export default AllProducts
+export default CategoriesProducts
