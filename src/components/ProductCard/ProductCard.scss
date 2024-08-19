@@ -79,6 +79,7 @@
 
     &__price {
         display: flex;
+        flex-wrap: wrap;
         gap: 12px;
         align-items: baseline;
         margin-top: auto;

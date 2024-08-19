@@ -15,3 +15,46 @@
         overflow: hidden;
     }
 }
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23.4px;
+
+    &:not(:last-child) {
+        margin-bottom: 24px;
+
+        @media (min-width: 768px) {
+            margin-bottom: 32px;
+
+        }
+    }
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 32px;
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    @media (min-width: 1000px) {
+        gap: 40px;
+    }
+
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        @media (min-width: 768px) {
+            gap: 16px;
+        }
+    }
+
+}

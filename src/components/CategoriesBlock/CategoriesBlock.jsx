@@ -17,7 +17,7 @@ const CategoriesBlock = () => {
 
     useEffect(() => {
         dispatch(fetchCategories());
-    }, []);
+    }, [categories]);
 
     return (
         <section className="categories-block">

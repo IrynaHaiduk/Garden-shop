@@ -1,0 +1,59 @@
+@use "../src/assets/variables.scss" as color;
+@import '../src/assets/mixins.scss';
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+
+    &__label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        padding-right: 36px; 
+        user-select: none;  
+    }
+
+    &__input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    &__box {
+        @include roundLightBorder;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        background-color: color.$white;
+    }
+
+    &__title {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 23.4px;
+        margin-right: 12px;
+    
+        @media (min-width: 768px) {
+            font-size: 20px;
+            line-height: 26px;
+        }
+    }
+
+    &__input:checked + .custom-checkbox__box::after {
+        content: '';
+        position: absolute;
+        top: calc(50% - 2px);
+        left: 50%;
+        width: 14px;
+        height: 14px;
+        border: solid color.$main-text-light;
+        border-width: 0 2px 2px 0;
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+}

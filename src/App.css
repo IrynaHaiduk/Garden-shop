@@ -5,6 +5,7 @@ html {
 html,
 body {
   font-family: "Montserrat", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 .wrapper {
@@ -47,6 +48,11 @@ input[type=radio].visually-hidden {
           clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
+}
+
+.no-transition {
+  transition: none !important;
+  animation: none !important;
 }
 
 .container {

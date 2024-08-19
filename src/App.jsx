@@ -44,7 +44,7 @@ function App() {
           <Route path="products/:productId" element={<SingleProductPage />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="*" element={<ErrorPage />} />
-          <Route path="categories/:productsFromCategory" element={<ProductsFromCategoryPage />} />
+          <Route path="categories/:categoryId" element={<ProductsFromCategoryPage />} />
           <Route path="liked-products" element={<LikedProductsPage />} />
           <Route path="all-sales" element={<DiscountedProductsPage />} />
         </Route>

@@ -1,0 +1,67 @@
+@use "../src/assets/variables.scss" as color;
+@import '../src/assets/mixins.scss';
+
+.sort {
+    color: color.$main-text-light;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17.64px;
+    outline: none;
+    position: relative;
+
+    @media (min-width: 768px) {
+        font-size: 16px;
+        line-height: 20.16px;
+    }
+
+    &__label {
+        @include roundLightBorder;
+        position: relative;
+        padding: 8px 16px;
+        width: 200px;
+        color: color.$main-text-light;
+        background-color: color.$white;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17.64px;
+        outline: none;
+
+        @media (min-width: 768px) {
+            font-size: 16px;
+            line-height: 20.16px;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 2px);
+            right: 8px;
+            width: 14px;
+            height: 14px;
+            border: solid color.$main-text-light;
+            border-width: 0 2px 2px 0;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+    }
+
+    &__content {
+        position: absolute;
+        right: 0;
+        z-index: 1;
+        @include roundLightBorder;
+        width: 100%;
+        padding: 8px 16px;
+        background-color: color.$white;
+  
+    }
+
+    &__item {
+        padding: 8px 16px;
+
+        &:hover {
+            cursor: pointer;
+            color: color.$bright-color-light;
+        }
+    }
+
+}

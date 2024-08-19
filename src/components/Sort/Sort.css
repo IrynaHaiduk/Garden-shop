@@ -1,0 +1,21 @@
+.sort {
+  position: relative;
+}
+.sort__label {
+  font-size: 16px;
+}
+.sort__content {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid black;
+  padding: 8px 16px;
+  right: 0;
+  z-index: 2;
+}
+.sort__item {
+  padding: 8px;
+  background-color: #f2f2f2;
+}
+.sort__item:hover {
+  cursor: pointer;
+}/*# sourceMappingURL=Sort.css.map */

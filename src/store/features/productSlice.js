@@ -6,6 +6,10 @@ const initialState = {
     categories: [],
     loading: false,
     discountedProducts: [],
+    filteredDiscountedProducts: [],
+    filteredProducts: [],
+    categoriesProducts: [],
+    filteredCategoriesProducts: [],
 
 }
 
@@ -47,7 +51,6 @@ export const fetchDiscountedProducts = createAsyncThunk(
 
             const data = await response.json();
             const saleProducts = data.filter(product => product.discont_price);
-            console.log(saleProducts);
             return saleProducts;
         } catch (error) {
             throw error;
@@ -59,6 +62,81 @@ export const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
+        sortByPrice: (state, { payload }) => {
+            let data = state.filteredProducts.length > 0 ? state.filteredProducts : state.products;
+
+            if (payload.value === 'low-to-high') {
+                state.filteredProducts = [...data].sort((a, b) => a.price - b.price);
+            } else if (payload.value === 'high-to-low') {
+                state.filteredProducts = [...data].sort((a, b) => b.price - a.price);
+            } else {
+                state.filteredProducts = data;
+            }
+        },
+        sortByPriceSale: (state, { payload }) => {
+            let data = state.filteredDiscountedProducts.length > 0 ? state.filteredDiscountedProducts : state.discountedProducts;
+
+            if (payload.value === 'low-to-high') {
+                state.filteredDiscountedProducts = [...data].sort((a, b) => a.price - b.price);
+            } else if (payload.value === 'high-to-low') {
+                state.filteredDiscountedProducts = [...data].sort((a, b) => b.price - a.price);
+            } else {
+                state.filteredDiscountedProducts = data;
+            }
+        },
+        filterByPrice: (state, { payload }) => {
+            const { minPrice, maxPrice } = payload;
+            const minPriceValue = !isNaN(Number(minPrice)) ? Number(minPrice) : null;
+            const maxPriceValue = !isNaN(Number(maxPrice)) ? Number(maxPrice) : null;;
+            console.log(minPrice, maxPrice);
+            let data = state.filteredProducts.length > 0 ? state.filteredProducts : state.products;
+
+            if (minPriceValue && maxPriceValue) {
+                state.filteredProducts = data.filter(item => item.price >= minPriceValue && item.price <= maxPriceValue);
+
+            } else if (minPriceValue) {
+                state.filteredProducts = data.filter(item => item.price >= minPriceValue);
+
+            } else if (maxPriceValue) {
+                state.filteredProducts = data.filter(item => item.price <= maxPriceValue);
+
+            } else {
+                state.filteredProducts = data;
+            }
+        },
+        filterByPriceSale: (state, { payload }) => {
+            const { minPrice, maxPrice } = payload;
+            const minPriceValue = !isNaN(Number(minPrice)) ? Number(minPrice) : null;
+            const maxPriceValue = !isNaN(Number(maxPrice)) ? Number(maxPrice) : null;;
+            console.log(minPrice, maxPrice);
+            let data = state.filteredDiscountedProducts.length > 0 ? state.filteredDiscountedProducts : state.discountedProducts;
+
+            if (minPriceValue && maxPriceValue) {
+                state.filteredDiscountedProducts = data.filter(item => item.price >= minPriceValue && item.price <= maxPriceValue);
+
+            } else if (minPriceValue) {
+                state.filteredDiscountedProducts = data.filter(item => item.price >= minPriceValue);
+
+            } else if (maxPriceValue) {
+                state.filteredDiscountedProducts = data.filter(item => item.price <= maxPriceValue);
+
+            } else {
+                state.filteredDiscountedProducts = data;
+            }
+        },
+        filterDiscountedProducts: (state, {payload}) => {
+            let data = state.filteredProducts.length > 0 ? state.filteredProducts : state.products;
+
+            if(payload.value) {
+                state.filteredProducts = data.filter(product => product.discont_price);
+                console.log("btn checked");
+
+            } else {
+                state.filteredProducts = state.products;
+                console.log("btn un checked");
+            }
+
+        }
 
     },
     extraReducers: builder => {
@@ -101,6 +179,6 @@ export const productSlice = createSlice({
 })
 
 
-export const { } = productSlice.actions
+export const { sortByPrice, filterByPrice, filterDiscountedProducts, filterByPriceSale,  sortByPriceSale } = productSlice.actions
 
 export default productSlice.reducer

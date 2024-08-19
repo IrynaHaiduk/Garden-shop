@@ -1,3 +1,5 @@
+@use "./variables.scss" as color;
+
 @mixin responsiveMarginBottom {
     margin-bottom: 56px;
 
@@ -48,6 +50,13 @@
         gap: 32px;
     }
 }
+
+@mixin roundLightBorder {
+    border: 1px solid color.$text-light-2;
+    border-radius: 6px;
+
+}
+
 
 
 

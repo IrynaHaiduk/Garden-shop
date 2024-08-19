@@ -4,10 +4,17 @@ import "./ProductCard.scss";
 
 const DiscountProduct = ({ product }) => {
     let discountPercentage = null;
+    let discountPrice = 0;
 
     if (product && product.discont_price !== undefined && product.discont_price) {
         discountPercentage = Math.round(((product.price - product.discont_price) / product.price) * 100);
+        discountPrice = Number.isInteger(product.discont_price) ? product.discont_price : (Math.round(product.discont_price * 100) / 100).toFixed(2);
+
     }
+
+    const productPrice = Number.isInteger(product?.price) ? product?.price : product?.price.toFixed(2);
+
+
 
     return (
         <>
@@ -76,17 +83,17 @@ const DiscountProduct = ({ product }) => {
                             {product.discont_price ? (
                                 <div className="product-card__price">
                                     <span className="product-card__price-new">
-                                        ${product.discont_price.toFixed(2)}
+                                        ${discountPrice}
                                     </span>
                                     <span className="product-card__price-old">
-                                        ${product.price}
+                                        ${productPrice}
                                     </span>
                                 </div>)
                                 : (
 
                                     <div className="product-card__price">
                                         <span className="product-card__price-new">
-                                            ${product.price}
+                                            ${productPrice}
                                         </span>
                                     </div>
                                 )
