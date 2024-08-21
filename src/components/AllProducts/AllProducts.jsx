@@ -1,8 +1,7 @@
 import React from 'react';
 import "./AllProducts.scss";
 import Heading from '@/components/Heading/Heading';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '@/store/features/productSlice';
+import { useDispatch } from 'react-redux';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { useEffect } from 'react';
 import { sortByPrice } from '@/store/features/productSlice';
@@ -13,10 +12,9 @@ import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 import { filterDiscountedProducts } from '../../store/features/productSlice';
 import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
 
-const AllProducts = () => {
+const AllProducts = ({ products, filteredProducts }) => {
 
     const dispatch = useDispatch();
-    const { products, filteredProducts } = useSelector(state => state.products);
     let [minPrice, setMinPrice] = useState("");
     let [maxPrice, setMaxPrice] = useState("");
     const [sortByValue, setSortByValue] = useState({
@@ -27,7 +25,6 @@ const AllProducts = () => {
     const [isChecked, setIsChecked] = useState(false);
 
     const handleCheckboxChange = (event) => {
-
         setIsChecked(!isChecked);
     };
 
@@ -49,11 +46,6 @@ const AllProducts = () => {
         },
     ]);
 
-
-
-    useEffect(() => {
-        dispatch(fetchProducts());
-    }, [dispatch]);
 
     useEffect(() => {
 

@@ -19,7 +19,6 @@ const DiscountForm = () => {
     const [showMessage, setShowMessage] = useState(false);
 
     const submitForm = formData => {
-        console.log('Form submitted:', formData);
         setIsSubmitted(true);
         setShowMessage(true);
         reset();
@@ -131,7 +130,6 @@ const DiscountForm = () => {
                 <p>Data was sent successfully!</p>
             </div>
             }
-
 
             <button type="submit" className="discount-form__btn btn--white" disabled={isSubmitting}>
                 Get a discount

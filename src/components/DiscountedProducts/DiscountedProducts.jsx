@@ -2,17 +2,16 @@ import React from 'react'
 import Heading from '../../components/Heading/Heading';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchDiscountedProducts, filterByPriceSale, sortByPriceSale } from '@/store/features/productSlice';
+import {filterByPriceSale, sortByPriceSale } from '@/store/features/productSlice';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import "./DiscountedProducts.scss";
 import { useState } from 'react';
 import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
 import Sort from '../Sort/Sort';
 
-const DiscountedProducts = () => {
+const DiscountedProducts = ({discountedProducts, filteredDiscountedProducts }) => {
 
     const dispatch = useDispatch();
-    const { discountedProducts, filteredDiscountedProducts } = useSelector(state => state.products);
     let [minPrice, setMinPrice] = useState("");
     let [maxPrice, setMaxPrice] = useState("");
     const [sortByValue, setSortByValue] = useState({
@@ -38,9 +37,6 @@ const DiscountedProducts = () => {
             value: "high-to-low",
         },
     ]);
-    useEffect(() => {
-        dispatch(fetchDiscountedProducts());
-    }, [dispatch]);
 
     useEffect(() => {
 

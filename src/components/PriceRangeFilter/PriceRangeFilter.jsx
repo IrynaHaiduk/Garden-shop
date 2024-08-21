@@ -32,11 +32,6 @@ const PriceRangeFilter = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
                 />
             </div>
         </div>
-
-
-
-
-
     )
 }
 

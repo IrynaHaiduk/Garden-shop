@@ -14,8 +14,6 @@ const DiscountProduct = ({ product }) => {
 
     const productPrice = Number.isInteger(product?.price) ? product?.price : product?.price.toFixed(2);
 
-
-
     return (
         <>
             {

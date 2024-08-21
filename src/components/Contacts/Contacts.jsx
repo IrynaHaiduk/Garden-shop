@@ -1,9 +1,6 @@
 import React from 'react';
-import iconInstagram from "../../images/icons/icon-instagram.svg";
-import iconWhatsapp from "../../images/icons/icon-whatsapp.svg";
 import "./Contacts.scss";
 import Heading from '../Heading/Heading';
-
 import Map from '../Map/Map';
 
 const Contacts = () => {

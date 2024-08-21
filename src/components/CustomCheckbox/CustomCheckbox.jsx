@@ -10,10 +10,13 @@ const CustomCheckbox = ({ title, checked, onChange }) => {
                     checked={checked}
                     onChange={onChange}
                     className="custom-checkbox__input"
-                /> <span className="custom-checkbox__box"></span>
-                {title && <span className="custom-checkbox__title">
-                    {title}
-                </span>}
+                />
+                <span className="custom-checkbox__box"></span>
+                {
+                    title && <span className="custom-checkbox__title">
+                        {title}
+                    </span>
+                }
 
 
             </label>

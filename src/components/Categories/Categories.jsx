@@ -1,19 +1,9 @@
 import React from 'react'
 import Heading from '@/components/Heading/Heading';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchCategories } from '@/store/features/productSlice';
 import Category from '@/components/Category/Category';
 import "@/components/Categories/Categories.scss";
 
-const Categories = () => {
-
-    const dispatch = useDispatch();
-    const { categories } = useSelector(state => state.products);
-
-    useEffect(() => {
-        dispatch(fetchCategories());
-    }, [])
+const Categories = ({categories}) => {
 
     return (
         <section className="categories">
