@@ -4,8 +4,7 @@ import ErrorBlock from '@/components/ErrorBlock/ErrorBlock';
 const ErrorPage = () => {
   return (
     <>
-    <ErrorBlock/>
-      
+      <ErrorBlock />
     </>
   )
 }

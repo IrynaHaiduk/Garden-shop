@@ -168,5 +168,12 @@
             object-fit: contain;
             margin: auto;
         }
+
+        &:hover {
+            cursor: pointer;
+            svg path {
+                fill: color.$main-text-light;
+            }
+        }
     }
 }

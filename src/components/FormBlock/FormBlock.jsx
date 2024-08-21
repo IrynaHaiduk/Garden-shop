@@ -1,5 +1,4 @@
 import React from 'react';
-
 import formImg360 from "../../images/form/formBg-360.png";
 import formImg480 from "../../images/form/formBg-480.png";
 import formImg768 from "../../images/form/formBg-768.png";

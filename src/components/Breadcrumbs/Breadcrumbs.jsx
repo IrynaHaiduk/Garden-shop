@@ -4,21 +4,19 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Breadcrumbs.scss';
 
-const Breadcrumbs = () => {
+const Breadcrumbs = ({ lastTitle }) => {
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter((item) => item);
 
     const capitalizeFirstWord = (value) => {
         return value
             .split('-')
-            .map((word, index) => index === 0 
-                ? word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() 
+            .map((word, index) => index === 0
+                ? word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
                 : word.toLowerCase()
             )
             .join(' ');
     };
-
-    console.log(pathnames);
 
     return (
         <div className="breadcrumbs">
@@ -38,12 +36,18 @@ const Breadcrumbs = () => {
                             return (
                                 <li key={path} className="breadcrumbs__item">
                                     {isLast ? (
-                                        <span className="breadcrumbs__link--active">
-                                             {capitalizeFirstWord(value)}
+                                        <span className="breadcrumbs__link breadcrumbs__link--active">
+
+                                            {
+                                                !isNaN(+value)
+                                                    ? lastTitle
+                                                    : capitalizeFirstWord(value)
+                                            }
+
                                         </span>
                                     ) : (
                                         <Link to={path} className="breadcrumbs__link">
-                                              {capitalizeFirstWord(value)}
+                                            {capitalizeFirstWord(value)}
                                         </Link>
                                     )}
                                 </li>

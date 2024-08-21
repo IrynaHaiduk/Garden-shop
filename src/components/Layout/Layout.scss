@@ -1,0 +1,161 @@
+@use "../src/assets/variables.scss" as color;
+@import '../src/assets/mixins.scss';
+
+
+.light-mode {
+    color: color.$main-text-light;
+    background-color: color.$main-bg-light;
+}
+
+
+.dark-mode {
+    color: color.$main-text-dark;
+    background-color: color.$main-bg-dark;
+
+    .utility-bar {
+        &__link {
+            svg path {
+                stroke: color.$text-dark;
+            }
+
+            &:hover {
+                svg path {
+                    stroke: color.$bright-color-light;
+                }
+            }
+        }
+
+        &__link--cart {
+            svg path {
+                fill: color.$text-dark;
+            }
+
+            &:hover {
+                svg path {
+                    fill: color.$bright-color-light;
+                }
+            }
+        }
+    }
+
+    .main-menu {
+
+        &__btn {
+            svg path {
+                stroke: color.$text-dark;
+            }
+
+            &:hover {
+                svg path {
+                    stroke: color.$bright-color-light;
+                }
+            }
+        }
+
+        &__content {
+            background-color: color.$main-bg-dark;
+        }
+    }
+
+    .heading {
+        &__link {
+            color: color.$text-dark-1;
+            border-color: color.$text-dark-1;
+
+            &:hover {
+                color: color.$bright-color-light;
+                border-color: color.$bright-color-light;
+            }
+        }
+
+        &__decor {
+            background-color: color.$text-dark-1;
+        }
+    }
+
+    .category {
+        &__title {
+            color: color.$main-text-dark;
+        }
+    }
+
+    .discount-products-block {
+        &__item {
+            border-color: color.$text-dark-1;
+        }
+    }
+
+    .product-card {
+
+
+        &__content {
+            color: color.$main-text-dark;
+            background-color: color.$bg-dark;
+        }
+    }
+
+    .contact {
+        background-color: color.$bg-dark;
+
+        &__content {
+            color: color.$main-text-dark;
+        }
+    }
+
+    .socials {
+        &__link {
+            svg path {
+                fill: color.$main-text-dark;
+            }
+
+            &:hover {
+                svg path {
+                    fill: color.$bright-color-light;
+                }
+            }
+        }
+    }
+
+    .breadcrumbs {
+        &__item {
+            &:not(:last-of-type)::after {
+                background-color: color.$text-dark-1;
+            }
+        }
+
+        &__link {
+            border-color: color.$text-dark-1;
+
+            &--active {
+                color: color.$main-text-dark;
+            }
+        }
+
+    }
+
+    .discount-popup {
+        .product-card {
+            &__content {
+                background-color: color.$main-text-dark;
+                color: color.$main-bg-dark;
+            }
+
+
+            &:hover {
+                .product-card__content {
+                  color: color.$bright-color-light-1;
+                }
+              }
+        }
+    }
+
+    .error-block {
+        &__title {
+            color: color.$main-text-dark;
+        }
+
+        &__content {
+            color: color.$light-grey;
+        }
+    }
+}

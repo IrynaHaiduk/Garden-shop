@@ -1,23 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import promoBg from "../../images/promo-bg.jpg";
 import "./CategoriesBlock.scss";
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchCategories } from '../../store/features/productSlice';
 import Category from '../Category/Category';
 import Heading from '../Heading/Heading';
 
-const CategoriesBlock = () => {
-
-    const dispatch = useDispatch();
+const CategoriesBlock = ({categories}) => {
     const maxNumOfCategories = 4;
-
-    const { categories } = useSelector(state => state.products);
-
-    useEffect(() => {
-        dispatch(fetchCategories());
-    }, [categories]);
 
     return (
         <section className="categories-block">

@@ -25,10 +25,6 @@
 
 
     &__item {
-        padding: 8px 16px;
-        border-radius: 6px;
-        border: 1px solid color.$text-light-2;
-
         &:not(:last-of-type) {
             position: relative;
 
@@ -45,11 +41,15 @@
     }
 
     &__link {
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: 1px solid color.$text-light-2;
         display: block;
         color: color.$text-light-1;
 
         &:not(&--active):hover {
             color: color.$bright-color-light;
+            border-color: color.$bright-color-light;
         }
 
         &--active {
