@@ -12,7 +12,7 @@ const CategoriesPage = () => {
 
   useEffect(() => {
     dispatch(fetchCategories());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

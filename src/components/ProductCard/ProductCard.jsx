@@ -18,7 +18,7 @@ const DiscountProduct = ({ product }) => {
         <>
             {
                 product && (
-                    <Link to="/" className="product-card">
+                    <Link to={`/products/${product.id}`} className="product-card">
                         <div className="product-card__image">
                             <img src={`${import.meta.env.APP_API_URL}/${product.image}`} alt={product.title} />
                             {discountPercentage && (

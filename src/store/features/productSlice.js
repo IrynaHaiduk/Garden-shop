@@ -10,6 +10,7 @@ const initialState = {
     filteredProducts: [],
     categoryData: {},
     filteredCategoryData: [],
+    product: null,
 }
 
 export const fetchCategories = createAsyncThunk(
@@ -41,6 +42,24 @@ export const fetchProducts = createAsyncThunk(
 
             const data = await response.json();
             return data;
+        } catch (error) {
+            throw error;
+        }
+
+    }
+)
+
+export const fetchProductById = createAsyncThunk(
+    "products/fetchProductById",
+    async (productId) => {
+        try {
+            const response = await fetch(`${import.meta.env.APP_API_URL}/products/${productId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch products');
+            };
+
+            const data = await response.json();
+            return data[0];
         } catch (error) {
             throw error;
         }
@@ -234,6 +253,18 @@ export const productSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
+            .addCase(fetchProductById.pending, state => {
+                state.loading = true;
+            })
+            .addCase(fetchProductById.fulfilled, (state, action) => {
+                state.loading = false;
+                state.product = action.payload;
+            })
+            .addCase(fetchProductById.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            
     }
 })
 

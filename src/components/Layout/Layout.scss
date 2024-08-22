@@ -87,10 +87,13 @@
 
     .product-card {
 
-
         &__content {
             color: color.$main-text-dark;
             background-color: color.$bg-dark;
+        }
+
+        &__image {
+            border-color: color.$text-dark-1;
         }
     }
 
@@ -143,9 +146,9 @@
 
             &:hover {
                 .product-card__content {
-                  color: color.$bright-color-light-1;
+                    color: color.$bright-color-light-1;
                 }
-              }
+            }
         }
     }
 
@@ -156,6 +159,13 @@
 
         &__content {
             color: color.$light-grey;
+        }
+    }
+
+    .categories-products, .all-products, .discounted-products {
+
+        &__item {
+            border-color: color.$text-dark-1;
         }
     }
 }
