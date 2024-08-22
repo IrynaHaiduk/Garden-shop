@@ -10,7 +10,7 @@ import ProductCard from '@/components/ProductCard/ProductCard';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 
 
-const CategoriesProducts = ({categoryData, filteredCategoryData}) => {
+const CategoriesProducts = ({ categoryData, filteredCategoryData }) => {
     const dispatch = useDispatch();
 
     let [minPrice, setMinPrice] = useState("");
@@ -56,11 +56,8 @@ const CategoriesProducts = ({categoryData, filteredCategoryData}) => {
 
     }, [sortByValue, minPrice, maxPrice, isChecked, dispatch]);
 
-    console.log(categoryData?.data);
-
-
     const data = filteredCategoryData?.length > 0 ? filteredCategoryData : categoryData?.data;
-
+    
     return (
         <section className="categories-products">
             <div className="container">
