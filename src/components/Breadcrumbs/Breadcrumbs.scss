@@ -15,16 +15,19 @@
 
 
     &__list {
+        height: 100%;
 
         @media (min-width: 768px) {
             display: flex;
             gap: 16px;
-            align-items: center;
+            align-items: stretch;
         }
     }
 
 
     &__item {
+        min-height: 100%;
+
         &:not(:last-of-type) {
             position: relative;
 
@@ -46,6 +49,10 @@
         border: 1px solid color.$text-light-2;
         display: block;
         color: color.$text-light-1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
 
         &:not(&--active):hover {
             color: color.$bright-color-light;

@@ -7,9 +7,6 @@
     width: 100vw;
     height: 100vh;
     background: rgba(40, 40, 40, 0.4);
-   /*  display: flex;
-    justify-content: center;
-    align-items: center; */
     z-index: 10;
     padding: 0 20px;
 
@@ -19,14 +16,11 @@
         left: 50%;
         transform: translate(-50%, -50%);
         max-height: 100%;
-
-        //margin: 0 20px;
         color: color.$white;
         border-radius: 8px;
         max-width: 548px;
         width: calc(100% - 40px);
         border-radius: 12px;
-       
         background-color: color.$bright-color-light;
         overflow-y: auto;
         scrollbar-width: none;

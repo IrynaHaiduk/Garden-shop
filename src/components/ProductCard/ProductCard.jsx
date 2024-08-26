@@ -9,7 +9,6 @@ const DiscountProduct = ({ product }) => {
     if (product && product.discont_price !== undefined && product.discont_price) {
         discountPercentage = Math.round(((product.price - product.discont_price) / product.price) * 100);
         discountPrice = Number.isInteger(product.discont_price) ? product.discont_price : (Math.round(product.discont_price * 100) / 100).toFixed(2);
-
     }
 
     const productPrice = Number.isInteger(product?.price) ? product?.price : product?.price.toFixed(2);

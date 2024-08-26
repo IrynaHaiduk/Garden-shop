@@ -14,12 +14,12 @@ const ProductsFromCategoryPage = () => {
 
   useEffect(() => {
     dispatch(fetchCategoryById(categoryId));
-  }, [dispatch]);
+  }, [categoryId, dispatch]);
 
   return (
     <>
       <Breadcrumbs lastTitle={categoryData?.category?.title} />
-      <CategoriesProducts categoryData={categoryData} filteredCategoryData={filteredCategoryData}/>
+      <CategoriesProducts categoryData={categoryData} filteredCategoryData={filteredCategoryData} />
     </>
 
   )

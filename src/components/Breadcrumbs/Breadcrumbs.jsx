@@ -26,7 +26,9 @@ const Breadcrumbs = ({ lastTitle }) => {
                     <ul className="breadcrumbs__list">
                         <li className="breadcrumbs__item">
                             <Link to="/" className="breadcrumbs__link">
-                                Main Page
+                                <span>
+                                    Main Page
+                                </span>
                             </Link>
                         </li>
                         {pathnames.map((value, index) => {
@@ -37,17 +39,21 @@ const Breadcrumbs = ({ lastTitle }) => {
                                 <li key={path} className="breadcrumbs__item">
                                     {isLast ? (
                                         <span className="breadcrumbs__link breadcrumbs__link--active">
+                                            <span>
+                                                {
+                                                    !isNaN(+value)
+                                                        ? lastTitle
+                                                        : capitalizeFirstWord(value)
+                                                }
+                                            </span>
 
-                                            {
-                                                !isNaN(+value)
-                                                    ? lastTitle
-                                                    : capitalizeFirstWord(value)
-                                            }
 
                                         </span>
                                     ) : (
                                         <Link to={path} className="breadcrumbs__link">
-                                            {capitalizeFirstWord(value)}
+                                            <span>
+                                              {capitalizeFirstWord(value)}  
+                                            </span>                                          
                                         </Link>
                                     )}
                                 </li>
