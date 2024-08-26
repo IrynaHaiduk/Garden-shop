@@ -100,8 +100,9 @@ const MainMenu = () => {
                                 1 day discount!
                             </button>
                         </div>
+                       
                         {isPopupVisible && (
-                            <DiscountPopup togglePopup={togglePopup} isPopupVisible={isPopupVisible} setIsPopupVisible={setIsPopupVisible}/>
+                            <DiscountPopup togglePopup={togglePopup}/>
                         )
                         }
                     </div >

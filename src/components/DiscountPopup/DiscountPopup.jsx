@@ -7,7 +7,7 @@ import { fetchProducts } from '@/store/features/productSlice';
 import { useState } from 'react';
 import { getRandomElement } from '../../utils/functions';
 
-const DiscountPopup = ({ togglePopup, isPopupVisible, }) => {
+const DiscountPopup = ({ togglePopup }) => {
 
     const dispatch = useDispatch();
     const [discountProduct, setDiscountProduct] = useState();

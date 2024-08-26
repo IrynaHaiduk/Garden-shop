@@ -11,6 +11,7 @@ const initialState = {
     categoryData: {},
     filteredCategoryData: [],
     product: null,
+    cart: [],
 }
 
 export const fetchCategories = createAsyncThunk(
@@ -89,6 +90,21 @@ export const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
+        addProductToCart: (state, { payload }) => {
+            const foundProduct = state.cart.find(item => item.id === payload.id);
+
+            if (foundProduct) {
+                state.cart = state.cart.map(item => {
+                    if (item.id === payload.id) {
+                        return { ...item, count: payload.count };
+                    }
+                    return item;
+                });
+            } else {
+                state.cart.push({ ...payload });
+            }
+            console.log(state.cart);
+        },
         sortByPrice: (state, { payload }) => {
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
 
@@ -100,7 +116,7 @@ export const productSlice = createSlice({
                 state.filteredProducts = data;
             }
         },
-        sortByPriceCategory: (state, { payload }) => {   
+        sortByPriceCategory: (state, { payload }) => {
             let data = state.filteredCategoryData?.length > 0 ? state.filteredCategoryData : state.categoryData?.data;
 
             if (payload.value === 'low-to-high') {
@@ -167,9 +183,9 @@ export const productSlice = createSlice({
             const maxPriceValue = !isNaN(Number(maxPrice)) ? Number(maxPrice) : null;
 
             console.log(minPrice, maxPrice);
-          
+
             // let data = state.filteredDiscountedProducts.length > 0 ? state.filteredDiscountedProducts : state.discountedProducts;
-             let data = state.discountedProducts;
+            let data = state.discountedProducts;
 
             if (minPriceValue && maxPriceValue) {
                 state.filteredDiscountedProducts = data.filter(item => item.price >= minPriceValue && item.price <= maxPriceValue);
@@ -184,20 +200,20 @@ export const productSlice = createSlice({
                 state.filteredDiscountedProducts = data;
             }
         },
-        filterDiscountedProducts: (state, {payload}) => {
+        filterDiscountedProducts: (state, { payload }) => {
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
 
-            if(payload.value) {
+            if (payload.value) {
                 state.filteredProducts = data.filter(product => product.discont_price);
             } else {
                 state.filteredProducts = state.products;
             }
 
         },
-        filterDiscountedProductsCategory: (state, {payload}) => {
+        filterDiscountedProductsCategory: (state, { payload }) => {
             let data = state.filteredCategoryData?.length > 0 ? state.filteredCategoryData : state.categoryData?.data;
 
-            if(payload.value) {
+            if (payload.value) {
                 state.filteredCategoryData = data.filter(product => product.discont_price);
 
             } else {
@@ -264,20 +280,21 @@ export const productSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
-            
+
     }
 })
 
 
-export const { 
-    sortByPrice, 
-    filterByPrice, 
-    filterDiscountedProducts, 
-    filterByPriceSale,  
-    sortByPriceSale, 
+export const {
+    sortByPrice,
+    filterByPrice,
+    filterDiscountedProducts,
+    filterByPriceSale,
+    sortByPriceSale,
     filterByPriceCategory,
-    sortByPriceCategory, 
+    sortByPriceCategory,
     filterDiscountedProductsCategory,
- } = productSlice.actions
+    addProductToCart
+} = productSlice.actions
 
 export default productSlice.reducer
