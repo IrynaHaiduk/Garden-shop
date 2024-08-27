@@ -1,0 +1,18 @@
+@use "../src/assets/variables.scss" as color;
+@import '../src/assets/mixins.scss';
+
+.cart-form {
+    border-radius: 12px;
+    background-color: color.$light-3;
+    padding: 24px 20px;
+
+    &__title {
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 30.8px;
+
+        &:not(:last-child) {
+            margin-bottom: 12px;
+        }
+    }
+}
