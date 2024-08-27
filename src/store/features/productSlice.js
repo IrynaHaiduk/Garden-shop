@@ -103,7 +103,27 @@ export const productSlice = createSlice({
             } else {
                 state.cart.push({ ...payload });
             }
-            console.log(state.cart);
+        },
+        incrementProductCart: (state, { payload }) => {
+            state.cart = state.cart.map(product => {
+                if (product.id === payload) {
+                    product.count += 1;
+                }
+
+                return product;
+            })
+        },
+        decrementProductCart: (state, { payload }) => {
+            state.cart = state.cart.map(product => {
+                if (product.id === payload && product.count > 1) {
+                    product.count -= 1;
+                }
+
+                return product;
+            });
+        },
+        deleteProductFromCart: (state, { payload }) => {
+            state.cart = state.cart.filter(product => product.id !== payload);
         },
         sortByPrice: (state, { payload }) => {
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
@@ -294,7 +314,11 @@ export const {
     filterByPriceCategory,
     sortByPriceCategory,
     filterDiscountedProductsCategory,
-    addProductToCart
+    addProductToCart,
+    incrementProductCart,
+    decrementProductCart,
+    deleteProductFromCart
+
 } = productSlice.actions
 
 export default productSlice.reducer

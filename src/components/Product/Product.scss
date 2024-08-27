@@ -192,9 +192,12 @@
         align-items: baseline;
         justify-content: center;
 
+        @media (min-width: 480px) {
+            justify-content: flex-start;
+        }
+
         @media (min-width: 768px) {
             gap: 20px;
-            justify-content: flex-start;
         }
     }
 
@@ -203,10 +206,7 @@
         font-weight: 700;
         line-height: 44px;
 
-        @media (min-width: 480px) {
-            font-size: 48px;
-            line-height: 52.8px;
-        }
+
 
         @media (min-width: 768px) {
             font-size: 56px;
@@ -227,10 +227,6 @@
         font-weight: 500;
         line-height: 36.4px;
 
-        @media (min-width: 768px) {
-            font-size: 32px;
-            line-height: 41.6px;
-        }
 
         @media (min-width: 1000px) {
             font-size: 40px;
