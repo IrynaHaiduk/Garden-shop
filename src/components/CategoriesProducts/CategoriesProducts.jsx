@@ -8,6 +8,7 @@ import { filterDiscountedProductsCategory, filterByPriceCategory, sortByPriceCat
 import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
+import { clearCategoryFilteredData } from '../../store/features/productSlice';
 
 
 const CategoriesProducts = ({ categoryData, filteredCategoryData }) => {
@@ -49,12 +50,14 @@ const CategoriesProducts = ({ categoryData, filteredCategoryData }) => {
 
         let minPriceVal = minPrice && minPrice > 0 ? minPrice : 0;
         let maxPriceVal = maxPrice ? maxPrice : Infinity;
-
+        dispatch(clearCategoryFilteredData());
         dispatch(filterDiscountedProductsCategory({ value: isChecked }));
         dispatch(filterByPriceCategory({ minPrice: minPriceVal, maxPrice: maxPriceVal }));
         dispatch(sortByPriceCategory({ value: sortByValue.value }));
 
     }, [sortByValue, minPrice, maxPrice, isChecked, dispatch]);
+
+   
 
     const data = filteredCategoryData?.length > 0 ? filteredCategoryData : categoryData?.data;
     

@@ -1,0 +1,143 @@
+@use "../src/assets/variables.scss" as color;
+
+.success-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(40, 40, 40, 0.4);
+    z-index: 10;
+    padding: 0 20px;
+
+    &__card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-height: 100%;
+        color: color.$white;
+        border-radius: 8px;
+        max-width: 548px;
+        width: calc(100% - 40px);
+        border-radius: 12px;
+        background-color: color.$bright-color-light;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding: 24px 20px 72px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (min-width: 480px) {
+            padding-bottom: 24px;
+        }
+
+        @media (min-width: 768px) {
+            padding: 32px;
+        }
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        height: 100%;
+        padding: 20px;
+
+        @media (min-width: 768px) {
+            gap: 16px;
+            padding: 32px;
+
+        }
+    }
+
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        &:not(:last-child) {
+            margin-bottom: 20px;
+
+            @media (min-width: 768px) {
+                margin-bottom: 24px;
+            }
+        }
+
+        @media (min-width: 480px) {
+            flex-direction: row;
+            gap: 60px;
+        }
+
+        @media (min-width: 768px) {
+            gap: 40px;
+        }
+    }
+
+    &__title {
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 30.8px;
+
+        @media (min-width: 480px) {
+            font-size: 36px;
+            line-height: 39.6px;
+        }
+
+        @media (min-width: 768px) {
+            font-size: 40px;
+            line-height: 44px;
+        }
+    }
+
+
+    &__btn-close {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        cursor: pointer;
+        margin-left: auto;
+
+        @media (min-width: 480px) {
+            order: 1;
+        }
+
+        @media (min-width: 768px) {
+            width: 44px;
+            height: 44px;
+        }
+
+        &:hover {
+            svg path {
+                stroke: color.$main-text-light;
+            }
+        }
+
+        svg {
+            display: block;
+            margin: auto;
+        }
+
+    }
+
+    &__info {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 19.8px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        @media (min-width: 768px) {
+            font-size: 20px;
+            line-height: 22px;
+        }
+    }
+}

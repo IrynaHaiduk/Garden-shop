@@ -1,9 +1,14 @@
 import React from 'react';
 import "./CartForm.scss";
+import iconError from "@/images/icons/icon-error.svg"
 import { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
+import { clearCard, sendOrderData } from '../../store/features/productSlice';
+import { useDispatch } from 'react-redux';
+import SuccessPopup from '../SuccessPopup/SuccessPopup';
 
 const CartForm = ({ cart }) => {
+    const dispatch = useDispatch();
     const [totalSum, setTotalSum] = useState(0);
     const {
         register,
@@ -14,9 +19,33 @@ const CartForm = ({ cart }) => {
         reset,
     } = useForm();
 
-    const submitForm = formData => {
-        reset();
+    const [formDataSent, setFormDataSent] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null); // Track error messages
+
+
+    const toggleFormDataSent= () => {
+        setFormDataSent(!formDataSent);
     }
+
+    const submitForm = async (formData) => {
+        try {
+            // Reset error message before submission
+            setErrorMessage(null);
+            
+            const result = await dispatch(sendOrderData({ userData: formData, orderData: cart })).unwrap();
+            
+            // If the request is successful, show success popup
+            if (result) {
+                toggleFormDataSent();
+                dispatch(clearCard()); // Clear the cart on success
+                reset(); // Reset the form
+            }
+        } catch (error) {
+            // Handle the error response and display an error message
+            setErrorMessage(error); // You can show this error in the UI
+        }
+    };
+   
 
     useEffect(() => {
         let sum = cart.reduce((acc, product) => {
@@ -140,11 +169,15 @@ const CartForm = ({ cart }) => {
                                 }
                             </div>
 
-                            <button type="submit" className="cart-form__btn btn--white" disabled={isSubmitting}>
+                            <button type="submit" className="cart-form__btn btn--bright" disabled={isSubmitting}>
                                 Order
                             </button>
 
                         </form>
+
+                        {
+                          formDataSent &&  <SuccessPopup toggleFormDataSent={toggleFormDataSent}/>
+                        }
 
                     </div>
                 )

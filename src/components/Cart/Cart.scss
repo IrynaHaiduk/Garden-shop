@@ -5,6 +5,23 @@
     @include responsiveMarginBottom;
     @include responsiveMarginTop;
 
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        @media (min-width: 1000px) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (min-width: 1440px) {
+            grid-template-columns: 1.42fr 1fr;
+            gap: 32px;
+        }
+
+    }
+
     &__list {
         display: flex;
         flex-direction: column;
@@ -21,8 +38,15 @@
         height: 100%;
     }
 
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
     &__btn {
         align-self: center;
+
 
         @media (min-width: 480px) {
             display: none;
