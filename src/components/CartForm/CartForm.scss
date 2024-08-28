@@ -6,13 +6,147 @@
     background-color: color.$light-3;
     padding: 24px 20px;
 
+    @media (min-width: 768px) {
+        padding: 32px 20px;
+    }
+
+    @media (min-width: 1440px) {
+        padding: 32px;
+    }
+
     &__title {
         font-size: 28px;
         font-weight: 700;
         line-height: 30.8px;
 
+        @media (min-width: 768px) {
+            font-size: 32px;
+            line-height: 35.2px;
+        }
+
+        @media (min-width: 1000px) {
+            font-size: 40px;
+            line-height: 44px;
+        }
+
         &:not(:last-child) {
             margin-bottom: 12px;
+
+            @media (min-width: 1440px) {
+                margin-bottom: 24px;
+            }
+        }
+    }
+
+    &__info {
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 36.4px;
+        color: color.$text-light-1;
+
+        @media (min-width: 768px) {
+            font-size: 32px;
+            line-height: 41.6px;
+        }
+
+        @media (min-width: 1000px) {
+            font-size: 40px;
+            line-height: 52px;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 20px;
+
+            @media (min-width: 1440px) {
+                margin-bottom: 32px;
+            }
+        }
+    }
+
+    &__price {
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 44px;
+        color: color.$main-text-light;
+
+        @media (min-width: 480px) {
+            font-size: 48px;
+            line-height: 52.8px;
+        }
+
+        @media (min-width: 768px) {
+            font-size: 56px;
+            line-height: 61.6px;
+        }
+
+        @media (min-width: 1000px) {
+            font-size: 64px;
+            line-height: 70.4px;
+        }
+    }
+
+    &__wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+        align-items: baseline;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 23.4px;
+
+        @media (min-width: 768px) {
+            gap: 12px;
+        }
+
+        @media (min-width: 1440px) {
+            gap: 16px;
+        }
+    }
+
+    &__input {
+        width: 100%;
+        border: 1px solid color.$text-light-2;
+        border-radius: 6px;
+        background-color: color.$white;
+        padding: 12px 20px;
+        outline: none;
+
+        @media (min-width: 768px) {
+            padding: 16px 20px;
+            font-size: 20px;
+            line-height: 26px;
+        }
+
+        &::placeholder {
+            color: color.$text-light-2;
+        }
+    }
+
+    &__btn {
+        padding: 12px 20px;
+        font-weight: 600;
+        margin-top: 12px;
+
+        @media (min-width: 768px) {
+            padding: 16px 32px;
+            margin-top: 8px;
+            align-self: flex-start;
+            min-width: 172px;
+        }
+
+        @media (min-width: 1000px) {
+            align-self: stretch;
+        }
+
+        @media (min-width: 1440px) {
+            margin-top: 16px;
         }
     }
 }

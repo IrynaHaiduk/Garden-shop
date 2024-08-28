@@ -73,7 +73,7 @@ export const fetchDiscountedProducts = createAsyncThunk(
     async () => {
         try {
             const response = await fetch(`${import.meta.env.APP_API_URL}/products/all`);
-            if (!response) {
+            if (!response.ok) {
                 throw new Error("Failed to fetch discounted products");
             }
 
@@ -82,6 +82,32 @@ export const fetchDiscountedProducts = createAsyncThunk(
             return saleProducts;
         } catch (error) {
             throw error;
+        }
+    }
+)
+
+
+export const sendOrderData = createAsyncThunk(
+    "products/sendOrderData",
+    async (orderData, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`${import.meta.env.APP_API_URL}/order/send`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                return rejectWithValue(errorData || "Failed to send order data to server");
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.message || "An unexpected error occurred");
         }
     }
 )
@@ -146,6 +172,12 @@ export const productSlice = createSlice({
             } else {
                 state.filteredCategoryData = data;
             }
+        },
+        clearCard: state => {
+            state.cart = [];
+        },
+        clearCategoryFilteredData: state => {
+            state.filteredCategoryData = [];
         },
         sortByPriceSale: (state, { payload }) => {
             let data = state.filteredDiscountedProducts?.length > 0 ? state.filteredDiscountedProducts : state.discountedProducts;
@@ -237,7 +269,7 @@ export const productSlice = createSlice({
                 state.filteredCategoryData = data.filter(product => product.discont_price);
 
             } else {
-                state.filteredCategoryData = state.products;
+                state.filteredCategoryData = state.categoryData?.data;
             }
 
         }
@@ -317,8 +349,9 @@ export const {
     addProductToCart,
     incrementProductCart,
     decrementProductCart,
-    deleteProductFromCart
-
+    deleteProductFromCart,
+    clearCategoryFilteredData,
+    clearCard
 } = productSlice.actions
 
 export default productSlice.reducer

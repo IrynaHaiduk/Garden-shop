@@ -18,6 +18,15 @@
         grid-template-columns: 229fr 499fr;
     }
 
+    @media (min-width: 1000px) {
+        grid-template-columns: 10fr 13fr;
+    }
+
+    @media (min-width: 1440px) {
+        grid-template-columns: 1fr 2.9fr;  
+    }
+
+  
 
     &__image {
         border-left: 1px solid color.$light-grey;

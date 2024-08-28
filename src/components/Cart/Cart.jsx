@@ -28,7 +28,7 @@ const Cart = ({ cart }) => {
                             }
                             <div className="cart__form">
                                 <CartForm cart={cart}/>
-                                <Link to="/all-products" className='cart__btn btn--light'>
+                                <Link to="/" className='cart__btn btn--light'>
                                     Back to the store
                                 </Link>
                             </div>
