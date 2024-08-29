@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { decrementProductCart, deleteProductFromCart, incrementProductCart } from '@/store/features/productSlice';
 
 const ProductBlock = ({ product }) => {
+
     const dispatch = useDispatch();
     let discountPercentage = null;
     let discountPrice = 0;
@@ -29,8 +30,8 @@ const ProductBlock = ({ product }) => {
         dispatch(decrementProductCart(productId))
     }
 
-    const deleteProduct = (productId) => {
-        dispatch(deleteProductFromCart(productId));
+    const deleteProduct = (product) => {
+        dispatch(deleteProductFromCart(product));
     }
 
     return (
@@ -47,7 +48,7 @@ const ProductBlock = ({ product }) => {
                             <h2 className="product-block__title">
                                 {product.title}
                             </h2>
-                            <button className="product-block__icon" onClick={() => deleteProduct(product.id)}>
+                            <button className="product-block__icon" onClick={() => deleteProduct(product)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M18 6L6 18" stroke="#424436" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     <path d="M6 6L18 18" stroke="#424436" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

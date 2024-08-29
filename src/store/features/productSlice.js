@@ -12,6 +12,8 @@ const initialState = {
     filteredCategoryData: [],
     product: null,
     cart: [],
+    likedProducts: [],
+    filteredLikedProducts: [],
 }
 
 export const fetchCategories = createAsyncThunk(
@@ -116,15 +118,48 @@ export const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
+        saveLikedProduct: (state, { payload }) => {
+            const foundLikedProduct = state.likedProducts.find(product => product === payload);
+
+            if (foundLikedProduct) {
+                state.likedProducts = state.likedProducts.filter(product => product !== payload);
+            } else {
+                state.likedProducts.push(payload);
+            }
+
+            localStorage.setItem("likedProducts", JSON.stringify(state.likedProducts))
+        },
+        getLikedProducts: state => {
+            const likedProductsInStorage = JSON.parse(localStorage.getItem("likedProducts"));
+
+            if (likedProductsInStorage) {
+                state.likedProducts = [...likedProductsInStorage];
+            } else {
+                localStorage.setItem("likedProducts", JSON.stringify([]))
+            }
+        },
+        addProductToLiked: (state, { payload }) => {
+            const foundProduct = state.likedProducts.find(product => product.id === payload.id);
+
+            if (!foundProduct) {
+                state.likedProducts.push({ ...payload });
+            }
+
+            localStorage.setItem("likedProducts", JSON.stringify(state.likedProducts))
+        },
+        deleteProductFromLiked: (state, { payload }) => {
+            state.likedProducts = state.likedProducts.filter(product => product.id !== payload.id);
+            localStorage.setItem("likedProducts", JSON.stringify(state.likedProducts));
+        },
         addProductToCart: (state, { payload }) => {
-            const foundProduct = state.cart.find(item => item.id === payload.id);
+            const foundProduct = state.cart.find(product => product.id === payload.id);
 
             if (foundProduct) {
-                state.cart = state.cart.map(item => {
-                    if (item.id === payload.id) {
-                        return { ...item, count: payload.count };
+                state.cart = state.cart.map(product => {
+                    if (product.id === payload.id) {
+                        return { ...product, count: payload.count };
                     }
-                    return item;
+                    return product;
                 });
             } else {
                 state.cart.push({ ...payload });
@@ -149,7 +184,7 @@ export const productSlice = createSlice({
             });
         },
         deleteProductFromCart: (state, { payload }) => {
-            state.cart = state.cart.filter(product => product.id !== payload);
+            state.cart = state.cart.filter(product => product.id !== payload.id);
         },
         sortByPrice: (state, { payload }) => {
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
@@ -188,6 +223,17 @@ export const productSlice = createSlice({
                 state.filteredDiscountedProducts = [...data].sort((a, b) => b.price - a.price);
             } else {
                 state.filteredDiscountedProducts = data;
+            }
+        },
+        sortByPriceLiked: (state, { payload }) => {
+            let data = state.filteredLikedProducts?.length > 0 ? state.filteredLikedProducts : state.likedProducts;
+
+            if (payload.value === 'low-to-high') {
+                state.filteredLikedProducts = [...data].sort((a, b) => a.price - b.price);
+            } else if (payload.value === 'high-to-low') {
+                state.filteredLikedProducts = [...data].sort((a, b) => b.price - a.price);
+            } else {
+                state.filteredLikedProducts = data;
             }
         },
         filterByPrice: (state, { payload }) => {
@@ -234,9 +280,6 @@ export const productSlice = createSlice({
             const minPriceValue = !isNaN(Number(minPrice)) ? Number(minPrice) : null;
             const maxPriceValue = !isNaN(Number(maxPrice)) ? Number(maxPrice) : null;
 
-            console.log(minPrice, maxPrice);
-
-            // let data = state.filteredDiscountedProducts.length > 0 ? state.filteredDiscountedProducts : state.discountedProducts;
             let data = state.discountedProducts;
 
             if (minPriceValue && maxPriceValue) {
@@ -250,6 +293,27 @@ export const productSlice = createSlice({
 
             } else {
                 state.filteredDiscountedProducts = data;
+            }
+        },
+        filterByPriceLiked: (state, { payload }) => {
+            const { minPrice, maxPrice } = payload;
+            const minPriceValue = !isNaN(Number(minPrice)) ? Number(minPrice) : null;
+            const maxPriceValue = !isNaN(Number(maxPrice)) ? Number(maxPrice) : null;
+
+
+            let data = state.likedProducts;
+
+            if (minPriceValue && maxPriceValue) {
+                state.filteredLikedProducts = data.filter(item => item.price >= minPriceValue && item.price <= maxPriceValue);
+
+            } else if (minPriceValue) {
+                state.filteredLikedProducts = data.filter(item => item.price >= minPriceValue);
+
+            } else if (maxPriceValue) {
+                state.filteredLikedProducts = data.filter(item => item.price <= maxPriceValue);
+
+            } else {
+                state.filteredLikedProducts = data;
             }
         },
         filterDiscountedProducts: (state, { payload }) => {
@@ -351,7 +415,13 @@ export const {
     decrementProductCart,
     deleteProductFromCart,
     clearCategoryFilteredData,
-    clearCard
+    clearCard,
+    addProductToLiked,
+    sortByPriceLiked,
+    filterByPriceLiked,
+    deleteProductFromLiked,
+    getLikedProducts,
+
 } = productSlice.actions
 
 export default productSlice.reducer

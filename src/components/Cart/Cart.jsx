@@ -14,9 +14,8 @@ const Cart = ({ cart }) => {
                 <section className="cart">
                     <div className="container">
                         <Heading title="Shopping cart" subtitle="Back to the store" link="all-products" />
-                        <div className="cart__wrapper">
-                            {
-                                cart &&
+                        {cart && cart.length > 0 ? (
+                            <div className="cart__wrapper">
                                 <ul className="cart__list">
                                     {cart.map(product => (
                                         <li key={product.id} className="cart__item">
@@ -25,17 +24,27 @@ const Cart = ({ cart }) => {
                                     ))
                                     }
                                 </ul>
-                            }
-                            <div className="cart__form">
-                                <CartForm cart={cart}/>
-                                <Link to="/" className='cart__btn btn--light'>
-                                    Back to the store
+                                <div className="cart__form">
+                                    <CartForm cart={cart} />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="cart__container">
+                                <div className="cart__info">
+                                    <p>
+                                        Looks like you have no items in your basket currently.
+                                    </p>
+                                </div>
+                                <Link to="/" className='cart__link btn--bright'>
+                                    Continue Shopping
                                 </Link>
                             </div>
-                        </div>
+                        )}
+                        <Link to="/" className='cart__btn btn--light'>
+                            Back to the store
+                        </Link>
                     </div>
                 </section>
-
             }
         </>
     )
