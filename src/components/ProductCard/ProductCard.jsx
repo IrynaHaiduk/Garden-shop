@@ -1,8 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import "./ProductCard.scss";
+import { useDispatch } from "react-redux";
+import { addProductToLiked, deleteProductFromLiked } from '@/store/features/productSlice'
+import { useState } from 'react';
+import { addProductToCart, deleteProductFromCart } from '../../store/features/productSlice';
 
-const DiscountProduct = ({ product }) => {
+const ProductCard = ({ product }) => {
+    const dispatch = useDispatch();
+    const [isLiked, setIsLiked] = useState(false || product.isLiked);
+    const [isInCart, setIsInCart] = useState(false);
+
     let discountPercentage = null;
     let discountPrice = 0;
 
@@ -12,6 +20,35 @@ const DiscountProduct = ({ product }) => {
     }
 
     const productPrice = Number.isInteger(product?.price) ? product?.price : product?.price.toFixed(2);
+
+
+    const toggleWishlist = (product, event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        if (!isLiked) {
+            dispatch(addProductToLiked({ ...product, isLiked: true, isInCart }));
+        } else {
+            dispatch(deleteProductFromLiked(product));
+        }
+
+        setIsLiked(!isLiked);
+    };
+
+    const toggleCart = (product, event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        if (!isInCart) {
+            dispatch(addProductToCart({ ...product, isLiked, isInCart: true, count: 1 }));
+        } else {
+            dispatch(deleteProductFromCart(product));
+        }
+
+        setIsInCart(!isInCart);
+    };
+
+
 
     return (
         <>
@@ -30,7 +67,10 @@ const DiscountProduct = ({ product }) => {
 
                             <ul className="product-card__utils">
                                 <li className="product-card__utils-item">
-                                    <div className="product-card__utils-icon">
+                                    <button
+                                        className={`product-card__utils-icon  ${isLiked ? "product-card__utils-icon--active" : ""}`}
+                                        onClick={(event) => toggleWishlist(product, event)}
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="48"
@@ -47,10 +87,14 @@ const DiscountProduct = ({ product }) => {
                                                 strokeLinejoin="round"
                                             />
                                         </svg>
-                                    </div>
+                                    </button>
                                 </li>
                                 <li className="product-card__utils-item">
-                                    <div className="product-card__utils-icon">
+
+                                    <button
+                                        className={`product-card__utils-icon  ${isInCart ? "product-card__utils-icon--active" : ""}`}
+                                        onClick={(event) => toggleCart(product, event)}
+                                    >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="48"
@@ -67,9 +111,8 @@ const DiscountProduct = ({ product }) => {
                                                 fill="#424436"
                                             />
                                         </svg>
-                                    </div>
+                                    </button>
                                 </li>
-
                             </ul>
                         </div>
                         <div className="product-card__content">
@@ -106,4 +149,4 @@ const DiscountProduct = ({ product }) => {
     )
 }
 
-export default DiscountProduct
+export default ProductCard

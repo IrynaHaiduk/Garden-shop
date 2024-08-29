@@ -20,32 +20,37 @@ const CartForm = ({ cart }) => {
     } = useForm();
 
     const [formDataSent, setFormDataSent] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null); // Track error messages
 
 
-    const toggleFormDataSent= () => {
-        setFormDataSent(!formDataSent);
+
+    const toggleFormDataSent = () => {
+        setFormDataSent(prevState => !prevState);
     }
+
+
 
     const submitForm = async (formData) => {
         try {
-            // Reset error message before submission
-            setErrorMessage(null);
-            
             const result = await dispatch(sendOrderData({ userData: formData, orderData: cart })).unwrap();
-            
-            // If the request is successful, show success popup
+
             if (result) {
                 toggleFormDataSent();
-                dispatch(clearCard()); // Clear the cart on success
-                reset(); // Reset the form
+
+
+                dispatch(clearCard());
+                reset();
+
+                setTimeout(() => {
+                    dispatch(clearCard());
+                    reset();
+                }, 15000)
+
             }
         } catch (error) {
-            // Handle the error response and display an error message
-            setErrorMessage(error); // You can show this error in the UI
+            console.error("Error submitting order:", error);
         }
     };
-   
+
 
     useEffect(() => {
         let sum = cart.reduce((acc, product) => {
@@ -176,14 +181,13 @@ const CartForm = ({ cart }) => {
                         </form>
 
                         {
-                          formDataSent &&  <SuccessPopup toggleFormDataSent={toggleFormDataSent}/>
+                            formDataSent && <SuccessPopup toggleFormDataSent={toggleFormDataSent} />
                         }
 
                     </div>
                 )
             }
         </>
-
     )
 }
 

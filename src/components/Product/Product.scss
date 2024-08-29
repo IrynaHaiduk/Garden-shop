@@ -54,6 +54,22 @@
                 width: 48px;
                 height: 48px;
             }
+
+            &:hover {
+                cursor: pointer;
+
+                svg path {
+                    fill: color.$main-text-light;
+                    stroke: color.$main-text-light;
+                }
+            }
+
+            &--active {
+                svg path {
+                    fill: color.$bright-color-light;
+                    stroke: color.$bright-color-light;
+                }
+            }
         }
 
         &:hover {
@@ -398,7 +414,7 @@
         }
 
         @media (min-width: 1000px) {
-           flex-direction: row;
+            flex-direction: row;
             width: 100%;
             align-items: stretch;
             gap: 20px;
