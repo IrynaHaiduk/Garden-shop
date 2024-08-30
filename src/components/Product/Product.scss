@@ -55,29 +55,22 @@
                 height: 48px;
             }
 
-            &:hover {
-                cursor: pointer;
-
-                svg path {
-                    fill: color.$main-text-light;
-                    stroke: color.$main-text-light;
-                }
-            }
-
-            &--active {
-                svg path {
-                    fill: color.$bright-color-light;
-                    stroke: color.$bright-color-light;
-                }
-            }
+         
         }
 
         &:hover {
             cursor: pointer;
-
             svg path {
                 fill: color.$main-text-light;
+                stroke: color.$main-text-light;
             }
+        }
+
+        &--active {
+            svg path {
+                fill: color.$bright-color-light;
+                stroke: color.$bright-color-light;
+            }  
         }
     }
 

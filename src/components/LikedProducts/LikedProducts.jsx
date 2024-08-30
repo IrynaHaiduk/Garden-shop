@@ -8,12 +8,10 @@ import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
 import Sort from '../Sort/Sort';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import "./LikedProducts.scss";
-import { getLikedProducts } from '../../store/features/productSlice';
+import { getLikedProducts } from '@/store/features/productSlice';
 
 
 const LikedProducts = ({ likedProducts, filteredLikedProducts }) => {
-
-    console.log(likedProducts);
 
     const dispatch = useDispatch();
     let [minPrice, setMinPrice] = useState("");

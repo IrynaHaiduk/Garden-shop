@@ -1,34 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import "./Product.scss";
 import { useDispatch, useSelector } from 'react-redux';
 import ImagePopup from '../ImagePopup/ImagePopup';
-import { addProductToCart, addProductToLiked, decrementProductCart, deleteProductFromLiked, incrementProductCart } from '../../store/features/productSlice';
+import { addProductToCart, addProductToLiked, decrementProductCart, deleteProductFromLiked, getCartProducts, getLikedProducts, incrementProductCart } from '../../store/features/productSlice';
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
-  const isProductLiked = useSelector(state => state.product?.likedProducts.includes(product));
 
+  const { likedProducts, cart } = useSelector(state => state.products);
+
+  useEffect(() => {
+    dispatch(getLikedProducts());
+    dispatch(getCartProducts());
+  }, [dispatch]);
+
+  const isProductInLiked = likedProducts?.some(item => item?.id === product?.id);
+  const isProductInCart = cart?.some(item => item?.id === product?.id);
+
+  const foundProduct = isProductInCart ? cart?.find(item => item.id === product.id) : "";
+
+  const [productCount, setProductCount] = useState(foundProduct.count || 1);
+  
   const productWithCount = {
     ...product,
-    count: product?.count || 1,
-    isLiked: isProductLiked,
+    count: productCount,
   };
 
-  let discountPercentage = null;
-  let discountPrice = 0;
+  const toggleWishlist = (product, event) => {
+    event.stopPropagation();
+    event.preventDefault();
 
-  if (productWithCount?.discont_price) {
-    discountPercentage = Math.round(((productWithCount.price - productWithCount.discont_price) / productWithCount.price) * 100);
-    discountPrice = Number.isInteger(productWithCount.discont_price)
-      ? productWithCount.discont_price
-      : (Math.round(productWithCount.discont_price * 100) / 100).toFixed(2);
-  }
+    if (!isProductInLiked) {
+      dispatch(addProductToLiked(product));
+    } else {
+      dispatch(deleteProductFromLiked(product));
+    }
+  };
+
+  const discountPercentage = useMemo(() => {
+    return productWithCount?.discont_price 
+      ? Math.round(((productWithCount.price - productWithCount.discont_price) / productWithCount.price) * 100)
+      : null;
+  }, [productWithCount.price, productWithCount.discont_price]);
+  
+  const discountPrice = useMemo(() => {
+    return productWithCount?.discont_price
+      ? Number.isInteger(productWithCount.discont_price)
+        ? productWithCount.discont_price
+        : (Math.round(productWithCount.discont_price * 100) / 100).toFixed(2)
+      : 0;
+  }, [productWithCount.discont_price]);
 
   const productPrice = Number.isInteger(productWithCount?.price)
     ? productWithCount?.price
     : productWithCount?.price?.toFixed(2);
 
-  const [count, setCount] = useState(productWithCount.count); // Синхронизируем локальное состояние с productWithCount.count
   const [isExpanded, setIsExpanded] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [charLimit, setCharLimit] = useState(150);
@@ -42,22 +68,21 @@ const Product = ({ product }) => {
     : productWithCount.description;
 
   const countPrice = (price) => {
-    const currentPrice = price * count;
+    const currentPrice = price * productWithCount.count;
     return Number.isInteger(currentPrice)
       ? currentPrice
       : (Math.round(currentPrice * 100) / 100).toFixed(2);
   };
 
-  const incrementCountProduct = (productId) => {
-    dispatch(incrementProductCart(productId));
-    setCount(count + 1);
+  const incrementCountProduct = () => {
+    setProductCount(prevState => prevState += 1);
   };
 
-  const decrementCountProduct = (productId) => {
-    if (count > 1) {
-      dispatch(decrementProductCart(productId));
-      setCount(count - 1);
+  const decrementCountProduct = () => {
+    if (productCount > 1) {
+      setProductCount(prevState => prevState -= 1);
     }
+
   };
 
   useEffect(() => {
@@ -100,22 +125,8 @@ const Product = ({ product }) => {
   };
 
   const addToCart = () => {
-    dispatch(addProductToCart({ ...productWithCount, count }));
+    dispatch(addProductToCart({ ...productWithCount, count: productCount }));
   };
-
-
-  /*   const toggleWishlist = (product, event) => {
-      event.stopPropagation();
-      event.preventDefault();
-  
-      if (!isLiked) {
-        dispatch(addProductToLiked({ ...product, isLiked: true, isInCart }));
-      } else {
-        dispatch(deleteProductFromLiked(product));
-      }
-  
-      setIsLiked(!isLiked);
-    }; */
 
   return (
     <>
@@ -125,7 +136,10 @@ const Product = ({ product }) => {
             {windowWidth < tabletWidth && (
               <div className="product__header">
                 <h2 className="product__title">{productWithCount.title}</h2>
-                <button className={`product__icon  ${productWithCount.isLiked ? "product__icon--active" : ""}`}>
+                <button
+                  className={`product__icon  ${isProductInLiked ? "product__icon--active" : ""}`}
+                  onClick={(event) => toggleWishlist(product, event)}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
                     <path
                       d="M39.4 25.2222C42.678 22.14 46 18.4456 46 13.6111C46 10.5317 44.7252 7.57832 42.456 5.40082C40.1868 3.22331 37.1091 2 33.9 2C30.028 2 27.3 3.05556 24 6.22222C20.7 3.05556 17.972 2 14.1 2C10.8909 2 7.8132 3.22331 5.54401 5.40082C3.27482 7.57832 2 10.5317 2 13.6111C2 18.4667 5.3 22.1611 8.6 25.2222L24 40L39.4 25.2222Z"
@@ -152,7 +166,11 @@ const Product = ({ product }) => {
                 {windowWidth >= tabletWidth && (
                   <div className="product__header">
                     <h2 className="product__title">{productWithCount.title}</h2>
-                    <button className="product__icon">
+
+                    <button
+                      className={`product__icon  ${isProductInLiked ? "product__icon--active" : ""}`}
+                      onClick={(event) => toggleWishlist(product, event)}
+                    >
                       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
                         <path
                           d="M39.4 25.2222C42.678 22.14 46 18.4456 46 13.6111C46 10.5317 44.7252 7.57832 42.456 5.40082C40.1868 3.22331 37.1091 2 33.9 2C30.028 2 27.3 3.05556 24 6.22222C20.7 3.05556 17.972 2 14.1 2C10.8909 2 7.8132 3.22331 5.54401 5.40082C3.27482 7.57832 2 10.5317 2 13.6111C2 18.4667 5.3 22.1611 8.6 25.2222L24 40L39.4 25.2222Z"
@@ -183,9 +201,9 @@ const Product = ({ product }) => {
                 )}
                 <div className="product__wrap">
                   <div className="product__count">
-                    <button onClick={() => decrementCountProduct(productWithCount.id)}></button>
-                    <input type="text" value={count} disabled readOnly />
-                    <button onClick={() => incrementCountProduct(productWithCount.id)}></button>
+                    <button onClick={() => decrementCountProduct()}></button>
+                    <input type="text" value={productCount} disabled readOnly />
+                    <button onClick={() => incrementCountProduct()}></button>
                   </div>
                   <button className="product__btn btn--bright" onClick={addToCart}>
                     Add to cart
