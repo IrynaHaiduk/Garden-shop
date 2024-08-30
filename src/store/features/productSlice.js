@@ -151,6 +151,15 @@ export const productSlice = createSlice({
             state.likedProducts = state.likedProducts.filter(product => product.id !== payload.id);
             localStorage.setItem("likedProducts", JSON.stringify(state.likedProducts));
         },
+        getCartProducts: state => {
+            const cartProductsInStorage = JSON.parse(localStorage.getItem("cartProducts"));
+
+            if (cartProductsInStorage) {
+                state.cart = [...cartProductsInStorage];
+            } else {
+                localStorage.setItem("cartProducts", JSON.stringify([]));
+            }
+        },
         addProductToCart: (state, { payload }) => {
             const foundProduct = state.cart.find(product => product.id === payload.id);
 
@@ -164,6 +173,8 @@ export const productSlice = createSlice({
             } else {
                 state.cart.push({ ...payload });
             }
+
+            localStorage.setItem("cartProducts", JSON.stringify(state.cart));
         },
         incrementProductCart: (state, { payload }) => {
             state.cart = state.cart.map(product => {
@@ -172,7 +183,9 @@ export const productSlice = createSlice({
                 }
 
                 return product;
-            })
+            });
+
+            localStorage.setItem("cartProducts", JSON.stringify(state.cart));
         },
         decrementProductCart: (state, { payload }) => {
             state.cart = state.cart.map(product => {
@@ -182,9 +195,12 @@ export const productSlice = createSlice({
 
                 return product;
             });
+
+            localStorage.setItem("cartProducts", JSON.stringify(state.cart));
         },
         deleteProductFromCart: (state, { payload }) => {
             state.cart = state.cart.filter(product => product.id !== payload.id);
+            localStorage.setItem("cartProducts", JSON.stringify(state.cart));
         },
         sortByPrice: (state, { payload }) => {
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
@@ -421,6 +437,7 @@ export const {
     filterByPriceLiked,
     deleteProductFromLiked,
     getLikedProducts,
+    getCartProducts
 
 } = productSlice.actions
 

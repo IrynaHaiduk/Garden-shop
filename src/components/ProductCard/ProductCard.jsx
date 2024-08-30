@@ -4,12 +4,21 @@ import "./ProductCard.scss";
 import { useDispatch } from "react-redux";
 import { addProductToLiked, deleteProductFromLiked } from '@/store/features/productSlice'
 import { useState } from 'react';
-import { addProductToCart, deleteProductFromCart } from '../../store/features/productSlice';
+import { useSelector } from 'react-redux';
+import { addProductToCart, deleteProductFromCart, getCartProducts, getLikedProducts } from '../../store/features/productSlice';
+import { useEffect } from 'react';
 
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
-    const [isLiked, setIsLiked] = useState(false || product.isLiked);
-    const [isInCart, setIsInCart] = useState(false);
+    const { likedProducts, cart } = useSelector(state => state.products);
+
+    useEffect(() => {
+        dispatch(getLikedProducts());
+        dispatch(getCartProducts());
+    }, [dispatch]);
+
+    const isProductInLiked = likedProducts?.some(item => item.id === product.id);
+    const isProductInCart = cart?.some(item => item.id === product.id);
 
     let discountPercentage = null;
     let discountPrice = 0;
@@ -26,29 +35,23 @@ const ProductCard = ({ product }) => {
         event.stopPropagation();
         event.preventDefault();
 
-        if (!isLiked) {
-            dispatch(addProductToLiked({ ...product, isLiked: true, isInCart }));
+        if (!isProductInLiked) {
+            dispatch(addProductToLiked(product));
         } else {
             dispatch(deleteProductFromLiked(product));
         }
-
-        setIsLiked(!isLiked);
     };
 
     const toggleCart = (product, event) => {
         event.stopPropagation();
         event.preventDefault();
 
-        if (!isInCart) {
-            dispatch(addProductToCart({ ...product, isLiked, isInCart: true, count: 1 }));
+        if (!isProductInCart) {
+            dispatch(addProductToCart({ ...product, count: 1 }));
         } else {
             dispatch(deleteProductFromCart(product));
         }
-
-        setIsInCart(!isInCart);
     };
-
-
 
     return (
         <>
@@ -68,7 +71,7 @@ const ProductCard = ({ product }) => {
                             <ul className="product-card__utils">
                                 <li className="product-card__utils-item">
                                     <button
-                                        className={`product-card__utils-icon  ${isLiked ? "product-card__utils-icon--active" : ""}`}
+                                        className={`product-card__utils-icon  ${isProductInLiked ? "product-card__utils-icon--active" : ""}`}
                                         onClick={(event) => toggleWishlist(product, event)}
                                     >
                                         <svg
@@ -92,7 +95,7 @@ const ProductCard = ({ product }) => {
                                 <li className="product-card__utils-item">
 
                                     <button
-                                        className={`product-card__utils-icon  ${isInCart ? "product-card__utils-icon--active" : ""}`}
+                                        className={`product-card__utils-icon  ${isProductInCart ? "product-card__utils-icon--active" : ""}`}
                                         onClick={(event) => toggleCart(product, event)}
                                     >
                                         <svg

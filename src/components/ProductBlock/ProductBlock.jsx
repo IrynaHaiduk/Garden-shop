@@ -2,6 +2,7 @@ import React from 'react';
 import "./ProductBlock.scss";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { decrementProductCart, deleteProductFromCart, incrementProductCart } from '@/store/features/productSlice';
 
 const ProductBlock = ({ product }) => {
@@ -38,10 +39,9 @@ const ProductBlock = ({ product }) => {
         <>
             {product && (
                 <div className="product-block">
-                    <div className="product-block__image">
+                    <Link to={`/products/${product.id}`} className="product-block__image">
                         <img src={`${import.meta.env.APP_API_URL}/${product.image}`} alt={product.title} />
-                    </div>
-
+                    </Link>
                     <div className="product-block__content">
 
                         <div className="product-block__header">
