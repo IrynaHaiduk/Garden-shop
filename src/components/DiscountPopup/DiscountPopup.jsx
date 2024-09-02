@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProducts } from '@/store/features/productSlice';
 import { useState } from 'react';
-import { getRandomElement } from '../../utils/functions';
+import { getRandomElement } from '@/utils/functions';
+import { addProductToCart } from '@/store/features/productSlice';
 
 const DiscountPopup = ({ togglePopup }) => {
 
@@ -24,6 +25,7 @@ const DiscountPopup = ({ togglePopup }) => {
             const randomProduct = getRandomElement(products);
             const newPrice = randomProduct?.price * discountPercentage / 100;
             setDiscountProduct({ ...randomProduct, discont_price: newPrice });
+            console.log(discountProduct);
         }
     }, [products]);
 
@@ -36,6 +38,12 @@ const DiscountPopup = ({ togglePopup }) => {
         if (event.target.closest('.discount-popup')) {
             togglePopup();
         }
+    }
+
+    const handleAddToCart = (product) => {
+        dispatch(addProductToCart({...product, count: 1}));
+        togglePopup();
+        console.log("product", product);
     }
 
     return (
@@ -76,7 +84,11 @@ const DiscountPopup = ({ togglePopup }) => {
 
                             <ProductCard product={discountProduct} />
 
-                            <button className='discount-popup__btn btn--white'>Add to cart</button>
+                            <button onClick={() =>handleAddToCart(discountProduct)}
+                                className='discount-popup__btn btn--white'
+                            >
+                                Add to cart
+                            </button>
                         </div>
                     </div>
 

@@ -114,14 +114,23 @@
         width: 100%;
         border: 1px solid color.$text-light-2;
         border-radius: 6px;
-        background-color: color.$white;
+        background-color: color.$white !important;
         padding: 12px 20px;
         outline: none;
+        box-shadow: 0 0 0px 1000px color.$white inset !important;
+        color: color.$main-text-light !important;
 
         @media (min-width: 768px) {
             padding: 16px 20px;
             font-size: 20px;
             line-height: 26px;
+        }
+
+        &:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px color.$white inset !important;
+            -webkit-text-fill-color: color.$main-text-light !important;
+            color: color.$main-text-light !important;
+            background-color: color.$white !important;
         }
 
         &::placeholder {

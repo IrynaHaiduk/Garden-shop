@@ -5,14 +5,9 @@ import LikedProducts from '@/components/LikedProducts/LikedProducts';
 import { getLikedProducts } from '../../store/features/productSlice';
 import { useEffect } from 'react';
 
-const LikedProductsPage = () => {
+const LikedProductsPage = ({likedProducts, filteredLikedProducts }) => {
 
-  const dispatch = useDispatch();
-  const { likedProducts, filteredLikedProducts } = useSelector(state => state.products);
-
-  useEffect(() => {
-    dispatch(getLikedProducts());
-  }, [dispatch]);
+  console.log(likedProducts);
 
   return (
     <>
