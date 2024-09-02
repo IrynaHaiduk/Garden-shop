@@ -119,10 +119,10 @@ export const productSlice = createSlice({
     initialState,
     reducers: {
         saveLikedProduct: (state, { payload }) => {
-            const foundLikedProduct = state.likedProducts.find(product => product === payload);
+            const foundLikedProduct = state.likedProducts.find(product => product.id === payload.id);
 
             if (foundLikedProduct) {
-                state.likedProducts = state.likedProducts.filter(product => product !== payload);
+                state.likedProducts = state.likedProducts.filter(product => product.id !== payload.id);
             } else {
                 state.likedProducts.push(payload);
             }
@@ -138,6 +138,7 @@ export const productSlice = createSlice({
                 localStorage.setItem("likedProducts", JSON.stringify([]))
             }
         },
+        
         addProductToLiked: (state, { payload }) => {
             const foundProduct = state.likedProducts.find(product => product.id === payload.id);
 

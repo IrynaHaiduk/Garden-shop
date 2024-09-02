@@ -59,35 +59,34 @@ const LikedProducts = ({ likedProducts, filteredLikedProducts }) => {
 
         <section className="liked-products">
             <div className="container">
-
                 <Heading title="Liked products" />
 
-                <div className="filters">
-
-                    <div className="filters__item">
-                        <p>Price</p>
-                        <PriceRangeFilter
-                            minPrice={minPrice}
-                            maxPrice={maxPrice}
-                            setMinPrice={setMinPrice}
-                            setMaxPrice={setMaxPrice}
-                        />
-
-                    </div>
-
-                    <div className='filters__item'>
-                        <p>Sorted</p>
-                        <Sort
-                            labels={sortLabels}
-                            onSelect={setSortByValue}
-                            defaultSelect={sortByValue}
-                        />
-                    </div>
-
-                </div>
-
                 {
-                    data && (
+                    data && data.length > 0 ? (<>
+                        <div className="filters">
+
+                            <div className="filters__item">
+                                <p>Price</p>
+                                <PriceRangeFilter
+                                    minPrice={minPrice}
+                                    maxPrice={maxPrice}
+                                    setMinPrice={setMinPrice}
+                                    setMaxPrice={setMaxPrice}
+                                />
+
+                            </div>
+
+                            <div className='filters__item'>
+                                <p>Sorted</p>
+                                <Sort
+                                    labels={sortLabels}
+                                    onSelect={setSortByValue}
+                                    defaultSelect={sortByValue}
+                                />
+                            </div>
+
+                        </div>
+
                         <ul className="liked-products__list">
 
                             {
@@ -99,7 +98,11 @@ const LikedProducts = ({ likedProducts, filteredLikedProducts }) => {
                             }
 
                         </ul>
+                    </>
                     )
+                        : <p>
+                            There are no liked products added at the momentc
+                        </p>
                 }
 
             </div>

@@ -7,13 +7,13 @@ import CartForm from '@/components/CartForm/CartForm';
 
 
 const Cart = ({ cart }) => {
+    console.log(cart);
     return (
         <>
             {
-
                 <section className="cart">
                     <div className="container">
-                        <Heading title="Shopping cart" subtitle="Back to the store" link="all-products" />
+                        <Heading title="Shopping cart" subtitle="Back to the store" link=" " />
                         {cart && cart.length > 0 ? (
                             <div className="cart__wrapper">
                                 <ul className="cart__list">
@@ -35,7 +35,7 @@ const Cart = ({ cart }) => {
                                         Looks like you have no items in your basket currently.
                                     </p>
                                 </div>
-                                <Link to="/" className='cart__link btn--bright'>
+                                <Link to="/all-products" className='cart__link btn--bright'>
                                     Continue Shopping
                                 </Link>
                             </div>

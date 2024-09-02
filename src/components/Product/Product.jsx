@@ -20,7 +20,7 @@ const Product = ({ product }) => {
   const foundProduct = isProductInCart ? cart?.find(item => item.id === product.id) : "";
 
   const [productCount, setProductCount] = useState(foundProduct.count || 1);
-  
+
   const productWithCount = {
     ...product,
     count: productCount,
@@ -38,11 +38,11 @@ const Product = ({ product }) => {
   };
 
   const discountPercentage = useMemo(() => {
-    return productWithCount?.discont_price 
+    return productWithCount?.discont_price
       ? Math.round(((productWithCount.price - productWithCount.discont_price) / productWithCount.price) * 100)
       : null;
   }, [productWithCount.price, productWithCount.discont_price]);
-  
+
   const discountPrice = useMemo(() => {
     return productWithCount?.discont_price
       ? Number.isInteger(productWithCount.discont_price)
@@ -187,7 +187,7 @@ const Product = ({ product }) => {
                 {productWithCount.discont_price ? (
                   <div className="product__price">
                     <span className="product__price-new">${countPrice(discountPrice)}</span>
-                    <span className="product__price-old">${productPrice}</span>
+                    <span className="product__price-old">${countPrice(productPrice)}</span>
                     {windowWidth >= tabletWidth && discountPercentage && (
                       <div className="product__percentage">
                         <span>-{discountPercentage}%</span>

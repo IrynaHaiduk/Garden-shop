@@ -11,14 +11,21 @@ import { useEffect } from 'react';
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
     const { likedProducts, cart } = useSelector(state => state.products);
+    let isProductInLiked = "";
+    let isProductInCart = "";
 
     useEffect(() => {
         dispatch(getLikedProducts());
         dispatch(getCartProducts());
     }, [dispatch]);
 
-    const isProductInLiked = likedProducts?.some(item => item.id === product.id);
-    const isProductInCart = cart?.some(item => item.id === product.id);
+    useEffect(() => {
+        isProductInLiked = likedProducts?.some(item => item.id === product.id);
+    }, []);
+
+    useEffect(() => {
+        isProductInCart = cart?.some(item => item.id === product.id);
+    }, []);
 
     let discountPercentage = null;
     let discountPrice = 0;
@@ -29,7 +36,6 @@ const ProductCard = ({ product }) => {
     }
 
     const productPrice = Number.isInteger(product?.price) ? product?.price : product?.price.toFixed(2);
-
 
     const toggleWishlist = (product, event) => {
         event.stopPropagation();

@@ -23,6 +23,7 @@ const ProductBlock = ({ product }) => {
         return Number.isInteger(currentPrice) ? currentPrice : (Math.round(currentPrice * 100) / 100).toFixed(2);
     }
 
+
     const incrementCountProduct = (productId) => {
         dispatch(incrementProductCart(productId))
     }
@@ -69,9 +70,8 @@ const ProductBlock = ({ product }) => {
                                         ${countPrice(discountPrice)}
                                     </span>
                                     <span className="product-block__price-old">
-                                        ${productPrice}
+                                        ${countPrice(productPrice)}
                                     </span>
-
                                 </div>)
                                 : (
                                     <div className="product-block__price">

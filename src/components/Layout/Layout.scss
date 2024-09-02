@@ -162,8 +162,116 @@
         }
     }
 
-    .categories-products, .all-products, .discounted-products {
+    .categories-products,
+    .all-products,
+    .discounted-products {
 
+        &__item {
+            border-color: color.$text-dark-1;
+        }
+    }
+
+    .product {
+        &__image {
+            border-color: transparent;
+        }
+
+        &__percentage {
+            background-color: color.$bright-color-light;
+        }
+
+        &__icon {
+            svg path {
+                fill: none;
+                stroke: color.$light;
+            }
+
+            &:hover {
+                svg path {
+                    fill: color.$light;
+                    stroke: color.$light;
+                }
+            }
+        }
+
+        &__count {
+            background-color: transparent;
+            border-color: color.$text-dark-1;
+
+            button {
+                border-color: color.$text-dark-1;
+            }
+
+            input {
+                color: color.$white;
+            }
+        }
+
+        &__descr {
+            p {
+                color: color.$light-grey;
+            }
+        }
+    }
+
+    .product-block {
+        border-color: color.$text-dark-1;
+        background-color: color.$bg-dark;
+
+        &__count {
+            background-color: transparent;
+            border-color: color.$text-dark-1;
+
+            button {
+                border-color: color.$text-dark-1;
+            }
+
+            input {
+                color: color.$white;
+            }
+        }
+
+        &__icon {
+            svg path {
+                stroke: color.$light;
+            }
+
+            &:hover {
+                svg path {
+                    stroke: color.$bright-color-light;
+                }
+            }
+        }
+    }
+
+    .cart-form {
+        background-color: color.$bg-dark;
+
+        &__price {
+            color: color.$main-text-dark;
+        }
+
+        &__input {
+            border-color: color.$text-dark-1;
+            background-color: color.$main-bg-dark !important;
+            color: color.$main-text-dark !important;
+            box-shadow: 0 0 0px 1000px color.$main-bg-dark inset !important;
+
+
+            &:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0px 1000px color.$main-bg-dark inset !important;
+                -webkit-text-fill-color: color.$main-text-dark !important;
+            }
+
+            &::placeholder {
+                color: color.$text-dark-1 !important;
+            }
+        }
+
+
+    }
+
+    .liked-products {
         &__item {
             border-color: color.$text-dark-1;
         }
