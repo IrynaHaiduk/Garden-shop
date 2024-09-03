@@ -25,7 +25,7 @@ const DiscountPopup = ({ togglePopup }) => {
             const randomProduct = getRandomElement(products);
             const newPrice = randomProduct?.price * discountPercentage / 100;
             setDiscountProduct({ ...randomProduct, discont_price: newPrice });
-            console.log(discountProduct);
+            
         }
     }, [products]);
 
@@ -42,8 +42,6 @@ const DiscountPopup = ({ togglePopup }) => {
 
     const handleAddToCart = (product) => {
         dispatch(addProductToCart({...product, count: 1}));
-        togglePopup();
-        console.log("product", product);
     }
 
     return (

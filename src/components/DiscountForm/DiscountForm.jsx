@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form"
 import "./DiscountForm.scss";
 import iconError from "@/images/icons/icon-error.svg"
 import { useState, useEffect } from 'react';
+import { sendDiscountData } from '@/store/features/productSlice';
+import { useDispatch } from 'react-redux';
 
 const DiscountForm = () => {
+    const dispatch = useDispatch();
 
     const {
         register,
@@ -18,11 +21,22 @@ const DiscountForm = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
 
-    const submitForm = formData => {
-        setIsSubmitted(true);
-        setShowMessage(true);
-        reset();
-    }
+
+    const submitForm = async (formData) => {
+        try {
+            const result = await dispatch(sendDiscountData(formData)).unwrap();
+
+            if (result) {
+                setIsSubmitted(true);
+                setShowMessage(true);
+                setTimeout(() => {
+                    reset();
+                }, 2000);
+            }
+        } catch (error) {
+            console.error("Error submitting order:", error);
+        }
+    };
 
     useEffect(() => {
         if (showMessage) {

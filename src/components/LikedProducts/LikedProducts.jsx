@@ -101,7 +101,7 @@ const LikedProducts = ({ likedProducts, filteredLikedProducts }) => {
                     </>
                     )
                         : <p>
-                            There are no liked products added at the momentc
+                            There are no liked products added at the moment.
                         </p>
                 }
 

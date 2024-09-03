@@ -2,14 +2,14 @@ import React from 'react'
 import Heading from '../../components/Heading/Heading';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import {filterByPriceSale, sortByPriceSale } from '@/store/features/productSlice';
+import { filterByPriceSale, sortByPriceSale } from '@/store/features/productSlice';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import "./DiscountedProducts.scss";
 import { useState } from 'react';
 import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
 import Sort from '../Sort/Sort';
 
-const DiscountedProducts = ({discountedProducts, filteredDiscountedProducts }) => {
+const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) => {
 
     const dispatch = useDispatch();
     let [minPrice, setMinPrice] = useState("");
@@ -55,45 +55,44 @@ const DiscountedProducts = ({discountedProducts, filteredDiscountedProducts }) =
             <div className="container">
 
                 <Heading title="Discounted items" />
+                {data && data.length > 0 && <>
+                    <div className="filters">
 
-                <div className="filters">
+                        <div className="filters__item">
+                            <p>Price</p>
+                            <PriceRangeFilter
+                                minPrice={minPrice}
+                                maxPrice={maxPrice}
+                                setMinPrice={setMinPrice}
+                                setMaxPrice={setMaxPrice}
+                            />
 
-                    <div className="filters__item">
-                        <p>Price</p>
-                        <PriceRangeFilter
-                            minPrice={minPrice}
-                            maxPrice={maxPrice}
-                            setMinPrice={setMinPrice}
-                            setMaxPrice={setMaxPrice}
-                        />
+                        </div>
+
+                        <div className='filters__item'>
+                            <p>Sorted</p>
+                            <Sort
+                                labels={sortLabels}
+                                onSelect={setSortByValue}
+                                defaultSelect={sortByValue}
+                            />
+                        </div>
 
                     </div>
 
-                    <div className='filters__item'>
-                        <p>Sorted</p>
-                        <Sort
-                            labels={sortLabels}
-                            onSelect={setSortByValue}
-                            defaultSelect={sortByValue}
-                        />
-                    </div>
+                    <ul className="discounted-products__list">
 
-                </div>
+                        {
+                            data.map(product => (
+                                <li className="discounted-products__item" key={product.id}>
+                                    <ProductCard product={product} />
+                                </li>
+                            ))
+                        }
 
-                {
-                    data && (
-                        <ul className="discounted-products__list">
+                    </ul>
+                </>
 
-                            {
-                                data.map(product => (
-                                    <li className="discounted-products__item" key={product.id}>
-                                        <ProductCard product={product} />
-                                    </li>
-                                ))
-                            }
-
-                        </ul>
-                    )
                 }
 
             </div>

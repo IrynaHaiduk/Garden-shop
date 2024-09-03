@@ -89,6 +89,32 @@ export const fetchDiscountedProducts = createAsyncThunk(
 )
 
 
+
+export const sendDiscountData = createAsyncThunk(
+    "products/sendDiscountData",
+    async (discountData, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`${import.meta.env.APP_API_URL}/sale/send`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(discountData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                return rejectWithValue(errorData || "Failed to send discount data to server");
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.message || "An unexpected error occurred");
+        }
+    }
+)
+
 export const sendOrderData = createAsyncThunk(
     "products/sendOrderData",
     async (orderData, { rejectWithValue }) => {
