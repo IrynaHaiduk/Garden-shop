@@ -8,6 +8,13 @@ html,
 body {
     font-family: "Montserrat", "Roboto", "Helvetica Neue", Arial, sans-serif;
     box-sizing: border-box;
+    font-size: 14px;
+    line-height: 18.2px;
+
+    @media (min-width: 768px) {
+        font-size: 16px;
+        line-height: 20.8px;
+    }
 }
 
 .wrapper {
@@ -23,7 +30,8 @@ body {
     margin: 0;
 }
 
-a, button {
+a,
+button {
     color: inherit;
     font: inherit;
     text-decoration: none;
@@ -117,30 +125,29 @@ input[type='radio'].visually-hidden {
 
 .btn--white {
     cursor: pointer;
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 23.4px;
-        text-align: center;
-        color: color.$main-text-light;
-        background-color: color.$bg-light-1;
-        padding: 16px 32px;
-        gap: 10px;
-        border-radius: 6px;
-        border: none;
-        outline: none;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23.4px;
+    text-align: center;
+    color: color.$main-text-light;
+    background-color: color.$bg-light-1;
+    padding: 16px 32px;
+    gap: 10px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
 
-        @media (min-width: 768px) {
-            font-size: 20px;
-            line-height: 26px;
-        }
+    @media (min-width: 768px) {
+        font-size: 20px;
+        line-height: 26px;
+    }
 
-        &:hover {
-            background-color: color.$bright-color-light-1;
-            color: color.$white;
-        }
+    &:hover {
+        background-color: color.$bright-color-light-1;
+        color: color.$white;
+    }
 }
 
 .no-scroll {
     overflow: hidden;
 }
-

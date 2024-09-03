@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { decrementProductCart, deleteProductFromCart, incrementProductCart } from '@/store/features/productSlice';
+import Counter from "@/components/Counter/Counter";
 
 const ProductBlock = ({ product }) => {
 
@@ -58,12 +59,7 @@ const ProductBlock = ({ product }) => {
                         </div>
 
                         <div className="product-block__wrap">
-                            <div className="product-block__count">
-                                <button onClick={() => decrementCountProduct(product.id)}></button>
-                                <input type="text" value={product.count} disabled readOnly />
-                                <button onClick={() => incrementCountProduct(product.id)}></button>
-                            </div>
-
+                            <Counter product={product} incrementCount={incrementCountProduct} decrementCount={decrementCountProduct} />
                             {product.discont_price ? (
                                 <div className="product-block__price">
                                     <span className="product-block__price-new">

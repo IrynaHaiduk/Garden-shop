@@ -33,9 +33,24 @@
         font-size: 18px;
         font-weight: 500;
         line-height: 23.4px;
-        color: color.$white;
-        background-color: transparent;
         outline: none;
+        color: color.$white;
+        background-color: transparent !important;
+        outline: none;
+        -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+        box-shadow: 0 0 0px 1000px transparent inset !important;
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+            color: color.$white !important;
+            -webkit-text-fill-color: color.$white !important;
+            background-color: transparent !important;
+            -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+            box-shadow: 0 0 0px 1000px transparent inset !important;
+            transition: background-color 5000s ease-in-out 0s !important;
+        }
 
         @media (min-width: 768px) {
             padding: 15px 20px;

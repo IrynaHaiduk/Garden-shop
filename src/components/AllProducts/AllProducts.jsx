@@ -52,10 +52,10 @@ const AllProducts = ({ products, filteredProducts }) => {
         let minPriceVal = minPrice && minPrice > 0 ? minPrice : 0;
         let maxPriceVal = maxPrice ? maxPrice : Infinity;
 
-        dispatch(filterDiscountedProducts({value: isChecked}));
-        dispatch(filterByPrice({ minPrice: minPriceVal, maxPrice: maxPriceVal }));  
+        dispatch(filterDiscountedProducts({ value: isChecked }));
+        dispatch(filterByPrice({ minPrice: minPriceVal, maxPrice: maxPriceVal }));
         dispatch(sortByPrice({ value: sortByValue.value }));
-      
+
     }, [sortByValue, minPrice, maxPrice, isChecked, dispatch]);
 
 
@@ -66,38 +66,38 @@ const AllProducts = ({ products, filteredProducts }) => {
         <section className="all-products">
             <div className="container">
                 <Heading title="All products" />
+                {data && data.length > 0 &&  <>
+                    <div className="filters">
 
-                <div className="filters">
+                        <div className="filters__item">
+                            <p>Price</p>
+                            <PriceRangeFilter
+                                minPrice={minPrice}
+                                maxPrice={maxPrice}
+                                setMinPrice={setMinPrice}
+                                setMaxPrice={setMaxPrice}
+                            />
 
-                    <div className="filters__item">
-                        <p>Price</p>
-                        <PriceRangeFilter
-                            minPrice={minPrice}
-                            maxPrice={maxPrice}
-                            setMinPrice={setMinPrice}
-                            setMaxPrice={setMaxPrice}
-                        />
+                        </div>
+                        <div className='filters__item'>
+                            <CustomCheckbox
+                                title="Discounted items"
+                                checked={isChecked}
+                                onChange={handleCheckboxChange}
+                            />
+                        </div>
+                        <div className='filters__item'>
+                            <p>Sorted</p>
+                            <Sort
+                                labels={sortLabels}
+                                onSelect={setSortByValue}
+                                defaultSelect={sortByValue}
+                            />
+                        </div>
 
                     </div>
-                    <div className='filters__item'>
-                        <CustomCheckbox
-                            title="Discounted items"
-                            checked={isChecked}
-                            onChange={handleCheckboxChange}
-                        />
-                    </div>
-                    <div className='filters__item'>
-                        <p>Sorted</p>
-                        <Sort
-                            labels={sortLabels}
-                            onSelect={setSortByValue}
-                            defaultSelect={sortByValue}
-                        />
-                    </div>
 
-                </div>
 
-                {data &&
                     <ul className="all-products__list">
 
                         {
@@ -108,6 +108,7 @@ const AllProducts = ({ products, filteredProducts }) => {
                             ))
                         }
                     </ul>
+                </>
                 }
             </div>
 

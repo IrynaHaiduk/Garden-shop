@@ -12,14 +12,15 @@ import LikedProductsPage from '@/pages/LikedProductsPage/LikedProductsPage';
 import DiscountedProductsPage from '@/pages/DiscountedProductsPage/DiscountedProductsPage';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLikedProducts } from './store/features/productSlice';
+import { getCartProducts, getLikedProducts } from './store/features/productSlice';
 
 function App() {
  const dispatch = useDispatch();
-  const { likedProducts, filteredLikedProducts } = useSelector(state => state.products);
+  const { likedProducts, filteredLikedProducts, cart } = useSelector(state => state.products);
   
   useEffect(() => {
     dispatch(getLikedProducts());
+    dispatch(getCartProducts())
   }, [dispatch]);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ function App() {
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="all-products" element={<AllProductsPage />} />
           <Route path="products/:productId" element={<SingleProductPage />} />
-          <Route path="cart" element={<CartPage />} />
+          <Route path="cart" element={<CartPage cart={cart}/>} />
           <Route path="*" element={<ErrorPage />} />
           <Route path="categories/:categoryId" element={<ProductsFromCategoryPage />} />
           <Route path="liked-products" element={<LikedProductsPage likedProducts={likedProducts} filteredLikedProducts={filteredLikedProducts}/>} />

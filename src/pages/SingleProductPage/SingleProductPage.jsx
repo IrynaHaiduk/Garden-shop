@@ -24,35 +24,7 @@ const SingleProductPage = () => {
 
   return (
     <>
-      <div className="breadcrumbs">
-        <div className="container">
-          <nav className="breadcrumbs__nav">
-
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <Link to="/" className="breadcrumbs__link">
-                  <span> Main Page</span>                
-                </Link>
-              </li>
-              <li className="breadcrumbs__item">
-                <Link to="/categories" className="breadcrumbs__link">
-                  <span>Categories</span>
-                </Link>
-              </li>
-              <li className="breadcrumbs__item">
-                <Link to={`/categories/${categoryId}`} className="breadcrumbs__link">
-                  <span> {categoryData?.category?.title}</span>
-                </Link>
-              </li>
-              <li className="breadcrumbs__item">
-                <span className="breadcrumbs__link breadcrumbs__link--active">
-                  <span>{product?.title}</span>
-                </span>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div >
+      <Breadcrumbs categoryData={categoryData} lastTitle={product?.title} />
       <Product product={product} />
     </>
   )

@@ -194,19 +194,6 @@
             }
         }
 
-        &__count {
-            background-color: transparent;
-            border-color: color.$text-dark-1;
-
-            button {
-                border-color: color.$text-dark-1;
-            }
-
-            input {
-                color: color.$white;
-            }
-        }
-
         &__descr {
             p {
                 color: color.$light-grey;

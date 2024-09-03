@@ -55,22 +55,24 @@
                 height: 48px;
             }
 
-         
+
         }
 
         &:hover {
             cursor: pointer;
+
             svg path {
                 fill: color.$main-text-light;
                 stroke: color.$main-text-light;
             }
         }
 
-        &--active {
+
+        &.product__icon--active {
             svg path {
                 fill: color.$bright-color-light;
                 stroke: color.$bright-color-light;
-            }  
+            }
         }
     }
 
@@ -243,96 +245,6 @@
         }
     }
 
-    &__count {
-        border: 1px solid color.$light-grey;
-        border-radius: 6px;
-        max-width: 164px;
-        height: 47px;
-        display: flex;
-        align-items: stretch;
-        justify-content: space-between;
-        background-color: color.$white;
-
-        @media (min-width: 768px) {
-            max-width: 200px;
-            height: 58px;
-        }
-
-        @media (min-width: 1000px) {
-            min-width: 175px;
-            flex-grow: 1;
-        }
-
-        button {
-            cursor: pointer;
-            display: block;
-            width: 100%;
-            max-width: 47px;
-            height: 100%;
-            border: 1px solid color.$light-grey;
-            border-radius: 6px;
-            padding: 11px;
-            flex-grow: 1;
-            background-color: transparent;
-            font-family: inherit;
-            position: relative;
-
-            @media (min-width: 768px) {
-                max-width: 58px;
-            }
-
-            &::before {
-                content: "";
-                position: absolute;
-                border-radius: 2px;
-                width: 16px;
-                height: 2px;
-                background-color: color.$grey;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-            &:first-of-type {
-                border-width: 0 1px 0 0;
-
-            }
-
-            &:last-of-type {
-                border-width: 0 0 0 1px;
-
-                &::after {
-                    content: "";
-                    position: absolute;
-                    border-radius: 2px;
-                    width: 16px;
-                    height: 2px;
-                    background-color: color.$grey;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%) rotate(90deg);
-                }
-            }
-        }
-
-        input {
-            flex-grow: 0;
-            width: 100%;
-            font-size: 18px;
-            font-weight: 600;
-            line-height: 23.4px;
-            text-align: center;
-            border: none;
-            background-color: transparent;
-            font-family: inherit;
-
-            @media (min-width: 768px) {
-                font-size: 20px;
-                line-height: 26px;
-            }
-        }
-    }
-
     &__btn {
         width: 100%;
         padding: 12px 20px;
@@ -353,24 +265,14 @@
     }
 
     &__descr {
-        font-size: 14px;
-        line-height: 18.2px;
         display: flex;
         flex-direction: column;
         gap: 12px;
         align-items: start;
 
-
-
-        @media (min-width: 768px) {
-            font-size: 16px;
-            line-height: 20.8px;
-        }
-
         @media (min-width: 1000px) {
             gap: 16px;
         }
-
 
         &-title {
             font-size: 18px;

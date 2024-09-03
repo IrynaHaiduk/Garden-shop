@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import "./ProductCard.scss";
 import { useDispatch } from "react-redux";
 import { addProductToLiked, deleteProductFromLiked } from '@/store/features/productSlice'
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { addProductToCart, deleteProductFromCart, getCartProducts, getLikedProducts } from '../../store/features/productSlice';
 import { useEffect } from 'react';
@@ -11,40 +11,30 @@ import { useEffect } from 'react';
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
     const { likedProducts, cart } = useSelector(state => state.products);
-    let isProductInLiked = "";
-    let isProductInCart = "";
-
-    useEffect(() => {
-        dispatch(getLikedProducts());
-        dispatch(getCartProducts());
-    }, [dispatch]);
-
-    useEffect(() => {
-        isProductInLiked = likedProducts?.some(item => item.id === product.id);
-    }, []);
-
-    useEffect(() => {
-        isProductInCart = cart?.some(item => item.id === product.id);
-    }, []);
-
-    let discountPercentage = null;
-    let discountPrice = 0;
-
-    if (product && product.discont_price !== undefined && product.discont_price) {
-        discountPercentage = Math.round(((product.price - product.discont_price) / product.price) * 100);
-        discountPrice = Number.isInteger(product.discont_price) ? product.discont_price : (Math.round(product.discont_price * 100) / 100).toFixed(2);
-    }
-
-    const productPrice = Number.isInteger(product?.price) ? product?.price : product?.price.toFixed(2);
-
+    const [isProductInLiked, setIsProductInLiked] = useState(false);
+    const [isProductInCart, setIsProductInCart] = useState(false);
+    const [discountPercentage, discountPrice, productPrice] = useMemo(() => {
+        let discount = null;
+        let discountedPrice = 0;
+        const price = Number.isInteger(product?.price) ? product?.price : product?.price.toFixed(2);
+    
+        if (product && product.discont_price) {
+            discount = Math.round(((product.price - product.discont_price) / product.price) * 100);
+            discountedPrice = Number.isInteger(product.discont_price) 
+                ? product.discont_price 
+                : (Math.round(product.discont_price * 100) / 100).toFixed(2);
+        }
+        return [discount, discountedPrice, price];
+    }, [product]);
+    
     const toggleWishlist = (product, event) => {
         event.stopPropagation();
         event.preventDefault();
 
         if (!isProductInLiked) {
-            dispatch(addProductToLiked(product));
+            dispatch(addProductToLiked({...product, isProductInLiked}));
         } else {
-            dispatch(deleteProductFromLiked(product));
+            dispatch(deleteProductFromLiked({...product, isProductInLiked}));
         }
     };
 
@@ -55,9 +45,22 @@ const ProductCard = ({ product }) => {
         if (!isProductInCart) {
             dispatch(addProductToCart({ ...product, count: 1 }));
         } else {
-            dispatch(deleteProductFromCart(product));
+            dispatch(deleteProductFromCart({ ...product, count: 1 }));
         }
     };
+
+    useEffect(() => {
+        dispatch(getLikedProducts());
+        dispatch(getCartProducts());
+    }, [dispatch]);
+
+    useEffect(() => {
+        setIsProductInLiked(likedProducts?.some(item => item.id === product?.id));
+    }, [likedProducts, product?.id]);
+
+    useEffect(() => {
+        setIsProductInCart(cart?.some(item => item.id === product?.id));
+    }, [cart, product?.id]);
 
     return (
         <>
@@ -154,7 +157,6 @@ const ProductCard = ({ product }) => {
                 )
             }
         </>
-
     )
 }
 

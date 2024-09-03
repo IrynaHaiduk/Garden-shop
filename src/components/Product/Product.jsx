@@ -3,38 +3,22 @@ import "./Product.scss";
 import { useDispatch, useSelector } from 'react-redux';
 import ImagePopup from '../ImagePopup/ImagePopup';
 import { addProductToCart, addProductToLiked, decrementProductCart, deleteProductFromLiked, getCartProducts, getLikedProducts, incrementProductCart } from '../../store/features/productSlice';
+import Counter from "@/components/Counter/Counter";
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
-
   const { likedProducts, cart } = useSelector(state => state.products);
-
-  useEffect(() => {
-    dispatch(getLikedProducts());
-    dispatch(getCartProducts());
-  }, [dispatch]);
-
-  const isProductInLiked = likedProducts?.some(item => item?.id === product?.id);
-  const isProductInCart = cart?.some(item => item?.id === product?.id);
-
-  const foundProduct = isProductInCart ? cart?.find(item => item.id === product.id) : "";
-
-  const [productCount, setProductCount] = useState(foundProduct.count || 1);
+  const [isProductInLiked, setIsProductInLiked] = useState("");
+  const [isProductInCart, setIsProductInCart] = useState("");
+  const foundProduct = useMemo(() => cart?.find(item => item.id === product?.id), [cart, product?.id]);
+  const initialProductCount = useMemo(() => {
+    return foundProduct ? foundProduct.count : 1;
+  }, [foundProduct]);
+  const [productCount, setProductCount] = useState(initialProductCount);
 
   const productWithCount = {
     ...product,
-    count: productCount,
-  };
-
-  const toggleWishlist = (product, event) => {
-    event.stopPropagation();
-    event.preventDefault();
-
-    if (!isProductInLiked) {
-      dispatch(addProductToLiked(product));
-    } else {
-      dispatch(deleteProductFromLiked(product));
-    }
+    count: foundProduct ? productCount : 1,
   };
 
   const discountPercentage = useMemo(() => {
@@ -85,9 +69,47 @@ const Product = ({ product }) => {
 
   };
 
+  const toggleWishlist = (product, event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (!isProductInLiked) {
+      dispatch(addProductToLiked(product));
+    } else {
+      dispatch(deleteProductFromLiked(product));
+    }
+  };
+
+  const togglePopup = () => {
+    setIsPopupVisible(!isPopupVisible);
+  };
+  const addToCart = () => {
+    dispatch(addProductToCart({ ...productWithCount, count: productCount }));
+  };
+
+  useEffect(() => {
+    dispatch(getLikedProducts());
+    dispatch(getCartProducts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setIsProductInLiked(likedProducts?.some(item => item.id === productWithCount?.id));
+  }, [likedProducts, productWithCount?.id]);
+
+  useEffect(() => {
+    setIsProductInCart(cart?.some(item => item.id === productWithCount?.id));
+  }, [cart, productWithCount?.id]);
+
+  useEffect(() => {
+    if (foundProduct) {
+      setProductCount(foundProduct.count);
+    }
+  }, [foundProduct]);
+
   useEffect(() => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
+      setWindowWidth(currentWidth);
 
       if (currentWidth < 768) {
         setCharLimit(140);
@@ -98,14 +120,14 @@ const Product = ({ product }) => {
       } else {
         setCharLimit(250);
       }
-
-      setWindowWidth(currentWidth);
     };
 
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);  // Cleanup listener on unmount
+    };
   }, []);
 
   useEffect(() => {
@@ -120,13 +142,6 @@ const Product = ({ product }) => {
     };
   }, [isPopupVisible]);
 
-  const togglePopup = () => {
-    setIsPopupVisible(!isPopupVisible);
-  };
-
-  const addToCart = () => {
-    dispatch(addProductToCart({ ...productWithCount, count: productCount }));
-  };
 
   return (
     <>
@@ -200,11 +215,7 @@ const Product = ({ product }) => {
                   </div>
                 )}
                 <div className="product__wrap">
-                  <div className="product__count">
-                    <button onClick={() => decrementCountProduct()}></button>
-                    <input type="text" value={productCount} disabled readOnly />
-                    <button onClick={() => incrementCountProduct()}></button>
-                  </div>
+                  <Counter product={productWithCount} incrementCount={incrementCountProduct} decrementCount={decrementCountProduct} />
                   <button className="product__btn btn--bright" onClick={addToCart}>
                     Add to cart
                   </button>
