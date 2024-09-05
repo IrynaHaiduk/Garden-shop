@@ -1,10 +1,9 @@
 import React from 'react'
 import Cart from '@/components/Cart/Cart';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getCartProducts } from '@/store/features/productSlice';
+import { useSelector} from 'react-redux';
 
-const CartPage = ({cart}) => {
+const CartPage = () => {
+  const { cart } = useSelector(state => state.products);
 
   return (
     <>
@@ -13,4 +12,4 @@ const CartPage = ({cart}) => {
   )
 }
 
-export default CartPage
+export default CartPage;

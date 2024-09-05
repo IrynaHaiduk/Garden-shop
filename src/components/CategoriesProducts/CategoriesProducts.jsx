@@ -57,8 +57,6 @@ const CategoriesProducts = ({ categoryData, filteredCategoryData }) => {
 
     }, [sortByValue, minPrice, maxPrice, isChecked, dispatch]);
 
-   
-
     const data = filteredCategoryData?.length > 0 ? filteredCategoryData : categoryData?.data;
     
     return (

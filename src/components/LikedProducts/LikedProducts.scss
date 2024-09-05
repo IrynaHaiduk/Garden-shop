@@ -15,4 +15,49 @@
         border-radius: 12px;
         overflow: hidden;
     }
+
+
+    &__container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        align-items: flex-start;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 23.4px;
+
+        @media (min-width: 768px) {
+            font-size: 20px;
+            line-height: 26px;
+            gap: 32px;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 24px;
+
+            @media (min-width: 768px) {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__info {
+        @media (min-width: 1000px) {
+           width: 50%;
+        }
+    }
+
+
+    &__link {
+        font-weight: 600;
+        padding: 12px 24px;
+        min-width: 285px;
+        text-align: center;
+
+        @media (min-width: 768px) {
+            padding: 16px 32px;
+            min-width: 313px;
+        }
+    }
 }

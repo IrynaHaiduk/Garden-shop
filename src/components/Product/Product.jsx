@@ -88,11 +88,6 @@ const Product = ({ product }) => {
   };
 
   useEffect(() => {
-    dispatch(getLikedProducts());
-    dispatch(getCartProducts());
-  }, [dispatch]);
-
-  useEffect(() => {
     setIsProductInLiked(likedProducts?.some(item => item.id === productWithCount?.id));
   }, [likedProducts, productWithCount?.id]);
 

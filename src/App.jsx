@@ -11,12 +11,11 @@ import ProductsFromCategoryPage from '@/pages/ProductsFromCategoryPage/ProductsF
 import LikedProductsPage from '@/pages/LikedProductsPage/LikedProductsPage';
 import DiscountedProductsPage from '@/pages/DiscountedProductsPage/DiscountedProductsPage';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getCartProducts, getLikedProducts } from './store/features/productSlice';
 
 function App() {
  const dispatch = useDispatch();
-  const { likedProducts, filteredLikedProducts, cart } = useSelector(state => state.products);
   
   useEffect(() => {
     dispatch(getLikedProducts());
@@ -50,10 +49,10 @@ function App() {
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="all-products" element={<AllProductsPage />} />
           <Route path="products/:productId" element={<SingleProductPage />} />
-          <Route path="cart" element={<CartPage cart={cart}/>} />
+          <Route path="cart" element={<CartPage/>} />
           <Route path="*" element={<ErrorPage />} />
           <Route path="categories/:categoryId" element={<ProductsFromCategoryPage />} />
-          <Route path="liked-products" element={<LikedProductsPage likedProducts={likedProducts} filteredLikedProducts={filteredLikedProducts}/>} />
+          <Route path="liked-products" element={<LikedProductsPage/>} />
           <Route path="all-sales" element={<DiscountedProductsPage />} />
         </Route>
       </Routes>
