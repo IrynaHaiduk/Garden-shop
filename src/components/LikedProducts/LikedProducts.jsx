@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { filterByPriceLiked, sortByPriceLiked } from '@/store/features/productSlice';
 import { useEffect } from 'react';
 import Heading from '../Heading/Heading';
@@ -9,9 +9,11 @@ import Sort from '../Sort/Sort';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import "./LikedProducts.scss";
 import { getLikedProducts } from '@/store/features/productSlice';
+import { Link } from 'react-router-dom';
 
 
-const LikedProducts = ({ likedProducts, filteredLikedProducts }) => {
+const LikedProducts = () => {
+    const { likedProducts, filteredLikedProducts, cart } = useSelector(state => state.products);
 
     const dispatch = useDispatch();
     let [minPrice, setMinPrice] = useState("");
@@ -100,9 +102,20 @@ const LikedProducts = ({ likedProducts, filteredLikedProducts }) => {
                         </ul>
                     </>
                     )
-                        : <p>
-                            There are no liked products added at the moment.
-                        </p>
+                        :
+                        (
+                            <div className="liked-products__container">
+                                <div className="liked-products__info">
+                                    <p>
+                                        Looks like you currently have no liked products.
+                                    </p>
+                                </div>
+                                <Link to="/all-products" className='liked-products__link btn--bright'>
+                                    Continue Shopping
+                                </Link>
+                            </div>
+                        )
+
                 }
 
             </div>

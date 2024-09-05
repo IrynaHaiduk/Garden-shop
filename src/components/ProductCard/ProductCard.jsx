@@ -50,11 +50,6 @@ const ProductCard = ({ product }) => {
     };
 
     useEffect(() => {
-        dispatch(getLikedProducts());
-        dispatch(getCartProducts());
-    }, [dispatch]);
-
-    useEffect(() => {
         setIsProductInLiked(likedProducts?.some(item => item.id === product?.id));
     }, [likedProducts, product?.id]);
 

@@ -89,7 +89,6 @@ export const fetchDiscountedProducts = createAsyncThunk(
 )
 
 
-
 export const sendDiscountData = createAsyncThunk(
     "products/sendDiscountData",
     async (discountData, { rejectWithValue }) => {
@@ -176,6 +175,7 @@ export const productSlice = createSlice({
         },
         deleteProductFromLiked: (state, { payload }) => {
             state.likedProducts = state.likedProducts.filter(product => product.id !== payload.id);
+            state.filteredLikedProducts = state.filteredLikedProducts.filter(product => product.id !== payload.id);
             localStorage.setItem("likedProducts", JSON.stringify(state.likedProducts));
         },
         getCartProducts: state => {
@@ -219,16 +219,19 @@ export const productSlice = createSlice({
                 if (product.id === payload && product.count > 1) {
                     product.count -= 1;
                 }
-
                 return product;
             });
-
             localStorage.setItem("cartProducts", JSON.stringify(state.cart));
         },
         deleteProductFromCart: (state, { payload }) => {
             state.cart = state.cart.filter(product => product.id !== payload.id);
             localStorage.setItem("cartProducts", JSON.stringify(state.cart));
         },
+        clearCard: state => {
+            state.cart = [];
+            localStorage.setItem("cartProducts", JSON.stringify(state.cart));
+        },
+    
         sortByPrice: (state, { payload }) => {
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
 
@@ -251,9 +254,7 @@ export const productSlice = createSlice({
                 state.filteredCategoryData = data;
             }
         },
-        clearCard: state => {
-            state.cart = [];
-        },
+
         clearCategoryFilteredData: state => {
             state.filteredCategoryData = [];
         },
@@ -422,6 +423,8 @@ export const productSlice = createSlice({
             })
             .addCase(fetchCategoryById.fulfilled, (state, action) => {
                 state.loading = false;
+                state.categoryData= {};
+                state.filteredCategoryData = [];
                 state.categoryData = action.payload;
             })
             .addCase(fetchCategoryById.rejected, (state, action) => {

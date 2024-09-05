@@ -1,8 +1,11 @@
 import React from 'react';
 import "./SuccessPopup.scss";
+import { clearCard, sendOrderData } from '../../store/features/productSlice';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
-const SuccessPopup = ({ toggleFormDataSent }) => {
-
+const SuccessPopup = ({ toggleFormDataSent, reset }) => {
+    const dispatch = useDispatch();
     const handlePopupClose = (event) => {
 
         if (event.target.closest('.success-popup__card')) {
@@ -12,7 +15,19 @@ const SuccessPopup = ({ toggleFormDataSent }) => {
         if (event.target.closest('.success-popup')) {
             toggleFormDataSent();
         }
+
+        console.log("send");
+   
     }
+
+    useEffect(()=>{
+
+        return () => {
+            dispatch(clearCard());
+            reset();
+        }
+
+    },[])
 
     return (
         <div className='success-popup' onClick={(e) => handlePopupClose(e)}>

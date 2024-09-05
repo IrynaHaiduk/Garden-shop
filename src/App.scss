@@ -8,12 +8,13 @@ html,
 body {
     font-family: "Montserrat", "Roboto", "Helvetica Neue", Arial, sans-serif;
     box-sizing: border-box;
-    font-size: 14px;
-    line-height: 18.2px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 23.4px;
 
     @media (min-width: 768px) {
-        font-size: 16px;
-        line-height: 20.8px;
+        font-size: 20px;
+        line-height: 26px;
     }
 }
 

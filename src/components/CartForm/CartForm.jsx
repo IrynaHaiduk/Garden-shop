@@ -28,28 +28,19 @@ const CartForm = ({ cart }) => {
     }
 
 
-
     const submitForm = async (formData) => {
         try {
             const result = await dispatch(sendOrderData({ userData: formData, orderData: cart })).unwrap();
 
             if (result) {
                 toggleFormDataSent();
-
-
-                dispatch(clearCard());
-                reset();
-
-                setTimeout(() => {
-                    dispatch(clearCard());
-                    reset();
-                }, 15000)
-
             }
         } catch (error) {
             console.error("Error submitting order:", error);
         }
     };
+
+  
 
 
     useEffect(() => {
@@ -181,7 +172,11 @@ const CartForm = ({ cart }) => {
                         </form>
 
                         {
-                            formDataSent && <SuccessPopup toggleFormDataSent={toggleFormDataSent} />
+                            formDataSent && <SuccessPopup 
+                            toggleFormDataSent={toggleFormDataSent} 
+                            reset={() => reset()}
+                            clearCard={() => dispatch(clearCard())}
+                            />
                         }
 
                     </div>

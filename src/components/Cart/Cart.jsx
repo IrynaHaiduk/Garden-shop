@@ -7,7 +7,6 @@ import CartForm from '@/components/CartForm/CartForm';
 
 
 const Cart = ({ cart }) => {
-    console.log(cart);
     return (
         <>
             {
