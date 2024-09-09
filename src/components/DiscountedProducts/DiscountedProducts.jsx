@@ -8,6 +8,8 @@ import "./DiscountedProducts.scss";
 import { useState } from 'react';
 import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
 import Sort from '../Sort/Sort';
+import ProductsBlock from '../ProductsBlock/ProductsBlock';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) => {
 
@@ -47,6 +49,8 @@ const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) 
     }, [sortByValue, minPrice, maxPrice, dispatch]);
 
 
+    const skeletonCardsCount = discountedProducts.length || 12;
+
     const data = filteredDiscountedProducts.length > 0 ? filteredDiscountedProducts : discountedProducts;
 
 
@@ -55,46 +59,32 @@ const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) 
             <div className="container">
 
                 <Heading title="Discounted items" />
-                {data && data.length > 0 && <>
-                    <div className="filters">
 
-                        <div className="filters__item">
-                            <p>Price</p>
-                            <PriceRangeFilter
-                                minPrice={minPrice}
-                                maxPrice={maxPrice}
-                                setMinPrice={setMinPrice}
-                                setMaxPrice={setMaxPrice}
-                            />
+                <div className="filters">
 
-                        </div>
-
-                        <div className='filters__item'>
-                            <p>Sorted</p>
-                            <Sort
-                                labels={sortLabels}
-                                onSelect={setSortByValue}
-                                defaultSelect={sortByValue}
-                            />
-                        </div>
+                    <div className="filters__item">
+                        <p>Price</p>
+                        <PriceRangeFilter
+                            minPrice={minPrice}
+                            maxPrice={maxPrice}
+                            setMinPrice={setMinPrice}
+                            setMaxPrice={setMaxPrice}
+                        />
 
                     </div>
 
-                    <ul className="discounted-products__list">
+                    <div className='filters__item'>
+                        <p>Sorted</p>
+                        <Sort
+                            labels={sortLabels}
+                            onSelect={setSortByValue}
+                            defaultSelect={sortByValue}
+                        />
+                    </div>
 
-                        {
-                            data.map(product => (
-                                <li className="discounted-products__item" key={product.id}>
-                                    <ProductCard product={product} />
-                                </li>
-                            ))
-                        }
+                </div>
 
-                    </ul>
-                </>
-
-                }
-
+                <ProductsBlock data={data} skeletonCardsCount={skeletonCardsCount} />
             </div>
         </section>
     )

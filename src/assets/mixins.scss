@@ -36,6 +36,23 @@
     >li {
         width: 100%;
         display: block;
+        min-height: 335px;
+
+        @media (min-width: 480px) {
+            min-height: 358px;
+        }
+
+        @media (min-width: 768px) {
+            min-height: 372px;
+        }
+    
+        @media (min-width: 1000px) {
+            min-height: 398px;
+        }
+    
+        @media (min-width: 1440px) {
+            min-height: 422px;
+        }
     }
 
     @media (min-width: 480px) {
@@ -54,7 +71,6 @@
 @mixin roundLightBorder {
     border: 1px solid color.$text-light-2;
     border-radius: 6px;
-
 }
 
 

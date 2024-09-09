@@ -163,7 +163,7 @@ export const productSlice = createSlice({
                 localStorage.setItem("likedProducts", JSON.stringify([]))
             }
         },
-        
+
         addProductToLiked: (state, { payload }) => {
             const foundProduct = state.likedProducts.find(product => product.id === payload.id);
 
@@ -231,14 +231,19 @@ export const productSlice = createSlice({
             state.cart = [];
             localStorage.setItem("cartProducts", JSON.stringify(state.cart));
         },
-    
+        clearCategoryData: state => {
+            state.categoryData = {};
+            state.filteredCategoryData = [];
+        },
         sortByPrice: (state, { payload }) => {
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
 
+            const getPrice = (product) => product.discont_price ?? product.price;
+
             if (payload.value === 'low-to-high') {
-                state.filteredProducts = [...data].sort((a, b) => a.price - b.price);
+                state.filteredProducts = [...data].sort((a, b) => getPrice(a) - getPrice(b));
             } else if (payload.value === 'high-to-low') {
-                state.filteredProducts = [...data].sort((a, b) => b.price - a.price);
+                state.filteredProducts = [...data].sort((a, b) => getPrice(b) - getPrice(a));
             } else {
                 state.filteredProducts = data;
             }
@@ -246,10 +251,12 @@ export const productSlice = createSlice({
         sortByPriceCategory: (state, { payload }) => {
             let data = state.filteredCategoryData?.length > 0 ? state.filteredCategoryData : state.categoryData?.data;
 
+            const getPrice = (product) => product.discont_price ?? product.price;
+
             if (payload.value === 'low-to-high') {
-                state.filteredCategoryData = [...data].sort((a, b) => a.price - b.price);
+                state.filteredCategoryData = [...data].sort((a, b) => getPrice(a) - getPrice(b));
             } else if (payload.value === 'high-to-low') {
-                state.filteredCategoryData = [...data].sort((a, b) => b.price - a.price);
+                state.filteredCategoryData = [...data].sort((a, b) => getPrice(b) - getPrice(a));
             } else {
                 state.filteredCategoryData = data;
             }
@@ -260,22 +267,24 @@ export const productSlice = createSlice({
         },
         sortByPriceSale: (state, { payload }) => {
             let data = state.filteredDiscountedProducts?.length > 0 ? state.filteredDiscountedProducts : state.discountedProducts;
+            const getPrice = (product) => product.discont_price ?? product.price;
 
             if (payload.value === 'low-to-high') {
-                state.filteredDiscountedProducts = [...data].sort((a, b) => a.price - b.price);
+                state.filteredDiscountedProducts = [...data].sort((a, b) => getPrice(a) - getPrice(b));
             } else if (payload.value === 'high-to-low') {
-                state.filteredDiscountedProducts = [...data].sort((a, b) => b.price - a.price);
+                state.filteredDiscountedProducts = [...data].sort((a, b) => getPrice(b) - getPrice(a));
             } else {
                 state.filteredDiscountedProducts = data;
             }
         },
         sortByPriceLiked: (state, { payload }) => {
             let data = state.filteredLikedProducts?.length > 0 ? state.filteredLikedProducts : state.likedProducts;
+            const getPrice = (product) => product.discont_price ?? product.price;
 
             if (payload.value === 'low-to-high') {
-                state.filteredLikedProducts = [...data].sort((a, b) => a.price - b.price);
+                state.filteredLikedProducts = [...data].sort((a, b) => getPrice(a) - getPrice(b));
             } else if (payload.value === 'high-to-low') {
-                state.filteredLikedProducts = [...data].sort((a, b) => b.price - a.price);
+                state.filteredLikedProducts = [...data].sort((a, b) => getPrice(b) - getPrice(a));
             } else {
                 state.filteredLikedProducts = data;
             }
@@ -283,21 +292,21 @@ export const productSlice = createSlice({
         filterByPrice: (state, { payload }) => {
             const { minPrice, maxPrice } = payload;
             const minPriceValue = !isNaN(Number(minPrice)) ? Number(minPrice) : null;
-            const maxPriceValue = !isNaN(Number(maxPrice)) ? Number(maxPrice) : null;;
+            const maxPriceValue = !isNaN(Number(maxPrice)) ? Number(maxPrice) : null;
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
 
-            if (minPriceValue && maxPriceValue) {
-                state.filteredProducts = data.filter(item => item.price >= minPriceValue && item.price <= maxPriceValue);
+            state.filteredProducts = data.filter(item => {
+                const price = item.discont_price ? item.discont_price : item.price;
 
-            } else if (minPriceValue) {
-                state.filteredProducts = data.filter(item => item.price >= minPriceValue);
-
-            } else if (maxPriceValue) {
-                state.filteredProducts = data.filter(item => item.price <= maxPriceValue);
-
-            } else {
-                state.filteredProducts = data;
-            }
+                if (minPriceValue && maxPriceValue) {
+                    return price >= minPriceValue && price <= maxPriceValue;
+                } else if (minPriceValue) {
+                    return price >= minPriceValue;
+                } else if (maxPriceValue) {
+                    return price <= maxPriceValue;
+                }
+                return true;
+            });
         },
         filterByPriceCategory: (state, { payload }) => {
             const { minPrice, maxPrice } = payload;
@@ -306,18 +315,18 @@ export const productSlice = createSlice({
 
             let data = state.filteredCategoryData?.length > 0 ? state.filteredCategoryData : state.categoryData?.data;
 
-            if (minPriceValue && maxPriceValue) {
-                state.filteredCategoryData = data.filter(item => item.price >= minPriceValue && item.price <= maxPriceValue);
+            state.filteredCategoryData = data?.filter(item => {
+                const price = item.discont_price ? item.discont_price : item.price;
 
-            } else if (minPriceValue) {
-                state.filteredCategoryData = data.filter(item => item.price >= minPriceValue);
-
-            } else if (maxPriceValue) {
-                state.filteredCategoryData = data?.filter(item => item.price <= maxPriceValue);
-
-            } else {
-                state.filteredCategoryData = data;
-            }
+                if (minPriceValue && maxPriceValue) {
+                    return price >= minPriceValue && price <= maxPriceValue;
+                } else if (minPriceValue) {
+                    return price >= minPriceValue;
+                } else if (maxPriceValue) {
+                    return price <= maxPriceValue;
+                }
+                return true;
+            });
         },
         filterByPriceSale: (state, { payload }) => {
             const { minPrice, maxPrice } = payload;
@@ -326,39 +335,39 @@ export const productSlice = createSlice({
 
             let data = state.discountedProducts;
 
-            if (minPriceValue && maxPriceValue) {
-                state.filteredDiscountedProducts = data.filter(item => item.price >= minPriceValue && item.price <= maxPriceValue);
 
-            } else if (minPriceValue) {
-                state.filteredDiscountedProducts = data.filter(item => item.price >= minPriceValue);
+            state.filteredDiscountedProducts = data?.filter(item => {
+                const price = item.discont_price ? item.discont_price : item.price;
 
-            } else if (maxPriceValue) {
-                state.filteredDiscountedProducts = data.filter(item => item.price <= maxPriceValue);
-
-            } else {
-                state.filteredDiscountedProducts = data;
-            }
+                if (minPriceValue && maxPriceValue) {
+                    return price >= minPriceValue && price <= maxPriceValue;
+                } else if (minPriceValue) {
+                    return price >= minPriceValue;
+                } else if (maxPriceValue) {
+                    return price <= maxPriceValue;
+                }
+                return true;
+            });
         },
         filterByPriceLiked: (state, { payload }) => {
             const { minPrice, maxPrice } = payload;
             const minPriceValue = !isNaN(Number(minPrice)) ? Number(minPrice) : null;
             const maxPriceValue = !isNaN(Number(maxPrice)) ? Number(maxPrice) : null;
 
-
             let data = state.likedProducts;
 
-            if (minPriceValue && maxPriceValue) {
-                state.filteredLikedProducts = data.filter(item => item.price >= minPriceValue && item.price <= maxPriceValue);
+            state.filteredLikedProducts = data?.filter(item => {
+                const price = item.discont_price ? item.discont_price : item.price;
 
-            } else if (minPriceValue) {
-                state.filteredLikedProducts = data.filter(item => item.price >= minPriceValue);
-
-            } else if (maxPriceValue) {
-                state.filteredLikedProducts = data.filter(item => item.price <= maxPriceValue);
-
-            } else {
-                state.filteredLikedProducts = data;
-            }
+                if (minPriceValue && maxPriceValue) {
+                    return price >= minPriceValue && price <= maxPriceValue;
+                } else if (minPriceValue) {
+                    return price >= minPriceValue;
+                } else if (maxPriceValue) {
+                    return price <= maxPriceValue;
+                }
+                return true;
+            });
         },
         filterDiscountedProducts: (state, { payload }) => {
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
@@ -423,7 +432,7 @@ export const productSlice = createSlice({
             })
             .addCase(fetchCategoryById.fulfilled, (state, action) => {
                 state.loading = false;
-                state.categoryData= {};
+                state.categoryData = {};
                 state.filteredCategoryData = [];
                 state.categoryData = action.payload;
             })
@@ -467,7 +476,8 @@ export const {
     filterByPriceLiked,
     deleteProductFromLiked,
     getLikedProducts,
-    getCartProducts
+    getCartProducts,
+    clearCategoryData
 
 } = productSlice.actions
 

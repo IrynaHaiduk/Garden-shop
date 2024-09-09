@@ -23,6 +23,25 @@
         }
     }
 
+    &__item {
+        border-radius: 12px;
+        overflow: hidden;
+        min-height: 220px;
+    
+
+        @media (min-width: 480px) {
+            min-height: 260px;
+        }
+
+        @media (min-width: 768px) {
+            min-height: 250px;
+        }
+
+        @media (min-width: 1440px) {
+            min-height: 350px;
+        }
+    }
+
     .category__image {
         @media (min-width: 1000px) {
             padding-bottom: 81.6%;

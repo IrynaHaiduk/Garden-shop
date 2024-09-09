@@ -8,11 +8,19 @@ import { filterDiscountedProductsCategory, filterByPriceCategory, sortByPriceCat
 import { useState, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
-import { clearCategoryFilteredData } from '../../store/features/productSlice';
+import { clearCategoryData, clearCategoryFilteredData } from '@/store/features/productSlice';
+import { useSelector } from 'react-redux';
+import 'react-loading-skeleton/dist/skeleton.css'
+import CardSkeleton from '../CardSkeleton/CardSkeleton';
+import ProductsBlock from '../ProductsBlock/ProductsBlock';
+
+
 
 
 const CategoriesProducts = ({ categoryData, filteredCategoryData }) => {
     const dispatch = useDispatch();
+    let { loading } = useSelector(state => state.products);
+
 
     let [minPrice, setMinPrice] = useState("");
     let [maxPrice, setMaxPrice] = useState("");
@@ -55,10 +63,21 @@ const CategoriesProducts = ({ categoryData, filteredCategoryData }) => {
         dispatch(filterByPriceCategory({ minPrice: minPriceVal, maxPrice: maxPriceVal }));
         dispatch(sortByPriceCategory({ value: sortByValue.value }));
 
+        /*  return () => {
+             dispatch(clearCategoryData());
+         }; */
+
     }, [sortByValue, minPrice, maxPrice, isChecked, dispatch]);
 
+    useEffect(() => {
+        return () => {
+            dispatch(clearCategoryData());
+        };
+    }, []);
+
+    const skeletonCardsCount = categoryData.length || 12;
+
     const data = filteredCategoryData?.length > 0 ? filteredCategoryData : categoryData?.data;
-    
     return (
         <section className="categories-products">
             <div className="container">
@@ -95,19 +114,7 @@ const CategoriesProducts = ({ categoryData, filteredCategoryData }) => {
                     </div>
 
                 </div>
-
-                {data &&
-                    <ul className="categories-products__list">
-
-                        {
-                            data.map(product => (
-                                <li key={product.id} className="categories-products__item">
-                                    <ProductCard product={product} />
-                                </li>
-                            ))
-                        }
-                    </ul>
-                }
+                <ProductsBlock data={data} skeletonCardsCount={skeletonCardsCount} />
             </div>
 
 
