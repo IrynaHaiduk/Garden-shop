@@ -10,6 +10,7 @@ import ProductCard from '@/components/ProductCard/ProductCard';
 import "./LikedProducts.scss";
 import { getLikedProducts } from '@/store/features/productSlice';
 import { Link } from 'react-router-dom';
+import ProductsBlock from '../ProductsBlock/ProductsBlock';
 
 
 const LikedProducts = () => {
@@ -52,7 +53,9 @@ const LikedProducts = () => {
 
     useEffect(() => {
         dispatch(getLikedProducts());
-    }, [dispatch])
+    }, [dispatch]);
+
+    const skeletonCardsCount = likedProducts.length || 12;
 
     const data = filteredLikedProducts.length > 0 ? filteredLikedProducts : likedProducts;
 
@@ -63,57 +66,47 @@ const LikedProducts = () => {
             <div className="container">
                 <Heading title="Liked products" />
 
+
+                <div className="filters">
+
+                    <div className="filters__item">
+                        <p>Price</p>
+                        <PriceRangeFilter
+                            minPrice={minPrice}
+                            maxPrice={maxPrice}
+                            setMinPrice={setMinPrice}
+                            setMaxPrice={setMaxPrice}
+                        />
+
+                    </div>
+
+                    <div className='filters__item'>
+                        <p>Sorted</p>
+                        <Sort
+                            labels={sortLabels}
+                            onSelect={setSortByValue}
+                            defaultSelect={sortByValue}
+                        />
+                    </div>
+
+                </div>
+
                 {
-                    data && data.length > 0 ? (<>
-                        <div className="filters">
-
-                            <div className="filters__item">
-                                <p>Price</p>
-                                <PriceRangeFilter
-                                    minPrice={minPrice}
-                                    maxPrice={maxPrice}
-                                    setMinPrice={setMinPrice}
-                                    setMaxPrice={setMaxPrice}
-                                />
-
+                    !data || data.length === 0 ? (
+                        <div className="liked-products__container">
+                            <div className="liked-products__info">
+                                <p>
+                                    Looks like you currently have no liked products.
+                                </p>
                             </div>
-
-                            <div className='filters__item'>
-                                <p>Sorted</p>
-                                <Sort
-                                    labels={sortLabels}
-                                    onSelect={setSortByValue}
-                                    defaultSelect={sortByValue}
-                                />
-                            </div>
-
+                            <Link to="/all-products" className='liked-products__link btn--bright'>
+                                Continue Shopping
+                            </Link>
                         </div>
-
-                        <ul className="liked-products__list">
-
-                            {
-                                data.map(product => (
-                                    <li className="liked-products__item" key={product.id}>
-                                        <ProductCard product={product} />
-                                    </li>
-                                ))
-                            }
-
-                        </ul>
-                    </>
                     )
                         :
                         (
-                            <div className="liked-products__container">
-                                <div className="liked-products__info">
-                                    <p>
-                                        Looks like you currently have no liked products.
-                                    </p>
-                                </div>
-                                <Link to="/all-products" className='liked-products__link btn--bright'>
-                                    Continue Shopping
-                                </Link>
-                            </div>
+                            <ProductsBlock data={data} skeletonCardsCount={skeletonCardsCount} />
                         )
 
                 }

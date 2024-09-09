@@ -4,14 +4,4 @@
 .categories-products {
     @include responsiveMarginTop;
     @include responsiveMarginBottom;
-
-    &__list {
-        @include itemsList;
-    }
-
-    &__item {
-        border: 1px solid color.$text-light-2;
-        border-radius: 12px;
-        overflow: hidden;
-    }
 }

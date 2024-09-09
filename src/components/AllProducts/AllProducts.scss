@@ -13,6 +13,10 @@
         border: 1px solid color.$text-light-2;
         border-radius: 12px;
         overflow: hidden;
+
+        &--no-border {
+            border-color: transparent;
+        }
     }
 }
 

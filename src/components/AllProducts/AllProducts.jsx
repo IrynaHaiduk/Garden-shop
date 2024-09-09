@@ -1,7 +1,7 @@
 import React from 'react';
 import "./AllProducts.scss";
 import Heading from '@/components/Heading/Heading';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { useEffect } from 'react';
 import { sortByPrice } from '@/store/features/productSlice';
@@ -11,10 +11,15 @@ import { filterByPrice } from '@/store/features/productSlice';
 import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
 import { filterDiscountedProducts } from '../../store/features/productSlice';
 import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import CardSkeleton from '../CardSkeleton/CardSkeleton';
+import ProductsBlock from '../ProductsBlock/ProductsBlock';
 
 const AllProducts = ({ products, filteredProducts }) => {
 
     const dispatch = useDispatch();
+    let { loading } = useSelector(state => state.products);
     let [minPrice, setMinPrice] = useState("");
     let [maxPrice, setMaxPrice] = useState("");
     const [sortByValue, setSortByValue] = useState({
@@ -58,6 +63,7 @@ const AllProducts = ({ products, filteredProducts }) => {
 
     }, [sortByValue, minPrice, maxPrice, isChecked, dispatch]);
 
+    const skeletonCardsCount = products.length || 12; // Динамічно визначаємо кількість скелетонів
 
     const data = filteredProducts.length > 0 ? filteredProducts : products;
 
@@ -66,50 +72,60 @@ const AllProducts = ({ products, filteredProducts }) => {
         <section className="all-products">
             <div className="container">
                 <Heading title="All products" />
-                {data && data.length > 0 &&  <>
-                    <div className="filters">
+                <div className="filters">
 
-                        <div className="filters__item">
-                            <p>Price</p>
-                            <PriceRangeFilter
-                                minPrice={minPrice}
-                                maxPrice={maxPrice}
-                                setMinPrice={setMinPrice}
-                                setMaxPrice={setMaxPrice}
-                            />
-
-                        </div>
-                        <div className='filters__item'>
-                            <CustomCheckbox
-                                title="Discounted items"
-                                checked={isChecked}
-                                onChange={handleCheckboxChange}
-                            />
-                        </div>
-                        <div className='filters__item'>
-                            <p>Sorted</p>
-                            <Sort
-                                labels={sortLabels}
-                                onSelect={setSortByValue}
-                                defaultSelect={sortByValue}
-                            />
-                        </div>
+                    <div className="filters__item">
+                        <p>Price</p>
+                        <PriceRangeFilter
+                            minPrice={minPrice}
+                            maxPrice={maxPrice}
+                            setMinPrice={setMinPrice}
+                            setMaxPrice={setMaxPrice}
+                        />
 
                     </div>
+                    <div className='filters__item'>
+                        <CustomCheckbox
+                            title="Discounted items"
+                            checked={isChecked}
+                            onChange={handleCheckboxChange}
+                        />
+                    </div>
+                    <div className='filters__item'>
+                        <p>Sorted</p>
+                        <Sort
+                            labels={sortLabels}
+                            onSelect={setSortByValue}
+                            defaultSelect={sortByValue}
+                        />
+                    </div>
 
-
+                </div>
+               {/*  {loading ? (
                     <ul className="all-products__list">
-
-                        {
-                            data.map(product => (
-                                <li key={product.id} className="all-products__item">
-                                    <ProductCard product={product} />
-                                </li>
-                            ))
-                        }
+                        {Array(skeletonCardsCount).fill().map((_, index) => (
+                            <li key={index} className="all-products__item all-products__item--no-border">
+                                <CardSkeleton /> 
+                            </li>
+                        ))}
                     </ul>
-                </>
-                }
+                ) : (
+                    data && data.length > 0 && <>
+                        <ul className="all-products__list">
+
+                            {
+                                data.map(product => (
+                                    <li key={product.id} className="all-products__item">
+                                        <ProductCard product={product} />
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </>
+
+                )} */}
+                <ProductsBlock data={data} skeletonCardsCount={skeletonCardsCount}/>
+
             </div>
 
 

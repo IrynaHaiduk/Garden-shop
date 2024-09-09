@@ -8,6 +8,7 @@
     overflow: hidden;
     height: 100%;
     width: 100%;
+    border: 1px solid color.$text-light-2;
 
     &:hover {
         .product-card__content {
@@ -171,6 +172,7 @@
 
         &:hover {
             cursor: pointer;
+
             svg path {
                 fill: color.$main-text-light;
                 stroke: color.$main-text-light;
@@ -181,7 +183,24 @@
             svg path {
                 fill: color.$bright-color-light;
                 stroke: color.$bright-color-light;
-            }  
+            }
         }
+    }
+
+    .dark-mode & {
+        border-color: color.$text-dark-1;
+
+        &__content {
+            color: color.$main-text-dark;
+            background-color: color.$bg-dark;
+        }
+
+        &__image {
+            border-color: color.$text-dark-1;
+        }
+    }
+
+    .discount-popup & {
+        border: none;
     }
 }

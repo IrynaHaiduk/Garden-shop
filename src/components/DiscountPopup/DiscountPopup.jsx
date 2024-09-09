@@ -24,8 +24,10 @@ const DiscountPopup = ({ togglePopup }) => {
         if (products.length > 0) {
             const randomProduct = getRandomElement(products);
             const newPrice = randomProduct?.price * discountPercentage / 100;
-            setDiscountProduct({ ...randomProduct, discont_price: newPrice });
-            
+            console.log("randomProduct", randomProduct);
+            if (randomProduct) {
+                 setDiscountProduct({ ...randomProduct, discont_price: newPrice });    
+            }
         }
     }, [products]);
 
@@ -41,9 +43,9 @@ const DiscountPopup = ({ togglePopup }) => {
     }
 
     const handleAddToCart = (product) => {
-        dispatch(addProductToCart({...product, count: 1}));
+        dispatch(addProductToCart({ ...product, count: 1 }));
     }
-
+    console.log("discountProduct", discountProduct);
     return (
         <>
             {discountProduct && (
@@ -82,7 +84,7 @@ const DiscountPopup = ({ togglePopup }) => {
 
                             <ProductCard product={discountProduct} />
 
-                            <button onClick={() =>handleAddToCart(discountProduct)}
+                            <button onClick={() => handleAddToCart(discountProduct)}
                                 className='discount-popup__btn btn--white'
                             >
                                 Add to cart
