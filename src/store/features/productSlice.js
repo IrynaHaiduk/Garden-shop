@@ -57,6 +57,7 @@ export const fetchProductById = createAsyncThunk(
     async (productId) => {
         try {
             const response = await fetch(`${import.meta.env.APP_API_URL}/products/${productId}`);
+            
             if (!response.ok) {
                 throw new Error('Failed to fetch products');
             };

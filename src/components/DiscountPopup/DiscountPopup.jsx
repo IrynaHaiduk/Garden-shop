@@ -11,7 +11,7 @@ import { addProductToCart } from '@/store/features/productSlice';
 const DiscountPopup = ({ togglePopup }) => {
 
     const dispatch = useDispatch();
-    const [discountProduct, setDiscountProduct] = useState();
+    let [discountProduct, setDiscountProduct] = useState(null);
     const { products } = useSelector(state => state.products);
     const discountPercentage = 50;
 
@@ -22,14 +22,31 @@ const DiscountPopup = ({ togglePopup }) => {
 
     useEffect(() => {
         if (products.length > 0) {
-            const randomProduct = getRandomElement(products);
-            const newPrice = randomProduct?.price * discountPercentage / 100;
-            console.log("randomProduct", randomProduct);
-            if (randomProduct) {
-                 setDiscountProduct({ ...randomProduct, discont_price: newPrice });    
+            const storedData = JSON.parse(localStorage.getItem("discountProductData"));
+            const today = new Date().toISOString().split('T')[0]; // Get today's date in the format YYYY-MM-DD
+
+            // If there is no product in storage or the date is out of date
+            if (!storedData || storedData.date !== today) {
+                // Generate a new product of the day
+                const newDiscountProduct = getRandomElement(products);
+                const newPrice = (newDiscountProduct?.price * (100 - discountPercentage)) / 100;
+                const productWithDiscount = { ...newDiscountProduct, discont_price: newPrice };
+
+                // Store the product and date in localStorage
+                localStorage.setItem(
+                    "discountProductData",
+                    JSON.stringify({ product: productWithDiscount, date: today })
+                );
+
+                // Update the status of the product of the day
+                setDiscountProduct(productWithDiscount);
+            } else {
+                // Use the product of the day from localStorage if the date is relevant
+                setDiscountProduct(storedData.product);
             }
         }
     }, [products]);
+
 
     const handlePopupClose = (event) => {
 
@@ -45,7 +62,7 @@ const DiscountPopup = ({ togglePopup }) => {
     const handleAddToCart = (product) => {
         dispatch(addProductToCart({ ...product, count: 1 }));
     }
-    console.log("discountProduct", discountProduct);
+
     return (
         <>
             {discountProduct && (
