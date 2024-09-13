@@ -6,53 +6,63 @@ import { addProductToCart, addProductToLiked, decrementProductCart, deleteProduc
 import Counter from "@/components/Counter/Counter";
 
 const Product = ({ product }) => {
+
+  console.log(product)
   const dispatch = useDispatch();
   const { likedProducts, cart } = useSelector(state => state.products);
   const [isProductInLiked, setIsProductInLiked] = useState("");
   const [isProductInCart, setIsProductInCart] = useState("");
-  const foundProduct = useMemo(() => cart?.find(item => item.id === product?.id), [cart, product?.id]);
-  const initialProductCount = useMemo(() => {
-    return foundProduct ? foundProduct.count : 1;
-  }, [foundProduct]);
-  const [productCount, setProductCount] = useState(initialProductCount);
 
-  const productWithCount = {
-    ...product,
-    count: foundProduct ? productCount : 1,
-  };
-
-  const discountPercentage = useMemo(() => {
-    return productWithCount?.discont_price
-      ? Math.round(((productWithCount.price - productWithCount.discont_price) / productWithCount.price) * 100)
-      : null;
-  }, [productWithCount.price, productWithCount.discont_price]);
-
-  const discountPrice = useMemo(() => {
-    return productWithCount?.discont_price
-      ? Number.isInteger(productWithCount.discont_price)
-        ? productWithCount.discont_price
-        : (Math.round(productWithCount.discont_price * 100) / 100).toFixed(2)
-      : 0;
-  }, [productWithCount.discont_price]);
-
-  const productPrice = Number.isInteger(productWithCount?.price)
-    ? productWithCount?.price
-    : productWithCount?.price?.toFixed(2);
+  const [productCount, setProductCount] = useState(1);
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [charLimit, setCharLimit] = useState(150);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
+useEffect(() => {
+   
+  let foundProduct = cart?.find(item => item.id === product?.id);
+
+  if(foundProduct?.count){
+     setProductCount(foundProduct.count)
+  }
+
+ }, [cart, product?.id]);
+
+ product = {...product, count: productCount}
+
+
+  const discountPercentage = useMemo(() => {
+    return product?.discont_price
+      ? Math.round(((product.price - product.discont_price) / product.price) * 100)
+      : null;
+  }, [product.price, product.discont_price]);
+
+  const discountPrice = useMemo(() => {
+    return product?.discont_price
+      ? Number.isInteger(product.discont_price)
+        ? product.discont_price
+        : (Math.round(product.discont_price * 100) / 100).toFixed(2)
+      : 0;
+  }, [product.discont_price]);
+
+  const productPrice = Number.isInteger(product?.price)
+    ? product?.price
+    : product?.price?.toFixed(2);
+
+
+
   const tabletWidth = 768;
   const desktopWidth = 1000;
 
-  const truncatedText = productWithCount.description?.length > charLimit
-    ? `${productWithCount.description.slice(0, charLimit)}...`
-    : productWithCount.description;
+  const truncatedText = product.description?.length > charLimit
+    ? `${product.description.slice(0, charLimit)}...`
+    : product.description;
 
   const countPrice = (price) => {
-    const currentPrice = price * productWithCount.count;
+    const currentPrice = price * product.count;
+
     return Number.isInteger(currentPrice)
       ? currentPrice
       : (Math.round(currentPrice * 100) / 100).toFixed(2);
@@ -84,22 +94,18 @@ const Product = ({ product }) => {
     setIsPopupVisible(!isPopupVisible);
   };
   const addToCart = () => {
-    dispatch(addProductToCart({ ...productWithCount, count: productCount }));
+    dispatch(addProductToCart({ ...product, count: productCount }));
   };
 
-  useEffect(() => {
-    setIsProductInLiked(likedProducts?.some(item => item.id === productWithCount?.id));
-  }, [likedProducts, productWithCount?.id]);
 
   useEffect(() => {
-    setIsProductInCart(cart?.some(item => item.id === productWithCount?.id));
-  }, [cart, productWithCount?.id]);
+    setIsProductInLiked(likedProducts?.some(item => item.id === product?.id));
+  }, [likedProducts, product?.id]);
 
   useEffect(() => {
-    if (foundProduct) {
-      setProductCount(foundProduct.count);
-    }
-  }, [foundProduct]);
+    setIsProductInCart(cart?.some(item => item.id === product?.id));
+  }, [cart, product?.id]);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -138,14 +144,16 @@ const Product = ({ product }) => {
   }, [isPopupVisible]);
 
 
+  // return "Hello"
+
   return (
     <>
-      {productWithCount && (
+      {product && (
         <section className="product">
           <div className="container">
             {windowWidth < tabletWidth && (
               <div className="product__header">
-                <h2 className="product__title">{productWithCount.title}</h2>
+                <h2 className="product__title">{product.title}</h2>
                 <button
                   className={`product__icon  ${isProductInLiked ? "product__icon--active" : ""}`}
                   onClick={(event) => toggleWishlist(product, event)}
@@ -165,7 +173,7 @@ const Product = ({ product }) => {
             )}
             <div className="product__wrapper">
               <div className="product__image" onClick={togglePopup}>
-                <img src={`${import.meta.env.APP_API_URL}/${productWithCount.image}`} alt={productWithCount.title} />
+                <img src={`${import.meta.env.APP_API_URL}/${product.image}`} alt={product.title} />
                 {windowWidth < tabletWidth && discountPercentage && (
                   <div className="product__percentage">
                     <span>-{discountPercentage}%</span>
@@ -175,7 +183,7 @@ const Product = ({ product }) => {
               <div className="product__content">
                 {windowWidth >= tabletWidth && (
                   <div className="product__header">
-                    <h2 className="product__title">{productWithCount.title}</h2>
+                    <h2 className="product__title">{product.title}</h2>
 
                     <button
                       className={`product__icon  ${isProductInLiked ? "product__icon--active" : ""}`}
@@ -194,7 +202,7 @@ const Product = ({ product }) => {
                     </button>
                   </div>
                 )}
-                {productWithCount.discont_price ? (
+                {product.discont_price ? (
                   <div className="product__price">
                     <span className="product__price-new">${countPrice(discountPrice)}</span>
                     <span className="product__price-old">${countPrice(productPrice)}</span>
@@ -210,7 +218,8 @@ const Product = ({ product }) => {
                   </div>
                 )}
                 <div className="product__wrap">
-                  <Counter product={productWithCount} incrementCount={incrementCountProduct} decrementCount={decrementCountProduct} />
+                  <Counter product={product} incrementCount={incrementCountProduct} decrementCount={decrementCountProduct} />
+     
                   <button className="product__btn btn--bright" onClick={addToCart}>
                     Add to cart
                   </button>
@@ -218,7 +227,7 @@ const Product = ({ product }) => {
                 {windowWidth >= desktopWidth && (
                   <div className="product__descr">
                     <h3 className="product__descr-title">Description</h3>
-                    <p>{isExpanded ? productWithCount.description : truncatedText}</p>
+                    <p>{isExpanded ? product.description : truncatedText}</p>
                     <button onClick={() => setIsExpanded(!isExpanded)} className="product__descr-btn">
                       {isExpanded ? 'Hide' : 'Read more'}
                     </button>
@@ -229,7 +238,7 @@ const Product = ({ product }) => {
             {windowWidth < desktopWidth && (
               <div className="product__descr">
                 <h3 className="product__descr-title">Description</h3>
-                <p>{isExpanded ? productWithCount.description : truncatedText}</p>
+                <p>{isExpanded ? product.description : truncatedText}</p>
                 <button onClick={() => setIsExpanded(!isExpanded)} className="product__descr-btn">
                   {isExpanded ? 'Hide' : 'Read more'}
                 </button>
@@ -237,7 +246,7 @@ const Product = ({ product }) => {
             )}
           </div>
           {isPopupVisible && (
-            <ImagePopup togglePopup={togglePopup} product={productWithCount} />
+            <ImagePopup togglePopup={togglePopup} product={product} />
           )}
         </section>
       )}

@@ -6,26 +6,35 @@ import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchProductById } from '@/store/features/productSlice';
 import { fetchCategoryById } from '../../store/features/productSlice';
+import { useState } from 'react';
 
 const SingleProductPage = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
-  const { product, categoryData } = useSelector(state => state.products);
-  const categoryId = product?.categoryId;
+  const { product, categoryData, cart } = useSelector(state => state.products);
+  //const [productCount, setProductCount] = useState(1);
 
-
+  
   useEffect(() => {
     dispatch(fetchProductById(productId));
   }, [dispatch, productId]);
 
   useEffect(() => {
-    dispatch(fetchCategoryById(categoryId));
-  }, [categoryId, dispatch]);
+    if(productId){
+       const categoryId = product?.categoryId;
+
+       dispatch(fetchCategoryById(categoryId));
+    }
+   
+  }, [productId, dispatch]);
+
+
+ 
 
   return (
     <>
       <Breadcrumbs categoryData={categoryData} lastTitle={product?.title} />
-      <Product product={product} />
+      <Product product={{...product}} />
     </>
   )
 }
