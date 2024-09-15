@@ -1,30 +1,30 @@
 import React from 'react'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterByPriceLiked, sortByPriceLiked } from '@/store/features/productSlice';
+import { filterByPriceLiked, sortByLiked } from '@/store/features/productSlice';
 import { useEffect } from 'react';
-import Heading from '../Heading/Heading';
-import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
-import Sort from '../Sort/Sort';
-import ProductCard from '@/components/ProductCard/ProductCard';
+import Heading from '@/components//Heading/Heading';
+import PriceRangeFilter from '@/components/PriceRangeFilter/PriceRangeFilter';
+import Sort from '@/components/Sort/Sort';
 import "./LikedProducts.scss";
 import { getLikedProducts } from '@/store/features/productSlice';
 import { Link } from 'react-router-dom';
-import ProductsBlock from '../ProductsBlock/ProductsBlock';
-
+import ProductsBlock from '@/components/ProductsBlock/ProductsBlock';
 
 const LikedProducts = () => {
-    const { likedProducts, filteredLikedProducts, cart } = useSelector(state => state.products);
+    const { likedProducts, filteredLikedProducts } = useSelector(state => state.products);
 
     const dispatch = useDispatch();
     let [minPrice, setMinPrice] = useState("");
     let [maxPrice, setMaxPrice] = useState("");
+    // State for tracking the current sort selection
     const [sortByValue, setSortByValue] = useState({
         id: "1",
         label: "default",
         value: "default",
     });
 
+    // Sort options for the dropdown menu
     const [sortLabels, setSortlabels] = useState([
         {
             id: "1",
@@ -41,34 +41,42 @@ const LikedProducts = () => {
             label: "high to low",
             value: "high-to-low",
         },
+        {
+            id: "4",
+            label: "A to Z",
+            value: "a-to-z",
+        },
+        {
+            id: "5",
+            label: "Z to A",
+            value: "z-to-a",
+        }
     ]);
 
-    useEffect(() => {
+    const defaultSkeletonCardsCount = 12;
+    const skeletonCardsCount = likedProducts.length || defaultSkeletonCardsCount;
+    // Use filtered data if available, otherwise use likedProducts from props
+    const data = filteredLikedProducts.length > 0 ? filteredLikedProducts : likedProducts;
 
+    useEffect(() => {
+        // Set default values if minPrice or maxPrice are not defined
         let minPriceVal = minPrice && minPrice > 0 ? minPrice : 0;
         let maxPriceVal = maxPrice ? maxPrice : Infinity;
         dispatch(filterByPriceLiked({ minPrice: minPriceVal, maxPrice: maxPriceVal }));
-        dispatch(sortByPriceLiked({ value: sortByValue.value }));
+        dispatch(sortByLiked({ value: sortByValue.value }));
     }, [sortByValue, minPrice, maxPrice, dispatch]);
 
     useEffect(() => {
         dispatch(getLikedProducts());
     }, [dispatch]);
 
-    const skeletonCardsCount = likedProducts.length || 12;
-
-    const data = filteredLikedProducts.length > 0 ? filteredLikedProducts : likedProducts;
 
     return (
-
-
         <section className="liked-products">
             <div className="container">
                 <Heading title="Liked products" />
 
-
                 <div className="filters">
-
                     <div className="filters__item">
                         <p>Price</p>
                         <PriceRangeFilter
@@ -77,7 +85,6 @@ const LikedProducts = () => {
                             setMinPrice={setMinPrice}
                             setMaxPrice={setMaxPrice}
                         />
-
                     </div>
 
                     <div className='filters__item'>
@@ -88,7 +95,6 @@ const LikedProducts = () => {
                             defaultSelect={sortByValue}
                         />
                     </div>
-
                 </div>
 
                 {
@@ -108,9 +114,7 @@ const LikedProducts = () => {
                         (
                             <ProductsBlock data={data} skeletonCardsCount={skeletonCardsCount} />
                         )
-
                 }
-
             </div>
         </section>
     )

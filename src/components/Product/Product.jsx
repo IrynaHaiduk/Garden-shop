@@ -1,37 +1,32 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import "./Product.scss";
 import { useDispatch, useSelector } from 'react-redux';
-import ImagePopup from '../ImagePopup/ImagePopup';
-import { addProductToCart, addProductToLiked, decrementProductCart, deleteProductFromLiked, getCartProducts, getLikedProducts, incrementProductCart } from '../../store/features/productSlice';
+import ImagePopup from '@/components/ImagePopup/ImagePopup';
+import { addProductToCart, addProductToLiked, deleteProductFromLiked } from '@/store/features/productSlice';
 import Counter from "@/components/Counter/Counter";
 
 const Product = ({ product }) => {
-
-  console.log(product)
   const dispatch = useDispatch();
   const { likedProducts, cart } = useSelector(state => state.products);
   const [isProductInLiked, setIsProductInLiked] = useState("");
   const [isProductInCart, setIsProductInCart] = useState("");
-
-  const [productCount, setProductCount] = useState(1);
-
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [productCount, setProductCount] = useState(1);//// Product quantity in cart
+  const [isExpanded, setIsExpanded] = useState(false);// Control for description expansion
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [charLimit, setCharLimit] = useState(150);
+  const [charLimit, setCharLimit] = useState(150);// Character limit for product description
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
-useEffect(() => {
-   
-  let foundProduct = cart?.find(item => item.id === product?.id);
+  // Sync cart product count with the local state
+  useEffect(() => {
+    let foundProduct = cart?.find(item => item.id === product?.id);
 
-  if(foundProduct?.count){
-     setProductCount(foundProduct.count)
-  }
+    if (foundProduct?.count) {
+      setProductCount(foundProduct.count)
+    }
 
- }, [cart, product?.id]);
+  }, [cart, product?.id]);
 
- product = {...product, count: productCount}
-
+  product = { ...product, count: productCount }
 
   const discountPercentage = useMemo(() => {
     return product?.discont_price
@@ -51,11 +46,10 @@ useEffect(() => {
     ? product?.price
     : product?.price?.toFixed(2);
 
-
-
   const tabletWidth = 768;
   const desktopWidth = 1000;
 
+   // Shorten the product description based on the character limit
   const truncatedText = product.description?.length > charLimit
     ? `${product.description.slice(0, charLimit)}...`
     : product.description;
@@ -76,7 +70,6 @@ useEffect(() => {
     if (productCount > 1) {
       setProductCount(prevState => prevState -= 1);
     }
-
   };
 
   const toggleWishlist = (product, event) => {
@@ -97,7 +90,6 @@ useEffect(() => {
     dispatch(addProductToCart({ ...product, count: productCount }));
   };
 
-
   useEffect(() => {
     setIsProductInLiked(likedProducts?.some(item => item.id === product?.id));
   }, [likedProducts, product?.id]);
@@ -106,7 +98,7 @@ useEffect(() => {
     setIsProductInCart(cart?.some(item => item.id === product?.id));
   }, [cart, product?.id]);
 
-
+ // Handle screen resizing and adjust character limit for description
   useEffect(() => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
@@ -142,9 +134,6 @@ useEffect(() => {
       document.body.classList.remove("no-scroll");
     };
   }, [isPopupVisible]);
-
-
-  // return "Hello"
 
   return (
     <>
@@ -219,7 +208,7 @@ useEffect(() => {
                 )}
                 <div className="product__wrap">
                   <Counter product={product} incrementCount={incrementCountProduct} decrementCount={decrementCountProduct} />
-     
+
                   <button className="product__btn btn--bright" onClick={addToCart}>
                     Add to cart
                   </button>

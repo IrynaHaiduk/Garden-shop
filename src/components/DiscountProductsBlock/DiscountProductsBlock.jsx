@@ -1,14 +1,14 @@
 import React from 'react';
-import Heading from '../Heading/Heading';
+import Heading from '@/components/Heading/Heading';
 import { useEffect } from 'react';
-import ProductCard from "../ProductCard/ProductCard";
+import ProductCard from "@/components/ProductCard/ProductCard";
 import "./DiscountProductsBlock.scss";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { getRandomElements } from '../../utils/functions';
+import { getRandomElements } from '@/utils/functions';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import CardSkeleton from '../CardSkeleton/CardSkeleton';
+import CardSkeleton from '@/components/CardSkeleton/CardSkeleton';
 
 const DiscountProductsBlock = ({discountedProducts}) => {
     const [randomDiscountedProducts, setRandomDiscountedProducts] = useState([]);

@@ -17,7 +17,6 @@ const Heading = ({ title, subtitle, link }) => {
                     </Link>
                 </div>
             }
-
         </div>
     )
 }

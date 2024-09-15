@@ -5,7 +5,6 @@
 .contacts {
    @include responsiveMarginBottom;
 
-
     &__list {
         display: flex;
         flex-direction: column;
@@ -145,13 +144,6 @@
         svg {
             display: block;
             width: 100%;
-
-            /*  path {
-                fill: red;
-            } */
         }
     }
-
-
-
 }

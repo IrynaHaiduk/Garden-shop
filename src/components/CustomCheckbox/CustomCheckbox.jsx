@@ -17,8 +17,6 @@ const CustomCheckbox = ({ title, checked, onChange }) => {
                         {title}
                     </span>
                 }
-
-
             </label>
         </div>
 

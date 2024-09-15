@@ -1,6 +1,6 @@
 import React from 'react';
 import "./SuccessPopup.scss";
-import { clearCard, sendOrderData } from '../../store/features/productSlice';
+import { clearCard, sendOrderData } from '@/store/features/productSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -15,9 +15,6 @@ const SuccessPopup = ({ toggleFormDataSent, reset }) => {
         if (event.target.closest('.success-popup')) {
             toggleFormDataSent();
         }
-
-        console.log("send");
-   
     }
 
     useEffect(()=>{

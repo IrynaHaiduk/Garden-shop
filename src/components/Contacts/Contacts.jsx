@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Contacts.scss";
-import Heading from '../Heading/Heading';
-import Map from '../Map/Map';
+import Heading from '@/components/Heading/Heading';
+import Map from '@/components/Map/Map';
 
 const Contacts = () => {
     return (
@@ -48,7 +48,7 @@ const Contacts = () => {
                         </h3>
                         <div className="contact__content">
                             <a href="https://www.google.com/maps/search/Linkstra%C3%9Fe+2,+8+OG,+10%E2%80%AF785,+Berlin,+Deutschland/@52.5058271,13.3713796,14z/data=!3m1!4b1?entry=ttu" target="_blank" rel="noopener noreferrer" aria-label='Go to GoogleMaps'>
-                                Linkstraße 2, 8 OG, 10 785, Berlin, Deutschland
+                                Linkstraße 2, 8 OG, 10 785, Berlin, Deutschland
                             </a>
                         </div>
                     </li>

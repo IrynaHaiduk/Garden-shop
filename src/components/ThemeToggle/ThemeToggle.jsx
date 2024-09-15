@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './ThemeToggle.scss';
-import SunIcon from '../../images/icons/icon-sun.svg'; 
-import MoonIcon from '../../images/icons/icon-moon.svg';
+import SunIcon from '@/images/icons/icon-sun.svg'; 
+import MoonIcon from '@/images/icons/icon-moon.svg';
 import { useContext } from 'react';
-import { ThemeContext } from '../../context/ThemeContext';
+import { ThemeContext } from '@/context/ThemeContext';
 
 const ThemeToggle = () => {
     const { isDarkMode, toggleTheme } = useContext(ThemeContext); 

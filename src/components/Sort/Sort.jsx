@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 const Sort = ({ labels, onSelect, defaultSelect }) => {
     const [isOpen, setIsOpen] = useState(false);
-
     const toggleSort = () => setIsOpen(!isOpen);
 
     const handleOptionClick = (option) => {

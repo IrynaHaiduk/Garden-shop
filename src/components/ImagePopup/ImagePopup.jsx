@@ -4,7 +4,6 @@ import "./ImagePopup.scss"
 const ImagePopup = ({ togglePopup, product }) => {
 
     const handlePopupClose = (event) => {
-
         if (event.target.closest('.image-popup__img')) {
             return;
         }
@@ -16,7 +15,6 @@ const ImagePopup = ({ togglePopup, product }) => {
 
     return (
         <>
-
             {
                 product && (
                     <div className='image-popup' onClick={(e) => handlePopupClose(e)}>

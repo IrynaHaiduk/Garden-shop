@@ -1,6 +1,5 @@
 import React from 'react';
 import "./ProductBlock.scss";
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { decrementProductCart, deleteProductFromCart, incrementProductCart } from '@/store/features/productSlice';
@@ -23,7 +22,6 @@ const ProductBlock = ({ product }) => {
         const currentPrice = price * product.count;
         return Number.isInteger(currentPrice) ? currentPrice : (Math.round(currentPrice * 100) / 100).toFixed(2);
     }
-
 
     const incrementCountProduct = (productId) => {
         dispatch(incrementProductCart(productId))
@@ -79,9 +77,7 @@ const ProductBlock = ({ product }) => {
                             }
 
                         </div>
-
                     </div>
-
 
                 </div>
             )}

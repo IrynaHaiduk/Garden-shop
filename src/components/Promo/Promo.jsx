@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import promoBg from "../../images/promo-bg.jpg";
+import promoBg from "@/images/promo-bg.jpg";
 import "./Promo.scss";
 
 const Promo = () => {

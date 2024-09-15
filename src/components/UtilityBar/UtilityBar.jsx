@@ -8,7 +8,6 @@ const UtilityBar = () => {
 
   const { cart, likedProducts } = useSelector(state => state.products);
 
-
   return (
     <div className="utility-bar">
       <ul className="utility-bar__list">

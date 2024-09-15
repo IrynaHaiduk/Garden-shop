@@ -26,8 +26,6 @@
         grid-template-columns: 1fr 2.9fr;  
     }
 
-  
-
     &__image {
         display: block;
         border-left: 1px solid color.$light-grey;
@@ -148,6 +146,5 @@
             font-size: 20px;
             line-height: 26px;
         }
-
     }
 }

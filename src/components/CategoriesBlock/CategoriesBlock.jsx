@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import "./CategoriesBlock.scss";
-import Category from '../Category/Category';
-import Heading from '../Heading/Heading';
+import Category from '@/components/Category/Category';
+import Heading from '@/components/Heading/Heading';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import CardSkeleton from '../CardSkeleton/CardSkeleton';
+import CardSkeleton from '@/components/CardSkeleton/CardSkeleton';
 
 const CategoriesBlock = ({ categories }) => {
     let { loading } = useSelector(state => state.products);
@@ -37,7 +37,6 @@ const CategoriesBlock = ({ categories }) => {
                     </>
 
                 )}
-
 
                 <Link to="/categories" className='categories-block__btn btn--light'>
                     All categories
