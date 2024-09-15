@@ -20,6 +20,22 @@
         font-weight: 500;
         line-height: 17.64px;
         outline: none;
+        background-color: transparent !important;
+        outline: none;
+        -webkit-box-shadow: 0 0 0px 1000px color.$white inset !important;
+        box-shadow: 0 0 0px 1000px color.$white inset !important;
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+            color: color.$main-text-light !important;
+            -webkit-text-fill-color: color.$main-text-light !important;
+            background-color: color.$white !important;
+            -webkit-box-shadow: 0 0 0px 1000px color.$white inset !important;
+            box-shadow: 0 0 0px 1000px color.$white inset !important;
+            transition: background-color 5000s ease-in-out 0s !important;
+        }
 
         &::placeholder {
             color: color.$text-light-1;

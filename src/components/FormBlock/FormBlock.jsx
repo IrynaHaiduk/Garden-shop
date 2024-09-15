@@ -1,11 +1,11 @@
 import React from 'react';
-import formImg360 from "../../images/form/formBg-360.png";
-import formImg480 from "../../images/form/formBg-480.png";
-import formImg768 from "../../images/form/formBg-768.png";
-import formImg1000 from "../../images/form/formBg-1000.png";
-import formImg1440 from "../../images/form/formBg-1440.png";
+import formImg360 from "@/images/form/formBg-360.png";
+import formImg480 from "@/images/form/formBg-480.png";
+import formImg768 from "@/images/form/formBg-768.png";
+import formImg1000 from "@/images/form/formBg-1000.png";
+import formImg1440 from "@/images/form/formBg-1440.png";
 import "./FormBlock.scss";
-import DiscountForm from '../DiscountForm/DiscountForm';
+import DiscountForm from '@/components/DiscountForm/DiscountForm';
 
 const FormBlock = () => {
     return (
@@ -29,7 +29,6 @@ const FormBlock = () => {
                     </div>
                 </div>
             </div>
-
         </section>
     )
 }

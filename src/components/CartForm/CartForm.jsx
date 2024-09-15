@@ -3,9 +3,9 @@ import "./CartForm.scss";
 import iconError from "@/images/icons/icon-error.svg"
 import { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
-import { clearCard, sendOrderData } from '../../store/features/productSlice';
+import { clearCard, sendOrderData } from '@/store/features/productSlice';
 import { useDispatch } from 'react-redux';
-import SuccessPopup from '../SuccessPopup/SuccessPopup';
+import SuccessPopup from '@/components/SuccessPopup/SuccessPopup';
 
 const CartForm = ({ cart }) => {
     const dispatch = useDispatch();
@@ -13,34 +13,28 @@ const CartForm = ({ cart }) => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors, isSubmitting },
-        setError,
         reset,
     } = useForm();
 
     const [formDataSent, setFormDataSent] = useState(false);
 
-
-
     const toggleFormDataSent = () => {
         setFormDataSent(prevState => !prevState);
     }
 
-
     const submitForm = async (formData) => {
+        // Dispatching action to send order data (user data and cart)
         try {
             const result = await dispatch(sendOrderData({ userData: formData, orderData: cart })).unwrap();
 
             if (result) {
-                toggleFormDataSent();
+                toggleFormDataSent(); // Show success popup if order submission is successful
             }
         } catch (error) {
             console.error("Error submitting order:", error);
         }
     };
-
-  
 
 
     useEffect(() => {
@@ -111,8 +105,6 @@ const CartForm = ({ cart }) => {
                                         </div>
                                     )
                                 }
-
-
                             </div>
                             <div className="cart-form__item">
                                 <label htmlFor="phone" className="cart-form__label visually-hidden">Phone number:</label>

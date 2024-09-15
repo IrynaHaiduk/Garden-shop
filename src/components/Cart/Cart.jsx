@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 import Heading from '@/components/Heading/Heading';
 import "./Cart.scss";
 import { Link } from 'react-router-dom';
-import ProductBlock from '../ProductBlock/ProductBlock';
+import ProductBlock from '@/components/ProductBlock/ProductBlock';
 import CartForm from '@/components/CartForm/CartForm';
 
 

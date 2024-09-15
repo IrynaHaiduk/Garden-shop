@@ -1,38 +1,35 @@
 import React from 'react';
 import "./AllProducts.scss";
 import Heading from '@/components/Heading/Heading';
-import { useDispatch, useSelector } from 'react-redux';
-import ProductCard from '@/components/ProductCard/ProductCard';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { sortByPrice } from '@/store/features/productSlice';
+import { sortBy } from '@/store/features/productSlice';
 import { useState } from 'react';
-import Sort from '../Sort/Sort';
+import Sort from '@/components/Sort/Sort';
 import { filterByPrice } from '@/store/features/productSlice';
-import CustomCheckbox from '../CustomCheckbox/CustomCheckbox';
-import { filterDiscountedProducts } from '../../store/features/productSlice';
-import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import CardSkeleton from '../CardSkeleton/CardSkeleton';
-import ProductsBlock from '../ProductsBlock/ProductsBlock';
+import CustomCheckbox from '@/components/CustomCheckbox/CustomCheckbox';
+import { filterDiscountedProducts } from '@/store/features/productSlice';
+import PriceRangeFilter from '@/components/PriceRangeFilter/PriceRangeFilter';
+import 'react-loading-skeleton/dist/skeleton.css';
+import ProductsBlock from '@/components/ProductsBlock/ProductsBlock';
 
 const AllProducts = ({ products, filteredProducts }) => {
 
     const dispatch = useDispatch();
-    let { loading } = useSelector(state => state.products);
     let [minPrice, setMinPrice] = useState("");
     let [maxPrice, setMaxPrice] = useState("");
+    // State for tracking the current sort selection
     const [sortByValue, setSortByValue] = useState({
         id: "1",
         label: "default",
         value: "default",
     });
     const [isChecked, setIsChecked] = useState(false);
-
     const handleCheckboxChange = (event) => {
         setIsChecked(!isChecked);
     };
 
+    // Sort options for the dropdown menu
     const [sortLabels, setSortlabels] = useState([
         {
             id: "1",
@@ -49,24 +46,32 @@ const AllProducts = ({ products, filteredProducts }) => {
             label: "high to low",
             value: "high-to-low",
         },
+        {
+            id: "4",
+            label: "A to Z",
+            value: "a-to-z",
+        },
+        {
+            id: "5",
+            label: "Z to A",
+            value: "z-to-a",
+        }
     ]);
-
+    const defaultSkeletonCardsCount = 12;
+    const skeletonCardsCount = products.length || defaultSkeletonCardsCount;
+    // Use filtered products if they exist, otherwise use all products
+    const data = filteredProducts.length > 0 ? filteredProducts : products;
 
     useEffect(() => {
-
+        // Set default values if minPrice or maxPrice are not defined
         let minPriceVal = minPrice && minPrice > 0 ? minPrice : 0;
         let maxPriceVal = maxPrice ? maxPrice : Infinity;
 
         dispatch(filterDiscountedProducts({ value: isChecked }));
         dispatch(filterByPrice({ minPrice: minPriceVal, maxPrice: maxPriceVal }));
-        dispatch(sortByPrice({ value: sortByValue.value }));
+        dispatch(sortBy({ value: sortByValue.value }));
 
     }, [sortByValue, minPrice, maxPrice, isChecked, dispatch]);
-
-    const skeletonCardsCount = products.length || 12; // Динамічно визначаємо кількість скелетонів
-
-    const data = filteredProducts.length > 0 ? filteredProducts : products;
-
 
     return (
         <section className="all-products">
@@ -99,36 +104,9 @@ const AllProducts = ({ products, filteredProducts }) => {
                             defaultSelect={sortByValue}
                         />
                     </div>
-
                 </div>
-               {/*  {loading ? (
-                    <ul className="all-products__list">
-                        {Array(skeletonCardsCount).fill().map((_, index) => (
-                            <li key={index} className="all-products__item all-products__item--no-border">
-                                <CardSkeleton /> 
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    data && data.length > 0 && <>
-                        <ul className="all-products__list">
-
-                            {
-                                data.map(product => (
-                                    <li key={product.id} className="all-products__item">
-                                        <ProductCard product={product} />
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </>
-
-                )} */}
-                <ProductsBlock data={data} skeletonCardsCount={skeletonCardsCount}/>
-
+                <ProductsBlock data={data} skeletonCardsCount={skeletonCardsCount} />
             </div>
-
-
         </section>
     )
 }

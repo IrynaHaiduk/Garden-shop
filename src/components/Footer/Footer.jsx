@@ -1,5 +1,5 @@
 import React from 'react';
-import Contacts from '../Contacts/Contacts';
+import Contacts from '@/components/Contacts/Contacts';
 import "./Footer.scss";
 
 

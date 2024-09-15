@@ -1,6 +1,6 @@
 import React from 'react';
 import "./DiscountPopup.scss";
-import ProductCard from '../ProductCard/ProductCard';
+import ProductCard from '@/components/ProductCard/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchProducts } from '@/store/features/productSlice';
@@ -14,7 +14,20 @@ const DiscountPopup = ({ togglePopup }) => {
     let [discountProduct, setDiscountProduct] = useState(null);
     const { products } = useSelector(state => state.products);
     const discountPercentage = 50;
+    const handlePopupClose = (event) => {
 
+        if (event.target.closest('.discount-popup__card')) {
+            return;
+        }
+
+        if (event.target.closest('.discount-popup')) {
+            togglePopup();
+        }
+    }
+
+    const handleAddToCart = (product) => {
+        dispatch(addProductToCart({ ...product, count: 1 }));
+    }
 
     useEffect(() => {
         dispatch(fetchProducts());
@@ -46,22 +59,6 @@ const DiscountPopup = ({ togglePopup }) => {
             }
         }
     }, [products]);
-
-
-    const handlePopupClose = (event) => {
-
-        if (event.target.closest('.discount-popup__card')) {
-            return;
-        }
-
-        if (event.target.closest('.discount-popup')) {
-            togglePopup();
-        }
-    }
-
-    const handleAddToCart = (product) => {
-        dispatch(addProductToCart({ ...product, count: 1 }));
-    }
 
     return (
         <>

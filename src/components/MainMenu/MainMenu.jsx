@@ -2,13 +2,11 @@ import React from 'react';
 import "./MainMenu.scss";
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import DiscountPopup from '../DiscountPopup/DiscountPopup';
+import DiscountPopup from '@/components/DiscountPopup/DiscountPopup';
 
 const MainMenu = () => {
-
     const setActiveLink = ({ isActive }) => isActive ? "main-menu__link main-menu__link--active" : "main-menu__link";
     const [isToggle, setIsToggle] = useState(false);
-
     const handleToggleMenu = () => {
         setIsToggle(!isToggle);
     }
@@ -17,18 +15,19 @@ const MainMenu = () => {
         setIsPopupVisible(!isPopupVisible);
     };
 
+    // Effect to handle screen resize, ensuring the menu behaves responsively
     useEffect(() => {
-    
+
         const handleResize = () => {
             if (window.innerWidth >= 768) {
-                setIsToggle(true); 
+                setIsToggle(true); // Automatically open the menu on larger screen
             } else {
-                setIsToggle(false); 
+                setIsToggle(false); // Close the menu on smaller screens
             }
         };
 
-        handleResize(); 
-        
+        handleResize(); // Initial check on component mount
+
         window.addEventListener('resize', handleResize);
 
         return () => {
@@ -36,6 +35,7 @@ const MainMenu = () => {
         };
     }, []);
 
+    // Effect to lock body scrolling when the menu is open on mobile
     useEffect(() => {
         if (window.innerWidth < 768 && isToggle) {
             document.body.classList.add("no-scroll");
@@ -100,9 +100,9 @@ const MainMenu = () => {
                                 1 day discount!
                             </button>
                         </div>
-                       
+
                         {isPopupVisible && (
-                            <DiscountPopup togglePopup={togglePopup}/>
+                            <DiscountPopup togglePopup={togglePopup} />
                         )
                         }
                     </div >

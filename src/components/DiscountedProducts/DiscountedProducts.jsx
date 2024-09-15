@@ -1,14 +1,13 @@
 import React from 'react'
-import Heading from '../../components/Heading/Heading';
-import { useDispatch, useSelector } from 'react-redux';
+import Heading from '@/components/Heading/Heading';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { filterByPriceSale, sortByPriceSale } from '@/store/features/productSlice';
-import ProductCard from '@/components/ProductCard/ProductCard';
+import { filterByPriceSale, sortBySale } from '@/store/features/productSlice';
 import "./DiscountedProducts.scss";
 import { useState } from 'react';
-import PriceRangeFilter from '../PriceRangeFilter/PriceRangeFilter';
-import Sort from '../Sort/Sort';
-import ProductsBlock from '../ProductsBlock/ProductsBlock';
+import PriceRangeFilter from '@/components/PriceRangeFilter/PriceRangeFilter';
+import Sort from '@/components/Sort/Sort';
+import ProductsBlock from '@/components/ProductsBlock/ProductsBlock';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) => {
@@ -16,12 +15,13 @@ const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) 
     const dispatch = useDispatch();
     let [minPrice, setMinPrice] = useState("");
     let [maxPrice, setMaxPrice] = useState("");
+    // State for tracking the current sort selection
     const [sortByValue, setSortByValue] = useState({
         id: "1",
         label: "default",
         value: "default",
     });
-
+    // Sort options for the dropdown menu
     const [sortLabels, setSortlabels] = useState([
         {
             id: "1",
@@ -38,21 +38,30 @@ const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) 
             label: "high to low",
             value: "high-to-low",
         },
+        {
+            id: "4",
+            label: "A to Z",
+            value: "a-to-z",
+        },
+        {
+            id: "5",
+            label: "Z to A",
+            value: "z-to-a",
+        }
     ]);
 
-    useEffect(() => {
+    const defaultSkeletonCardsCount = 12;
+    const skeletonCardsCount = discountedProducts.length || defaultSkeletonCardsCount;
+    // Use filtered data if available, otherwise use discountedProducts from props
+    const data = filteredDiscountedProducts.length > 0 ? filteredDiscountedProducts : discountedProducts;
 
+    useEffect(() => {
+        // Set default values if minPrice or maxPrice are not defined
         let minPriceVal = minPrice && minPrice > 0 ? minPrice : 0;
         let maxPriceVal = maxPrice ? maxPrice : Infinity;
         dispatch(filterByPriceSale({ minPrice: minPriceVal, maxPrice: maxPriceVal }));
-        dispatch(sortByPriceSale({ value: sortByValue.value }));
+        dispatch(sortBySale({ value: sortByValue.value }));
     }, [sortByValue, minPrice, maxPrice, dispatch]);
-
-
-    const skeletonCardsCount = discountedProducts.length || 12;
-
-    const data = filteredDiscountedProducts.length > 0 ? filteredDiscountedProducts : discountedProducts;
-
 
     return (
         <section className="discounted-products">
@@ -61,7 +70,6 @@ const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) 
                 <Heading title="Discounted items" />
 
                 <div className="filters">
-
                     <div className="filters__item">
                         <p>Price</p>
                         <PriceRangeFilter
@@ -70,7 +78,6 @@ const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) 
                             setMinPrice={setMinPrice}
                             setMaxPrice={setMaxPrice}
                         />
-
                     </div>
 
                     <div className='filters__item'>
@@ -81,7 +88,6 @@ const DiscountedProducts = ({ discountedProducts, filteredDiscountedProducts }) 
                             defaultSelect={sortByValue}
                         />
                     </div>
-
                 </div>
 
                 <ProductsBlock data={data} skeletonCardsCount={skeletonCardsCount} />

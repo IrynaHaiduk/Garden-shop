@@ -1,7 +1,7 @@
 import React from 'react';
 import "./ErrorBlock.scss";
 import { Link } from 'react-router-dom';
-import errorImg from "../../images/errorImg.png";
+import errorImg from "@/images/errorImg.png";
 
 const ErrorBlock = () => {
   return (
@@ -16,17 +16,16 @@ const ErrorBlock = () => {
           </h1>
           <div className="error-block__content">
             <p>
-              We’re sorry, the page you requested could not be found.
+              We're sorry, the page you requested could not be found.
             </p>
             <p>
-              Please go back to the homepage.
+              Please go back to the homepage.
             </p>
           </div>
           <Link to="/" className='error-block__btn btn btn--bright'>
             Go Home
           </Link>
         </div>
-
       </div>
     </section>
   )

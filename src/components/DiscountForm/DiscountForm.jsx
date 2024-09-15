@@ -12,18 +12,16 @@ const DiscountForm = () => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors, isSubmitting },
-        setError,
         reset,
     } = useForm();
 
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [showMessage, setShowMessage] = useState(false);
 
-
     const submitForm = async (formData) => {
         try {
+            // Dispatch sendDiscountData action and await the result
             const result = await dispatch(sendDiscountData(formData)).unwrap();
 
             if (result) {

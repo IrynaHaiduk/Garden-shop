@@ -1,8 +1,6 @@
 @use "../src/assets/variables.scss" as color;
 @import '../src/assets/mixins.scss';
 
-
-
 .promo {
     position: relative;
     color: color.$white;
@@ -44,7 +42,6 @@
 
     .container {
         position: relative;
-        //z-index: 1;
     }
 
     &__title {
@@ -83,8 +80,6 @@
 
     &__btn {
         min-width: 200px;
-
-      
 
         @media (min-width: 768px) {
             min-width: 218px;

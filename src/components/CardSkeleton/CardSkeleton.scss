@@ -1,9 +1,6 @@
 @use "../src/assets/variables.scss" as color;
-@import '../src/assets/mixins.scss';
-
 
 .card-skeleton {
     background-color: color.$bg-light-2;
     height: 100%;
-
 }

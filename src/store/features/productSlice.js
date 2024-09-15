@@ -57,7 +57,7 @@ export const fetchProductById = createAsyncThunk(
     async (productId) => {
         try {
             const response = await fetch(`${import.meta.env.APP_API_URL}/products/${productId}`);
-            
+
             if (!response.ok) {
                 throw new Error('Failed to fetch products');
             };
@@ -88,7 +88,6 @@ export const fetchDiscountedProducts = createAsyncThunk(
         }
     }
 )
-
 
 export const sendDiscountData = createAsyncThunk(
     "products/sendDiscountData",
@@ -236,7 +235,7 @@ export const productSlice = createSlice({
             state.categoryData = {};
             state.filteredCategoryData = [];
         },
-        sortByPrice: (state, { payload }) => {
+        sortBy: (state, { payload }) => {
             let data = state.filteredProducts?.length > 0 ? state.filteredProducts : state.products;
 
             const getPrice = (product) => product.discont_price ?? product.price;
@@ -245,11 +244,15 @@ export const productSlice = createSlice({
                 state.filteredProducts = [...data].sort((a, b) => getPrice(a) - getPrice(b));
             } else if (payload.value === 'high-to-low') {
                 state.filteredProducts = [...data].sort((a, b) => getPrice(b) - getPrice(a));
+            } else if (payload.value === 'a-to-z') {
+                state.filteredProducts = [...data].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
+            } else if (payload.value === 'z-to-a') {
+                state.filteredProducts = [...data].sort((a, b) => b.title.localeCompare(a.title, undefined, { sensitivity: 'base' }));
             } else {
                 state.filteredProducts = data;
             }
         },
-        sortByPriceCategory: (state, { payload }) => {
+        sortByCategory: (state, { payload }) => {
             let data = state.filteredCategoryData?.length > 0 ? state.filteredCategoryData : state.categoryData?.data;
 
             const getPrice = (product) => product.discont_price ?? product.price;
@@ -258,6 +261,10 @@ export const productSlice = createSlice({
                 state.filteredCategoryData = [...data].sort((a, b) => getPrice(a) - getPrice(b));
             } else if (payload.value === 'high-to-low') {
                 state.filteredCategoryData = [...data].sort((a, b) => getPrice(b) - getPrice(a));
+            } else if (payload.value === 'a-to-z') {
+                state.filteredCategoryData = [...data].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
+            } else if (payload.value === 'z-to-a') {
+                state.filteredCategoryData = [...data].sort((a, b) => b.title.localeCompare(a.title, undefined, { sensitivity: 'base' }));
             } else {
                 state.filteredCategoryData = data;
             }
@@ -266,7 +273,7 @@ export const productSlice = createSlice({
         clearCategoryFilteredData: state => {
             state.filteredCategoryData = [];
         },
-        sortByPriceSale: (state, { payload }) => {
+        sortBySale: (state, { payload }) => {
             let data = state.filteredDiscountedProducts?.length > 0 ? state.filteredDiscountedProducts : state.discountedProducts;
             const getPrice = (product) => product.discont_price ?? product.price;
 
@@ -274,11 +281,15 @@ export const productSlice = createSlice({
                 state.filteredDiscountedProducts = [...data].sort((a, b) => getPrice(a) - getPrice(b));
             } else if (payload.value === 'high-to-low') {
                 state.filteredDiscountedProducts = [...data].sort((a, b) => getPrice(b) - getPrice(a));
+            } else if (payload.value === 'a-to-z') {
+                state.filteredDiscountedProducts = [...data].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
+            } else if (payload.value === 'z-to-a') {
+                state.filteredDiscountedProducts = [...data].sort((a, b) => b.title.localeCompare(a.title, undefined, { sensitivity: 'base' }));
             } else {
                 state.filteredDiscountedProducts = data;
             }
         },
-        sortByPriceLiked: (state, { payload }) => {
+        sortByLiked: (state, { payload }) => {
             let data = state.filteredLikedProducts?.length > 0 ? state.filteredLikedProducts : state.likedProducts;
             const getPrice = (product) => product.discont_price ?? product.price;
 
@@ -286,6 +297,10 @@ export const productSlice = createSlice({
                 state.filteredLikedProducts = [...data].sort((a, b) => getPrice(a) - getPrice(b));
             } else if (payload.value === 'high-to-low') {
                 state.filteredLikedProducts = [...data].sort((a, b) => getPrice(b) - getPrice(a));
+            } else if (payload.value === 'a-to-z') {
+                state.filteredLikedProducts = [...data].sort((a, b) => a.title.localeCompare(b.title, undefined, { sensitivity: 'base' }));
+            } else if (payload.value === 'z-to-a') {
+                state.filteredLikedProducts = [...data].sort((a, b) => b.title.localeCompare(a.title, undefined, { sensitivity: 'base' }));
             } else {
                 state.filteredLikedProducts = data;
             }
@@ -458,13 +473,13 @@ export const productSlice = createSlice({
 
 
 export const {
-    sortByPrice,
+    sortBy,
     filterByPrice,
     filterDiscountedProducts,
     filterByPriceSale,
-    sortByPriceSale,
+    sortBySale,
     filterByPriceCategory,
-    sortByPriceCategory,
+    sortByCategory,
     filterDiscountedProductsCategory,
     addProductToCart,
     incrementProductCart,
@@ -473,7 +488,7 @@ export const {
     clearCategoryFilteredData,
     clearCard,
     addProductToLiked,
-    sortByPriceLiked,
+    sortByLiked,
     filterByPriceLiked,
     deleteProductFromLiked,
     getLikedProducts,

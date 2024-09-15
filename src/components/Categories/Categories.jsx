@@ -4,14 +4,12 @@ import Category from '@/components/Category/Category';
 import "@/components/Categories/Categories.scss";
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import CardSkeleton from '../CardSkeleton/CardSkeleton';
-
-
+import CardSkeleton from '@/components/CardSkeleton/CardSkeleton';
 
 const Categories = ({ categories }) => {
     let { loading } = useSelector(state => state.products);
-    const skeletonCardsCount = categories.length || 5;
-
+    const defaultSkeletonCardsCount = 5;
+    const skeletonCardsCount = categories.length || defaultSkeletonCardsCount;
 
     return (
         <section className="categories">
@@ -40,7 +38,6 @@ const Categories = ({ categories }) => {
                     </>
 
                 )}
-
             </div>
         </section>
     )

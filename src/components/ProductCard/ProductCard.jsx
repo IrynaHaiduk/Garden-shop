@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { addProductToLiked, deleteProductFromLiked } from '@/store/features/productSlice'
 import { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { addProductToCart, deleteProductFromCart, getCartProducts, getLikedProducts } from '../../store/features/productSlice';
+import { addProductToCart, deleteProductFromCart} from '@/store/features/productSlice';
 import { useEffect } from 'react';
 
 const ProductCard = ({ product }) => {
@@ -145,9 +145,7 @@ const ProductCard = ({ product }) => {
                                     </div>
                                 )
                             }
-
                         </div>
-
                     </Link>
                 )
             }

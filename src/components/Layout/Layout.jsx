@@ -1,14 +1,14 @@
 import React from 'react';
-import Footer from '../Footer/Footer';
+import Footer from '@/components/Footer/Footer';
 import { Outlet } from 'react-router-dom';
-import Header from '../Header/Header';
+import Header from '@/components/Header/Header';
 import "./Layout.scss";
-import { ThemeContext } from '../../context/ThemeContext';
+import { ThemeContext } from '@/context/ThemeContext';
 import { useContext } from 'react';
 
 const Layout = () => {
 
-    const { isDarkMode, toggleTheme } = useContext(ThemeContext); 
+    const { isDarkMode } = useContext(ThemeContext);
 
     return (
         <>

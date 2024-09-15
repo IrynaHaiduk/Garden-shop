@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
-import logoImg from "../../images/logo.svg";
+import logoImg from "@/images/logo.svg";
 import "./Navbar.scss";
 import MainMenu from '@/components/MainMenu/MainMenu';
-import UtilityBar from '../UtilityBar/UtilityBar';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import UtilityBar from '@/components/UtilityBar/UtilityBar';
+import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 
 
 const Navbar = () => {
