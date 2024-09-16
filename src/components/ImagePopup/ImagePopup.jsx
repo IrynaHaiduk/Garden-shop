@@ -1,5 +1,5 @@
 import React from 'react';
-import "./ImagePopup.scss"
+import "./ImagePopup.scss";
 
 const ImagePopup = ({ togglePopup, product }) => {
 

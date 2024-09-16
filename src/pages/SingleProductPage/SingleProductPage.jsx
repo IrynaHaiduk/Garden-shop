@@ -3,38 +3,34 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Product from '@/components/Product/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchProductById } from '@/store/features/productSlice';
-import { fetchCategoryById } from '../../store/features/productSlice';
-import { useState } from 'react';
+import { fetchCategoryById } from '@/store/features/productSlice';
 
 const SingleProductPage = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
-  const { product, categoryData, cart } = useSelector(state => state.products);
-  //const [productCount, setProductCount] = useState(1);
+  const { product, categoryData } = useSelector(state => state.products);
 
-  
   useEffect(() => {
     dispatch(fetchProductById(productId));
   }, [dispatch, productId]);
 
   useEffect(() => {
-    if(productId){
-       const categoryId = product?.categoryId;
 
-       dispatch(fetchCategoryById(categoryId));
+    if (product?.categoryId) {
+      const categoryId = product?.categoryId;
+
+      dispatch(fetchCategoryById(categoryId));
     }
-   
-  }, [productId, dispatch]);
 
+  }, [product, productId, dispatch]);
 
- 
 
   return (
     <>
       <Breadcrumbs categoryData={categoryData} lastTitle={product?.title} />
-      <Product product={{...product}} />
+      <Product product={product} />
     </>
   )
 }

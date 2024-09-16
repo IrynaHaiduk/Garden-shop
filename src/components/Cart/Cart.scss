@@ -1,5 +1,5 @@
-@use "../src/assets/variables.scss" as color;
-@import '../src/assets/mixins.scss';
+@use "@/assets/variables.scss" as color;
+@import '@/assets/mixins.scss';
 
 .cart {
     @include responsiveMarginBottom;
@@ -59,7 +59,6 @@
     &__btn {
         align-self: center;
 
-
         @media (min-width: 480px) {
             display: none;
         }
@@ -95,7 +94,6 @@
            width: 50%;
         }
     }
-
 
     &__link {
         font-weight: 600;
