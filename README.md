@@ -9,7 +9,7 @@
 
 **Garden Shop** is an e-commerce platform built with React, designed to offer users a seamless experience in browsing, searching, and purchasing gardening products. The application provides a responsive and intuitive interface, making it easy for users to find plants, tools, and other gardening essentials. The project focuses on usability, delivering key online store functionalities such as a shopping cart, wishlist, and dynamic product filtering.
 
-[Screenshot of the project's main page](src/images/project-exemple.png)
+![Screenshot of the project's main page](src/images/project-exemple.png)
 
 ## Core Features
 
