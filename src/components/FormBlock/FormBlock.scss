@@ -1,5 +1,5 @@
-@use "../src/assets/variables.scss" as color;
-@import '../src/assets/mixins.scss';
+@use "@/assets/variables.scss" as color;
+@import '@/assets/mixins.scss';
 
 .form-block {
     @include responsiveMarginBottom;
@@ -20,7 +20,6 @@
             padding-left: 32px;
             padding-right: 32px;
         }
-
     }
 
     &__wrapper {
@@ -114,6 +113,5 @@
             margin-top: 32px;
         }
     }
-
 }
 

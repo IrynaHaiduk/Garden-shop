@@ -1,12 +1,11 @@
-@use "../src/assets/variables.scss" as color;
-@import '../src/assets/mixins.scss';
+@use "@/assets/variables.scss" as color;
+@import '@/assets/mixins.scss';
 
 
 .light-mode {
     color: color.$main-text-light;
     background-color: color.$main-bg-light;
 }
-
 
 .dark-mode {
     color: color.$main-text-dark;
@@ -227,6 +226,5 @@
                 color: color.$text-dark-1 !important;
             }
         }
-
     }
 }

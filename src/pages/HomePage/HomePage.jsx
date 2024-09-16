@@ -4,7 +4,7 @@ import CategoriesBlock from '@/components/CategoriesBlock/CategoriesBlock';
 import DiscountProductsBlock from '@/components/DiscountProductsBlock/DiscountProductsBlock';
 import FormBlock from '@/components/FormBlock/FormBlock';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories, fetchDiscountedProducts } from '../../store/features/productSlice';
+import { fetchCategories, fetchDiscountedProducts } from '@/store/features/productSlice';
 import { useEffect } from 'react';
 
 const HomePage = () => {

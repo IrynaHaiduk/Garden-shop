@@ -16,7 +16,7 @@ const Promo = () => {
                 <h2 className="promo__title">
                     Amazing Discounts on Garden Products!
                 </h2>
-                <Link to="/discounted-products" className="promo__btn btn btn--bright">
+                <Link to="/all-sales" className="promo__btn btn btn--bright">
                     Check out
                 </Link>
             </div>

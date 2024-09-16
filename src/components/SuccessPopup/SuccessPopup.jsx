@@ -1,6 +1,6 @@
 import React from 'react';
 import "./SuccessPopup.scss";
-import { clearCard, sendOrderData } from '@/store/features/productSlice';
+import { clearCard } from '@/store/features/productSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 

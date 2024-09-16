@@ -22,6 +22,8 @@ const Product = ({ product }) => {
 
     if (foundProduct?.count) {
       setProductCount(foundProduct.count)
+    }else {
+      setProductCount(1)
     }
 
   }, [cart, product?.id]);

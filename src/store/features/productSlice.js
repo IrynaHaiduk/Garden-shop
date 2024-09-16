@@ -193,7 +193,8 @@ export const productSlice = createSlice({
             if (foundProduct) {
                 state.cart = state.cart.map(product => {
                     if (product.id === payload.id) {
-                        return { ...product, count: payload.count };
+                        const productCount = payload.count === 1 ? product.count + 1 : payload.count;
+                        return { ...product, count: productCount };
                     }
                     return product;
                 });

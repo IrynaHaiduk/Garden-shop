@@ -1,5 +1,5 @@
-@use "../src/assets/variables.scss" as color;
-@import '../src/assets/mixins.scss';
+@use "@/assets/variables.scss" as color;
+@import '@/assets/mixins.scss';
 
 .categories {
     @include responsiveMarginBottom;
