@@ -2,6 +2,7 @@ import React from 'react';
 import "./ErrorBlock.scss";
 import { Link } from 'react-router-dom';
 import errorImg from "@/images/errorImg.png";
+import errorImg2x from "@/images/errorImg_2x.png";
 
 const ErrorBlock = () => {
   return (
@@ -9,7 +10,10 @@ const ErrorBlock = () => {
       <div className="container">
         <div className="error-block__wrapper">
           <div className="error-block__img">
-            <img src={errorImg} alt="" />
+            <img 
+            src={errorImg}  
+            srcSet={`${errorImg} 1x, ${errorImg2x} 2x`}  
+            alt="error 404" />
           </div>
           <h1 className='error-block__title'>
             Page Not Found

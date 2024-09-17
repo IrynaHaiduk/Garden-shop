@@ -9,7 +9,7 @@
 
 **Garden Shop** is an e-commerce platform built with React, designed to offer users a seamless experience in browsing, searching, and purchasing gardening products. The application provides a responsive and intuitive interface, making it easy for users to find plants, tools, and other gardening essentials. The project focuses on usability, delivering key online store functionalities such as a shopping cart, wishlist, and dynamic product filtering.
 
-![Screenshot of the project's main page](src/images/project-exemple.png)
+![Screenshot of the project's main page](src/images/project-example.png)
 
 ## Core Features
 
@@ -38,7 +38,8 @@
 - **LinkedIn**: [Iryna Haiduk on LinkedIn](https://www.linkedin.com/in/iryna-haiduk-622600210/)  
 
 ### Contributions:
-- **Frontend Development**: Implemented the entire frontend of the project using modern web technologies (e.g., React, Redux, Redux Toolkit).  
+- **Frontend Development**: 
+- Implemented the entire frontend of the project using modern web technologies (e.g., React, Redux, Redux Toolkit).  
 - Developed responsive and interactive user interfaces, ensuring a seamless user experience across different devices.  
 - **Component Design**: Created reusable UI components, following best practices in modular design and code efficiency.  
 - **State Management**: Implemented state management using Redux Toolkit, ensuring smooth data flow within the application.  

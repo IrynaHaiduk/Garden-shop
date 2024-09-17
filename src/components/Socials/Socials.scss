@@ -1,0 +1,27 @@
+@use "@/assets/variables.scss" as color;
+
+.socials {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    @media (min-width: 768px) {
+        gap: 16px;
+    }
+
+    &__link {
+        display: block;
+        width: 44px;
+
+        &:hover {
+            svg path {
+                fill: color.$bright-color-light;
+            }
+        }
+
+        svg {
+            display: block;
+            width: 100%;
+        }
+    }
+}

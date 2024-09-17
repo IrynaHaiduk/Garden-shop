@@ -63,7 +63,7 @@
     }
 
     &__img {
-       
+        
         margin: 0 -20px;
         height: 232px;
         position: relative;
@@ -82,6 +82,7 @@
         }
 
         img {
+            width: 100%;
             display: block;
             height: 100%;
             position: relative;
@@ -94,11 +95,6 @@
                 left: auto;
                 transform: none;
                 height: auto;
-                width: auto;
-            }
-
-            @media (min-width: 1440px) {
-                width: 100%;
             }
         }
     }
@@ -114,4 +110,3 @@
         }
     }
 }
-

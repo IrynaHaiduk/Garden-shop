@@ -17,11 +17,13 @@ import { getCartProducts, getLikedProducts } from './store/features/productSlice
 function App() {
  const dispatch = useDispatch();
   
+   // useEffect to load liked products and cart products from the store when the app loads
   useEffect(() => {
     dispatch(getLikedProducts());
     dispatch(getCartProducts())
   }, [dispatch]);
 
+   // useEffect to handle window resizing and temporarily disable transitions
   useEffect(() => {
     let resizeTimer;
 
