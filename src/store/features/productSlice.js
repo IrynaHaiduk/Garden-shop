@@ -19,18 +19,33 @@ const initialState = {
 export const fetchCategories = createAsyncThunk(
     "products/fetchCategories",
     async () => {
-        const response = await fetch(`${import.meta.env.APP_API_URL}/categories/all`);
-        const data = await response.json();
-        return data;
+        try {
+            const response = await fetch(`${import.meta.env.APP_API_URL}/categories/all`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch categories');
+            };
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            throw error;
+        }
     }
 )
 
 export const fetchCategoryById = createAsyncThunk(
     "products/fetchCategoryById",
     async (categoryId) => {
-        const response = await fetch(`${import.meta.env.APP_API_URL}/categories/${categoryId}`);
-        const data = await response.json();
-        return data;
+        try {
+            const response = await fetch(`${import.meta.env.APP_API_URL}/categories/${categoryId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch category');
+            };
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            throw error;
+        }
     }
 )
 
@@ -59,7 +74,7 @@ export const fetchProductById = createAsyncThunk(
             const response = await fetch(`${import.meta.env.APP_API_URL}/products/${productId}`);
 
             if (!response.ok) {
-                throw new Error('Failed to fetch products');
+                throw new Error('Failed to fetch product');
             };
 
             const data = await response.json();
@@ -67,7 +82,6 @@ export const fetchProductById = createAsyncThunk(
         } catch (error) {
             throw error;
         }
-
     }
 )
 
@@ -407,8 +421,8 @@ export const productSlice = createSlice({
             }
 
         }
-
     },
+
     extraReducers: builder => {
         builder
             .addCase(fetchCategories.pending, state => {
@@ -471,7 +485,6 @@ export const productSlice = createSlice({
 
     }
 })
-
 
 export const {
     sortBy,

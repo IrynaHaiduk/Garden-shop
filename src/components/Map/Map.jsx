@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Map.scss";
 import mapImg from "@/images/map.jpg";
+import mapImg2x from "@/images/map_2x.jpg";
 import { useState } from 'react';
 
 const Map = () => {
@@ -15,7 +16,12 @@ const Map = () => {
     return (
         <div className="map">
             {isMapError ? (
-                <img src={mapImg} alt="Map" className="map__img" />
+                <img 
+                src={mapImg} 
+                srcSet={`${mapImg} 1x, ${mapImg2x} 2x`} 
+                alt="Google map" 
+                className="map__img"
+                 />
             ) : (
                 <a href={googleMapsLink} className="map__link" target="_blank"
                     rel="noopener noreferrer" aria-label='Go to the Google Maps'>
